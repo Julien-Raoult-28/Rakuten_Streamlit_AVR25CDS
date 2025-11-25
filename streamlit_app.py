@@ -1,5 +1,11 @@
 import streamlit as st
 
+st.set_page_config(
+    page_title="Rakuten AVR25CDS",   # titre affiché dans l'onglet du navigateur
+    page_icon="images/favicon_Rakuten.png",             # emoji ou chemin vers une icône .png
+    layout="centered"               # optionnel : wide ou centered
+)
+
 st.markdown("""
     <div style="
     position: fixed;   /* fixe le bandeau en haut */
@@ -133,7 +139,7 @@ if page == pages[1] :
   st.write("""
 ### Exploration de la donnée textuelle  
 
-#### 🔹 Visualisation du dataset  
+#### 🔎 Visualisation du dataset  
 Structure du dataset X  
 """)
   st.image("images/Visualisation_X.png", use_container_width=True)
@@ -142,7 +148,7 @@ Structure du dataset Y
 """)
   st.image("images/Visualisation_Y.png", use_container_width=False)
   st.write("""
-#### 🔹 Qualité de la donnée 
+#### ✅ Qualité de la donnée 
 Lors de l'exploration du dataset nous identifions plusieurs problèmes de qualité de
 données. Pour chaque problème nous décidons des actions à entreprendre dans la phase de
 préparation des données.  
@@ -199,14 +205,19 @@ l'entraînement du modèle de passer par une phase de préparation des données 
 Nous remarquons plusieurs problèmes de qualité de données dans le dataset textuel. Nous
 avons identifié des stratégies pour chaque problème qui seront mises en œuvre dans la phase
 de préparation des données afin d'améliorer la qualité des données avant l'entraînement du
-modèle.
+modèle.  
+           
+---  
+### Exploration de la donnée image  
+           
+A venir ...
 """)
 
 #---------------------------------------PAGE PREPARATION DE LA DONNEE -----------------------------------------
 if page == pages[2] : 
   affiche_bandeau("Préparation des données", "#bf0000")
   st.write("""
-## Split des données
+### Split des données
 Après l'exploration nous décidons de splitter nos données répartit en 80% (train) et 20%
 (test) avant le nettoyage des données.  
 Nous générons donc 2 fichiers à partir de \"X_train_update.csv\" (fichier source original) :  
@@ -214,12 +225,12 @@ Nous générons donc 2 fichiers à partir de \"X_train_update.csv\" (fichier sou
 🔹 \"X_test_non_nettoye_20.csv\"
 
 ---
-## Préparation des données X_train_80
+### Préparation des données X_train_80
 
 Suite à l'analyse exploratoire des données nous avons identifié plusieurs actions à faire
 dans la préparation des données avant de commencer à entraîner le modèle.
 
-#### 1🔹 Création d'une colonne fusionnée de \"designation\" et \"description\"
+**1🔹 Création d'une colonne fusionnée de \"designation\" et \"description\"**  
 
 Nous avons constaté environ que 35% des données de \"description\" étaient vides. Donc
 nous avons fait le choix de fusionner les colonnes \"designation\" et \"description\" qui sont
@@ -227,13 +238,13 @@ toutes deux des champs textes. Nous ne supprimons pas la colonne \"description\"
 contient des données complémentaires à \"designation\" qui permettront au modèle
 d'être plus performant.
 
-#### 2🔹 Supprimer les balises HTML
+**2🔹 Supprimer les balises HTML**  
 
 Nous avons relevé la présence de balises HTML dans le champ \"description\". Elles n'ont
 pas d'utilité pour le modèle et sont même contre-productives. Par conséquent nous
 supprimons toutes les balises présentes.
 
-#### 3🔹 Détection de la langue (ajout d'une colonne précisant la langue)
+**3🔹 Détection de la langue (ajout d'une colonne précisant la langue)**  
 
 L'exploration a remonté la présence de texte en différentes langues. Donc nous ajoutons
 une étape qui prédit la langue présente dans le texte et la précise dans une colonne
@@ -243,13 +254,13 @@ Certaines données sont en plusieurs langues. Exemple : une description en fran�
 des mots anglais. Pour ce type de cas nous identifions la donnée comme \"fr\" et donc non
 traduite.
 
-#### 4🔹 Traduction des champs non fr (s'exécute que si la nouvelle colonne langue
+**4🔹 Traduction des champs non fr (s'exécute que si la nouvelle colonne langue** 
 n'est pas en \"fr\")
 
 Pour la traduction nous utilisons GoogleTranslator et faisons une sauvegarde toutes les
 200 lignes traduites pour ne pas perdre l'avancée en cas d'échec.
 
-#### 5🔹 Suppression de la ponctuation et des stop words
+**5🔹 Suppression de la ponctuation et des stopwords** 
 
 Certains mots viennent polluer le modèle comme \"le\", \"la\", \"et\" etc... Nous supprimons
 ces mots (stop words). Nous supprimons tous les accents, la ponctuation. On met tout en
@@ -258,18 +269,16 @@ Nous faisons des exceptions où nous transformons \"n°\" en \"numero\" car cett
 est utile pour la prédiction des magazines. Nous gardons les chiffres car ils sont aussi
 utiles pour les magazines, jeux vidéo.
 
-#### 6🔹 Rééquilibrage des classes (entre 1000 et 4000 max)
+**6🔹 Rééquilibrage des classes**  
+           
+L'exploration a mis en évidence un déséquilibre des classes. Donc nous utiliserons plutôt  
+un **class weight = balanced** dans le modèle qui gérera ce déséquilibre des classes.
 
-L'exploration a mis en évidence un déséquilibre des classes. Donc nous avons rééquilibré
-les classes en supprimant des lignes pour les classes surdimensionnées et en dupliquant
-des lignes pour les classes sous-dimensionnées. Par la suite nous utiliserons plutôt un
-\"class weight\" dans le modèle qui gérera ce déséquilibre des classes.
-
-#### 7🔹 Ensuite nous gardons que les colonnes utiles pour le modèle et sauvegardons
-un fichier \"X_train_80_clean.csv\"
+**7🔹 Ensuite nous gardons que les colonnes utiles pour le modèle et sauvegardons
+un fichier \"X_train_80_clean.csv\"**
 
 ---
-## Préparation des données X_test_20
+### Préparation des données X_test_20
 Nous appliquons quasiment le même code que pour X_train_80 sauf que nous ne faisons
 pas de rééquilibrage des classes donc les étapes sont les suivantes :  
 
@@ -278,7 +287,7 @@ pas de rééquilibrage des classes donc les étapes sont les suivantes :
 3🔹 Détection de la langue (ajout d'une colonne précisant la langue)  
 4🔹 Traduction des champs non fr (s'exécute que si la nouvelle colonne langue
 n'est pas en "fr")  
-5🔹 Suppression de la ponctuation et des stop words  
+5🔹 Suppression de la ponctuation et des stopwords  
 6🔹 Ensuite nous gardons que les colonnes utiles pour le test et sauvegardons un
 fichier \"X_test_20_clean.csv\"
         """
@@ -304,35 +313,35 @@ if page == pages[3] :
 🔸 Il transforme chaque texte en vecteur numérique où chaque dimension
 correspond à un mot ou un bigramme (paire de mots).  
 🔸 L’idée :  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• TF (Term Frequency) : un mot fréquent dans un texte obtient un score
+&nbsp;&nbsp;&nbsp;&nbsp;• TF (Term Frequency) : un mot fréquent dans un texte obtient un score
 élevé.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• IDF (Inverse Document Frequency) : un mot très courant dans tous les
+&nbsp;&nbsp;&nbsp;&nbsp;• IDF (Inverse Document Frequency) : un mot très courant dans tous les
 textes (comme “le”, “et”) est moins important.  
-➢ Résultat : les mots qui sont spécifiques et informatifs pour une catégorie de
+🔸 Résultat : les mots qui sont spécifiques et informatifs pour une catégorie de
 produit ont plus de poids.  
            
 #### 2🔹 TF-IDF sur les caractères  
            
-➢ Même principe que TF-IDF sur les mots, mais appliqué à des séquences de
+🔸 Même principe que TF-IDF sur les mots, mais appliqué à des séquences de
 caractères (3 à 5 lettres consécutives).  
-➢ Objectif :  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Capturer des variantes orthographiques, fautes de frappe ou abréviations.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Exemple : “PlayStation” → “pla”, “lay”, “ays”, …  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Utile quand les noms de produits peuvent être écrits de façons légèrement  
+🔸 Objectif :  
+&nbsp;&nbsp;&nbsp;&nbsp;• Capturer des variantes orthographiques, fautes de frappe ou abréviations.  
+&nbsp;&nbsp;&nbsp;&nbsp;• Exemple : “PlayStation” → “pla”, “lay”, “ays”, …  
+&nbsp;&nbsp;&nbsp;&nbsp;• Utile quand les noms de produits peuvent être écrits de façons légèrement  
 différentes.  
            
 #### 3🔹 Features heuristiques spécifiques aux jeux vidéo  
            
-➢ Ce sont des indicateurs binaires (0 ou 1) ajoutés aux vecteurs TF-IDF pour
+🔸 Ce sont des indicateurs binaires (0 ou 1) ajoutés aux vecteurs TF-IDF pour
 enrichir le modèle.  
-➢ Exemple d’indicateurs :  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Présence de plateformes : ps4, xbox, switch, etc.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Présence de éditeurs : Ubisoft, EA, Rockstar…  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Présence de franchises célèbres : Fifa, Call of Duty, Zelda…  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Indicateurs édition spéciale : collector, deluxe, goty…  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Présence de PEGI ou d’une année de sortie récente (>2000)  
+🔸 Exemple d’indicateurs :  
+&nbsp;&nbsp;&nbsp;&nbsp;• Présence de plateformes : ps4, xbox, switch, etc.  
+&nbsp;&nbsp;&nbsp;&nbsp;• Présence de éditeurs : Ubisoft, EA, Rockstar…  
+&nbsp;&nbsp;&nbsp;&nbsp;• Présence de franchises célèbres : Fifa, Call of Duty, Zelda…  
+&nbsp;&nbsp;&nbsp;&nbsp;• Indicateurs édition spéciale : collector, deluxe, goty…  
+&nbsp;&nbsp;&nbsp;&nbsp;• Présence de PEGI ou d’une année de sortie récente (>2000)  
            
-➢ Ces features aident le modèle à différencier les jeux vidéo des autres produits,
+🔸 Ces features aident le modèle à différencier les jeux vidéo des autres produits,
 comme les films ou les livres. 
             
 Exemple avec le mot nintendo dans un texte : Dans les features heuristiques GameHeuristicFeatures : « nintendo » est dans la liste platform_kw. Si le texte contient ce
@@ -347,39 +356,39 @@ influencer la décision finale en faveur de cette catégorie.
            
 #### 4🔹 SVM linéaire (LinearSVC)  
            
-➢ SVM (Support Vector Machine) : un modèle qui sépare les données en
+🔸 SVM (Support Vector Machine) : un modèle qui sépare les données en
 différentes catégories en trouvant une frontière optimale dans l’espace des
 caractéristiques.  
-➢ LinearSVC : SVM avec un hyperplan linéaire, efficace pour les grands vecteurs
+🔸 LinearSVC : SVM avec un hyperplan linéaire, efficace pour les grands vecteurs
 creux (comme les TF-IDF).  
-➢ Avantages :  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Rapide et efficace pour des données textuelles volumineuses.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Gère les classes déséquilibrées grâce à class_weight="balanced".  
+🔸 Avantages :  
+&nbsp;&nbsp;&nbsp;&nbsp;• Rapide et efficace pour des données textuelles volumineuses.  
+&nbsp;&nbsp;&nbsp;&nbsp;• Gère les classes déséquilibrées grâce à class_weight="balanced".  
 (Contradictoire avec notre rééquilibrage des classes en sur ou sous
 dimensionnant mais nous nous en sommes rendu compte après la phase de
 préparation des données. Donc le rééquilibrage sera supprimé de la phase
 préparatoire et class_weight="balanced" sera directement dans le modèle
 d'entraînement)  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Peut être combiné avec des features supplémentaires (TF-IDF +
+&nbsp;&nbsp;&nbsp;&nbsp;• Peut être combiné avec des features supplémentaires (TF-IDF +
 heuristiques).  
            
 **En gros, le pipeline fonctionne ainsi :**   
-➢ 1.Transformer chaque texte en vecteur numérique avec TF-IDF sur mots +
+🔸 1.Transformer chaque texte en vecteur numérique avec TF-IDF sur mots +
 caractères.  
-➢ 2.Ajouter des features spécifiques aux jeux vidéo.  
-➢ 3.Le SVM linéaire apprend à séparer les catégories de produits dans cet espace
+🔸 2.Ajouter des features spécifiques aux jeux vidéo.  
+🔸 3.Le SVM linéaire apprend à séparer les catégories de produits dans cet espace
 de caractéristiques et gère le déséquilibre des classes.  
          
 #### 5🔹 Résultat du modèle lors du test 
-➢ Le modèle obtient un F1-score de 82,91%, dépassant l'objectif de 81,13%  
-➢ Le modèle est moins performant sur l'univers des jeux (jeux vidéos, Jeux de
+🔸 Le modèle obtient un F1-score de 82,91%, dépassant l'objectif de 81,13%  
+🔸 Le modèle est moins performant sur l'univers des jeux (jeux vidéos, Jeux de
 rôles, jeux de société) et les livres (Livres loisirs & société, Littérature, Lots livres &
 magazines)  
-➢ Prochaine étape :  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Analyser les mauvaises prédictions, trouver des features pour aider le
+🔸 Prochaine étape :  
+&nbsp;&nbsp;&nbsp;&nbsp;• Analyser les mauvaises prédictions, trouver des features pour aider le
 modèle à mieux prédire ces classes.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Entraîner le modèle en utilisant un GPU pour accélérer les calculs.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Tester les performances du modèle sur GPU et CPU.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Entraîner et évaluer le modèle avec CamemBERT et Random Forest pour
+&nbsp;&nbsp;&nbsp;&nbsp;• Entraîner le modèle en utilisant un GPU pour accélérer les calculs.  
+&nbsp;&nbsp;&nbsp;&nbsp;• Tester les performances du modèle sur GPU et CPU.  
+&nbsp;&nbsp;&nbsp;&nbsp;• Entraîner et évaluer le modèle avec CamemBERT et Random Forest pour
 comparer leurs performances avec le modèle actuel TF-IDF + LinearSVC.   
 """)

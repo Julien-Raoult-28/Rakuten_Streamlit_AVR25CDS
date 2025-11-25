@@ -1,1 +1,11 @@
-streamlit run streamlit_app.py
+streamlit run streamlit_app.py : voir le streamlit en cours de modif
+
+liens url du streamlit public : https://rakutenappavr25cds-pnqrr2twrypsifbmoe2qcb.streamlit.app/
+
+git add .
+git commit -m "MAJ Streamlit"
+git push origin main
+
+Si quelqu’un d’autre a modifié main, il faudra faire :
+git pull origin main --rebase
+avant de push pour éviter les conflits.
