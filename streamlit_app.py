@@ -62,6 +62,18 @@ with st.sidebar:
     pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation"]
     page = st.radio("", pages)
 
+    # --- Auteurs ---
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        **Auteurs :**  
+        Angella LEALOI  
+        Fatiha IDDER  
+        Julien RAOULT
+        """,
+        unsafe_allow_html=True
+    )
+
 
 # --- TITRE DE CHAQUE PAGE ---
 def affiche_bandeau(titre, couleur_fond="#bf0000"):
