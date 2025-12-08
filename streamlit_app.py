@@ -59,7 +59,7 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     st.title("Sommaire")
 
-    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation"]
+    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation","Tester le modèle"]
     page = st.radio("", pages)
 
     # --- Auteurs ---
@@ -404,3 +404,61 @@ modèle à mieux prédire ces classes.
 &nbsp;&nbsp;&nbsp;&nbsp;• Entraîner et évaluer le modèle avec CamemBERT et Random Forest pour
 comparer leurs performances avec le modèle actuel TF-IDF + LinearSVC.   
 """)
+  
+
+#---------------------------------------PAGE TESTER LE MODELE -----------------------------------------
+if page == pages[4]:
+    affiche_bandeau("Tester le modèle", "#bf0000")
+    
+    st.write("Entrez la description du produit pour prédire sa catégorie :")
+
+    user_input = st.text_area("Description produit", height=150)
+
+    if st.button("Valider"):
+        if user_input.strip() == "":
+            st.warning("Veuillez saisir une description.")
+        else:
+            # =====================
+            # 1) Charger le pipeline
+            # =====================
+            pipe = joblib.load("pipeline_rakuten.pkl")
+
+            # =====================
+            # 2) Mapping codes → libellé
+            # =====================
+            mapping = {
+                10: 'Livres loisirs et société',
+                40: 'Jeux Vidéo',
+                50: 'Accessoires jeux vidéos',
+                60: 'Jeux vidéo & Consoles',
+                1140: 'Figurines',
+                1160: 'Cartes de jeux',
+                1180: 'Jeux de rôle et de figurines',
+                1280: 'Jouets & Enfant',
+                1281: 'Jeux de société',
+                1300: 'Véhicules RC & miniatures',
+                1301: 'Chaussettes bébé',
+                1302: 'Sports & Loisirs',
+                1320: 'Puériculture',
+                1560: 'Maison',
+                1920: 'Linge de maison',
+                1940: 'Petit déjeuner',
+                2060: 'Décoration',
+                2220: 'Animalerie',
+                2280: 'Magasine',
+                2403: 'Lots Livres & Magasines',
+                2462: 'Lots consoles & jeux',
+                2522: 'Fournitures Papeterie',
+                2582: 'Mobilier de jardin',
+                2583: 'Équipement piscine & spa',
+                2585: 'Outillage de jardin',
+                2705: 'Livres littérature et fiction',
+                2905: 'Jeux en téléchargement'
+            }
+
+            # =====================
+            # 3) Prédiction
+            # =====================
+            pred_code = pipe.predict([user_input])[0]
+            pred_label = mapping.get(pred_code, f"Code {pred_code} inconnu")
+            st.success(f"🔹 Catégorie prédite : **{pred_label}**")
