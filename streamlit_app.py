@@ -1,4 +1,6 @@
 import streamlit as st
+import joblib
+
 
 st.set_page_config(
     page_title="Rakuten AVR25CDS",   # titre affiché dans l'onglet du navigateur
