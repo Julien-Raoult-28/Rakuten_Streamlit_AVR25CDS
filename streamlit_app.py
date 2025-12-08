@@ -406,7 +406,7 @@ modèle à mieux prédire ces classes.
 &nbsp;&nbsp;&nbsp;&nbsp;• Entraîner et évaluer le modèle avec CamemBERT et Random Forest pour
 comparer leurs performances avec le modèle actuel TF-IDF + LinearSVC.   
 """)
- #---------------------------------------PAGE TESTER LE MODELE -----------------------------------------
+#---------------------------------------PAGE TESTER LE MODELE -----------------------------------------
 if page == "Tester le modèle":
     st.header("Tester le modèle")
 
@@ -418,12 +418,17 @@ if page == "Tester le modèle":
     import joblib
     import numpy as np
     import re
+    import html
+    import pandas as pd
+    from bs4 import BeautifulSoup
     from unidecode import unidecode
     from sklearn.base import BaseEstimator, TransformerMixin
-    from sklearn.feature_extraction.text import TfidfVectorizer
-    from sklearn.pipeline import Pipeline, FeatureUnion
+    from langdetect import detect, DetectorFactory
 
-    # -------------------- CLASSES CUSTOM --------------------
+    # Rendre la détection de langue reproductible
+    DetectorFactory.seed = 0
+
+    # -------------------- CLASSES CUSTOM (nécessaires pour joblib.load) --------------------
     class GameHeuristicFeatures(BaseEstimator, TransformerMixin):
         def __init__(self):
             self.platform_kw = ["ps1","ps2","ps3","ps4","ps5","playstation","xbox","xbox one","series x","series s",
@@ -441,7 +446,7 @@ if page == "Tester le modèle":
             return self
 
         def _flags(self, txt: str):
-            t_noacc = unidecode(txt.lower())
+            t_noacc = unidecode(str(txt).lower())
             has_platform  = any(k in t_noacc for k in self.platform_kw)
             has_publisher = any(k in t_noacc for k in self.publisher_kw)
             has_franchise = any(k in t_noacc for k in self.franchise_kw)
@@ -473,7 +478,7 @@ if page == "Tester le modèle":
         def transform(self, X):
             feats = []
             for txt in X:
-                t_noacc = unidecode(txt.lower())
+                t_noacc = unidecode(str(txt).lower())
                 row = []
                 for code in self.codes:
                     has_kw = any(k in t_noacc for k in self.keyword_map[code])
@@ -481,7 +486,7 @@ if page == "Tester le modèle":
                 feats.append(row)
             return np.array(feats, dtype=np.float32)
 
-    # -------------------- WRAPPER POUR LE PIPELINE AVEC LABELS --------------------
+    # -------------------- WRAPPER POUR LE PIPELINE (identique à celui utilisé pour dump) --------------------
     class RakutenPipelineWithLabels:
         def __init__(self, pipeline, mapping):
             self.pipeline = pipeline
@@ -495,13 +500,96 @@ if page == "Tester le modèle":
             codes = self.pipeline.predict(X)
             return [self.mapping[code] for code in codes]
 
+    # -------------------- FONCTIONS DE NETTOYAGE --------------------
+    def remove_html_tags(text):
+        if pd.isna(text):
+            return ''
+        text = str(text)
+        soup = BeautifulSoup(text, 'html.parser')
+        cleaned = soup.get_text(separator=' ')
+        cleaned = html.unescape(cleaned)
+        cleaned = re.sub(r'[<>/:"\\]', ' ', cleaned)
+        return cleaned
+
+    # Détection simple plus robuste (usage de mots-clés puis langdetect)
+    def detect_lang(text):
+        try:
+            if pd.isna(text) or not str(text).strip():
+                return 'unknown'
+            text_lower = str(text).lower()
+            french_kw = ['jeu','téléchargement','code','activation','compte','internet','français','épisode','saison']
+            english_kw = ['game','download','account','internet','english','episode','season','the','and']
+            f_count = sum(1 for w in french_kw if w in text_lower)
+            e_count = sum(1 for w in english_kw if w in text_lower)
+            if f_count >= 3 and f_count > e_count:
+                return 'fr'
+            detected = detect(text)
+            if detected != 'fr' and f_count >= 2:
+                return 'fr'
+            return detected
+        except:
+            return 'unknown'
+
+    # Liste de stopwords minimale (évite dépendance heavy si nltk non initialisé)
+    _basic_stopwords = {
+        "le","la","les","un","une","des","et","en","du","de","dans","au","aux","pour","avec","sur","par","ce","ces"
+    }
+    # on garde 'lot'/'lots'
+    stop_words = {w for w in _basic_stopwords if w not in ['lot','lots']}
+
+    def clean_and_normalize_text(text):
+        if pd.isna(text):
+            return ''
+        s = str(text).lower()
+        s = unidecode(s)
+        s = re.sub(r'\bn\s*°\b', 'numero', s)
+        s = re.sub(r'[\/\-]', ' ', s)
+        s = re.sub(r'[^\w\s]', ' ', s)
+        # garder mots >=2 caractères
+        s = ' '.join(word for word in s.split() if len(word) > 1)
+        s = ' '.join(word for word in s.split() if word not in stop_words)
+        # supprimer répétitions
+        s = ' '.join(dict.fromkeys(s.split()))
+        s = re.sub(r'\s+', ' ', s).strip()
+        return s
+
+    def clean_pipeline(text):
+        # 1) HTML cleanup
+        t = remove_html_tags(text)
+        # 2) detect language (optionnel pour traduction)
+        lang = detect_lang(t)
+        # 3) (OPTION) translate to fr if needed - commented out by default
+        # if lang != 'fr' and lang != 'unknown':
+        #     try:
+        #         from deep_translator import GoogleTranslator
+        #         t = GoogleTranslator(source='auto', target='fr').translate(t)
+        #     except Exception:
+        #         pass
+        # 4) normalization
+        t = clean_and_normalize_text(t)
+        return t
+
     # -------------------- CHARGER LE PIPELINE --------------------
-    pipe = joblib.load("pipeline_rakuten_with_labels.pkl")
+    try:
+        pipe = joblib.load("pipeline_rakuten_with_labels.pkl")
+    except Exception as e:
+        st.error(f"Erreur lors du chargement du pipeline: {e}")
+        pipe = None
 
     # -------------------- PREDICTION --------------------
     if st.button("Valider"):
         if user_input.strip() == "":
             st.warning("Veuillez saisir une description.")
         else:
-            pred_label = pipe.predict([user_input])[0]
-            st.success(f"🔹 Catégorie prédite : **{pred_label}**")
+            if pipe is None:
+                st.error("Le pipeline n'a pas pu être chargé.")
+            else:
+                # Nettoyage du texte
+                cleaned = clean_pipeline(user_input)
+
+                # Prédiction (le pipeline retourne le libellé directement)
+                try:
+                    pred_label = pipe.predict([cleaned])[0]
+                    st.success(f"🔹 Catégorie prédite : **{pred_label}**")
+                except Exception as e:
+                    st.error(f"Erreur pendant la prédiction: {e}")
