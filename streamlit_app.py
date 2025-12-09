@@ -422,71 +422,12 @@ if page == "Tester le modèle":
     import pandas as pd
     from bs4 import BeautifulSoup
     from unidecode import unidecode
-    from sklearn.base import BaseEstimator, TransformerMixin
     from langdetect import detect, DetectorFactory
 
     # Rendre la détection de langue reproductible
     DetectorFactory.seed = 0
 
-    # -------------------- CLASSES CUSTOM (nécessaires pour joblib.load) --------------------
-    class GameHeuristicFeatures(BaseEstimator, TransformerMixin):
-        def __init__(self):
-            self.platform_kw = ["ps1","ps2","ps3","ps4","ps5","playstation","xbox","xbox one","series x","series s",
-                                "nintendo","switch","wii","wii u","3ds","ds","gamecube","gba","psp","ps vita","pc"]
-            self.publisher_kw = ["ubisoft","ea","electronic arts","square enix","bandai","namco","bandai namco","capcom",
-                                 "activision","rockstar","2k","bethesda","konami","sega","blizzard","cd projekt","riot"]
-            self.franchise_kw = ["fifa","call of duty","cod","zelda","mario","pokemon","gta","gran turismo","assassin",
-                                 "battlefield","nba 2k","nhl","pes","efootball","forza","horizon","halo","gears",
-                                 "persona","final fantasy","monster hunter","elden ring"]
-            self.edition_kw = ["goty","game of the year","collector","ultimate","deluxe","limited","steelbook"]
-            self.pegi_kw = ["pegi", "18+", "16+", "12+", "7+", "3+"]
-            self.video_format_noise = ["blu-ray", "bluray", "dvd", "4k uhd"]
-
-        def fit(self, X, y=None):
-            return self
-
-        def _flags(self, txt: str):
-            t_noacc = unidecode(str(txt).lower())
-            has_platform  = any(k in t_noacc for k in self.platform_kw)
-            has_publisher = any(k in t_noacc for k in self.publisher_kw)
-            has_franchise = any(k in t_noacc for k in self.franchise_kw)
-            has_edition   = any(k in t_noacc for k in self.edition_kw)
-            has_pegi      = any(k in t_noacc for k in self.pegi_kw)
-            years = re.findall(r'\b(19\d{2}|20\d{2})\b', t_noacc)
-            has_year_2000plus = any(int(y) >= 2000 for y in years) if years else False
-            has_video_format = any(k in t_noacc for k in self.video_format_noise)
-            return [int(has_platform), int(has_publisher), int(has_franchise),
-                    int(has_edition), int(has_pegi), int(has_year_2000plus),
-                    int(has_video_format)]
-
-        def transform(self, X):
-            return np.array([self._flags(x) for x in X], dtype=np.float32)
-
-    class KeywordClassFeatures(BaseEstimator, TransformerMixin):
-        def __init__(self):
-            self.keyword_map = {
-                2705: ["roman", "conte", "fiction", "nouvelles", "theatre", "poesie", "auteur", "edition"],
-                10:   ["guide", "recette", "developpement personnel", "voyage", "histoire", "methode", "loisir", "sante"],
-                2403: ["lot", "ensemble", "collection", "pack", "coffret", "bundle"],
-                2280: ["magazine", "mensuel", "hebdomadaire", "numero", "revue", "edition", "journal"],
-            }
-            self.codes = sorted(self.keyword_map.keys())
-
-        def fit(self, X, y=None):
-            return self
-
-        def transform(self, X):
-            feats = []
-            for txt in X:
-                t_noacc = unidecode(str(txt).lower())
-                row = []
-                for code in self.codes:
-                    has_kw = any(k in t_noacc for k in self.keyword_map[code])
-                    row.append(int(has_kw))
-                feats.append(row)
-            return np.array(feats, dtype=np.float32)
-
-    # -------------------- WRAPPER POUR LE PIPELINE (identique à celui utilisé pour dump) --------------------
+    # -------------------- WRAPPER POUR LE PIPELINE --------------------
     class RakutenPipelineWithLabels:
         def __init__(self, pipeline, mapping):
             self.pipeline = pipeline
@@ -511,7 +452,6 @@ if page == "Tester le modèle":
         cleaned = re.sub(r'[<>/:"\\]', ' ', cleaned)
         return cleaned
 
-    # Détection simple plus robuste (usage de mots-clés puis langdetect)
     def detect_lang(text):
         try:
             if pd.isna(text) or not str(text).strip():
@@ -530,11 +470,9 @@ if page == "Tester le modèle":
         except:
             return 'unknown'
 
-    # Liste de stopwords minimale (évite dépendance heavy si nltk non initialisé)
     _basic_stopwords = {
         "le","la","les","un","une","des","et","en","du","de","dans","au","aux","pour","avec","sur","par","ce","ces"
     }
-    # on garde 'lot'/'lots'
     stop_words = {w for w in _basic_stopwords if w not in ['lot','lots']}
 
     def clean_and_normalize_text(text):
@@ -545,33 +483,21 @@ if page == "Tester le modèle":
         s = re.sub(r'\bn\s*°\b', 'numero', s)
         s = re.sub(r'[\/\-]', ' ', s)
         s = re.sub(r'[^\w\s]', ' ', s)
-        # garder mots >=2 caractères
         s = ' '.join(word for word in s.split() if len(word) > 1)
         s = ' '.join(word for word in s.split() if word not in stop_words)
-        # supprimer répétitions
         s = ' '.join(dict.fromkeys(s.split()))
         s = re.sub(r'\s+', ' ', s).strip()
         return s
 
     def clean_pipeline(text):
-        # 1) HTML cleanup
         t = remove_html_tags(text)
-        # 2) detect language (optionnel pour traduction)
         lang = detect_lang(t)
-        # 3) (OPTION) translate to fr if needed - commented out by default
-        # if lang != 'fr' and lang != 'unknown':
-        #     try:
-        #         from deep_translator import GoogleTranslator
-        #         t = GoogleTranslator(source='auto', target='fr').translate(t)
-        #     except Exception:
-        #         pass
-        # 4) normalization
         t = clean_and_normalize_text(t)
         return t
 
     # -------------------- CHARGER LE PIPELINE --------------------
     try:
-        pipe = joblib.load("pipeline_rakuten_with_labels.pkl")
+        pipe = joblib.load("pipeline_rakuten_without_labels.pkl")
     except Exception as e:
         st.error(f"Erreur lors du chargement du pipeline: {e}")
         pipe = None
@@ -584,10 +510,7 @@ if page == "Tester le modèle":
             if pipe is None:
                 st.error("Le pipeline n'a pas pu être chargé.")
             else:
-                # Nettoyage du texte
                 cleaned = clean_pipeline(user_input)
-
-                # Prédiction (le pipeline retourne le libellé directement)
                 try:
                     pred_label = pipe.predict([cleaned])[0]
                     st.success(f"🔹 Catégorie prédite : **{pred_label}**")
