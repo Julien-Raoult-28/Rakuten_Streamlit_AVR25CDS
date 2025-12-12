@@ -61,7 +61,7 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     st.title("Sommaire")
 
-    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation","Tester le modèle"]
+    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation","Tester le modèle","Tester le modèle - 2","Tester le modèle - 3"]
     page = st.radio("", pages)
 
     # --- Auteurs ---
@@ -516,3 +516,52 @@ if page == "Tester le modèle":
                     st.success(f"🔹 Catégorie prédite : **{pred_label}**")
                 except Exception as e:
                     st.error(f"Erreur pendant la prédiction: {e}")
+
+
+
+#-2222222222222222222222222222222222--------------------------------------PAGE TESTER LE MODELE -----------------------------------------
+
+
+#---------------------------------------PAGE TESTER LE MODELE (version simplifiée) -----------------------------------------
+if page == "Tester le modèle - 2":
+    st.header("Tester le modèle")
+    st.write("Entrez la description du produit pour prédire sa catégorie :")
+
+    user_input = st.text_area("Description produit", height=150)
+
+    import joblib
+    from pathlib import Path
+
+    @st.cache_resource
+    def load_pipeline(path: str):
+        # charge un .joblib qui contient soit le pipeline seul, soit un dict {"pipeline":..., "mapping":..., "meta":...}
+        loaded = joblib.load(path)
+        if isinstance(loaded, dict):
+            return loaded.get("pipeline"), loaded.get("mapping", {}), loaded.get("meta", {})
+        else:
+            return loaded, {}, {}
+
+    # mets ici le chemin exact vers ton .joblib
+    pipeline_path = r"C:\Users\Mproo\Documents\Cours_DATASCIENTEST\Streamlit_Rakuten\pipeline_0prepa_0features.joblib"
+    pipe, mapping, meta = load_pipeline(pipeline_path)
+
+    if st.button("Valider"):
+        txt = str(user_input)
+        if not txt.strip():
+            st.warning("Veuillez saisir une description.")
+        else:
+            # prédiction sur texte brut
+            pred = pipe.predict([txt])[0]
+            # tenter d'obtenir un label lisible depuis le mapping si disponible
+            label = None
+            if mapping:
+                entry = mapping.get(pred) or mapping.get(str(pred))
+                if entry:
+                    label = entry.get("libelle_type_code") or entry.get("prdtypecode") or str(entry)
+            if label:
+                st.success(f"🔹 Catégorie prédite : **{label}**  (code: {pred})")
+            else:
+                st.success(f"🔹 Catégorie prédite (code): **{pred}**")
+
+
+#-33333333333333333333333333333-------------------------------------PAGE TESTER LE MODELE -----------------------------------------
