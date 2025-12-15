@@ -529,21 +529,26 @@ if page == "Tester le modèle - 2":
 
     user_input = st.text_area("Description produit", height=150)
 
+    import os
     import joblib
-    from pathlib import Path
+    import streamlit as st
 
     @st.cache_resource
-    def load_pipeline(path: str):
-        # charge un .joblib qui contient soit le pipeline seul, soit un dict {"pipeline":..., "mapping":..., "meta":...}
+    def load_pipeline(path):
         loaded = joblib.load(path)
         if isinstance(loaded, dict):
             return loaded.get("pipeline"), loaded.get("mapping", {}), loaded.get("meta", {})
-        else:
-            return loaded, {}, {}
+        return loaded, {}, {}
 
-    # mets ici le chemin exact vers ton .joblib
-    pipeline_path = r"C:\Users\Mproo\Documents\Cours_DATASCIENTEST\RAKUTEN_STREAMLIT_CLEAN\pipeline_0prepa_0features.joblib"
+    BASE_DIR = os.path.dirname(__file__)
+    pipeline_path = os.path.join(
+       BASE_DIR,
+        "models",
+        "pipeline_0prepa_0features.joblib"
+    )
+
     pipe, mapping, meta = load_pipeline(pipeline_path)
+
 
     if st.button("Valider"):
         txt = str(user_input)
