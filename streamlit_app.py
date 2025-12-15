@@ -420,9 +420,11 @@ if page == "Tester le modèle":
     import re
     import html
     import pandas as pd
+    import os
     from bs4 import BeautifulSoup
     from unidecode import unidecode
     from langdetect import detect, DetectorFactory
+
 
     # Rendre la détection de langue reproductible
     DetectorFactory.seed = 0
