@@ -542,7 +542,7 @@ if page == "Tester le modèle - 2":
             return loaded, {}, {}
 
     # mets ici le chemin exact vers ton .joblib
-    pipeline_path = r"C:\Users\Mproo\Documents\Cours_DATASCIENTEST\Streamlit_Rakuten\pipeline_0prepa_0features.joblib"
+    pipeline_path = r"C:\Users\Mproo\Documents\Cours_DATASCIENTEST\RAKUTEN_STREAMLIT_CLEAN\pipeline_0prepa_0features.joblib"
     pipe, mapping, meta = load_pipeline(pipeline_path)
 
     if st.button("Valider"):
