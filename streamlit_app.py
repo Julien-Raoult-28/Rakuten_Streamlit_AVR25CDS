@@ -61,7 +61,7 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     st.title("Sommaire")
 
-    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation","Tester le modèle","Tester le modèle - 2","Tester le modèle - 3"]
+    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation","Tester le modèle","Tester le modèle - 2"]
     page = st.radio("", pages)
 
     # --- Auteurs ---
@@ -69,7 +69,7 @@ with st.sidebar:
     st.markdown(
         """
         **Auteurs :**  
-        Angella LEALOI  
+        Angella FONTAINE  
         Fatiha IDDER  
         Julien RAOULT
         """,
