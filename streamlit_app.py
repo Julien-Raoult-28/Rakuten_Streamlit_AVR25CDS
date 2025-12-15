@@ -496,10 +496,23 @@ if page == "Tester le modèle":
         return t
 
     # -------------------- CHARGER LE PIPELINE --------------------
+    BASE_DIR = os.path.dirname(__file__)
+    PIPELINE_PATH = os.path.join(
+        BASE_DIR,
+        "models",
+        "pipeline_rakuten_without_labels.pkl"
+    )
+
     try:
-        pipe = joblib.load("pipeline_rakuten_without_labels.pkl")
+        pipe = joblib.load(PIPELINE_PATH)
+    except FileNotFoundError:
+        st.error(
+            f"❌ Pipeline introuvable.\n"
+            f"Chemin attendu : {PIPELINE_PATH}"
+        )
+        pipe = None
     except Exception as e:
-        st.error(f"Erreur lors du chargement du pipeline: {e}")
+        st.error(f"❌ Erreur lors du chargement du pipeline : {e}")
         pipe = None
 
     # -------------------- PREDICTION --------------------
