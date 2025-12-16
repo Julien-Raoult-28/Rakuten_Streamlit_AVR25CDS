@@ -1,3 +1,4 @@
+from importlib.resources import path
 import streamlit as st
 import joblib
 
@@ -408,50 +409,107 @@ comparer leurs performances avec le modèle actuel TF-IDF + LinearSVC.
 """)
 
 #---------------------------------------PAGE TESTER LE MODELE (version simplifiée) -----------------------------------------
+
+
 if page == "Tester le modèle":
-    st.header("Tester le modèle")
-    st.write("Entrez la description du produit pour prédire sa catégorie :")
-
-    user_input = st.text_area("Description produit", height=150)
-
     import os
+    import re
     import joblib
     import streamlit as st
+    import pandas as pd
+    import requests
+
+    st.header("Tester le modèle")
+    st.write("Entrez la désignation et la description du produit pour prédire sa catégorie :")
+
+    # =========================
+    # Inputs utilisateur
+    # =========================
+    designation_input = st.text_input("Désignation produit")
+    description_input = st.text_area("Description produit", height=150)
+
+    # ============================================================
+    # FONCTIONS CUSTOM (nécessaires pour joblib.load)
+    # ============================================================
+    UNIT_PATTERN = r"(cm|mm|m|kg|g|mg|l|ml|cl|w|kw|v|mah|ah|hz|ghz|mhz|go|gb|to|tb|mp|px|fps|°c|°)"
+
+    def get_designation(X):
+        return X["designation"].fillna("").astype(str)
+
+    def get_description(X):
+        return X["description"].fillna("").astype(str)
+
+    def first_words_series(X, n=3):
+        return (
+            X["designation"]
+            .fillna("")
+            .astype(str)
+            .str.lower()
+            .str.split()
+            .str[:n]
+            .str.join(" ")
+        )
+
+    def numbers_units_series(X):
+        return (
+            X["designation"]
+            .fillna("")
+            .astype(str)
+            .str.lower()
+            .str.findall(rf"\b\d+[.,]?\d*\s?{UNIT_PATTERN}\b")
+            .str.join(" ")
+        )
+
+    # =========================
+    # Chargement du modèle depuis Dropbox
+    # =========================
+    MODEL_URL = (
+        "https://www.dropbox.com/scl/fi/oole37javo3jpageyx80v/"
+        "modele_final_rakuten.pkl?rlkey=wh7c65m17gyivk7wy0jgu377k&dl=1"
+    )
+    MODEL_PATH = "modele_final_rakuten.pkl"
 
     @st.cache_resource
-    def load_pipeline(path):
-        loaded = joblib.load(path)
-        if isinstance(loaded, dict):
-            return loaded.get("pipeline"), loaded.get("mapping", {}), loaded.get("meta", {})
-        return loaded, {}, {}
+    def load_pipeline():
+        if not os.path.exists(MODEL_PATH):
+            with st.spinner("📥 Téléchargement du modèle..."):
+                r = requests.get(MODEL_URL)
+                r.raise_for_status()
+                with open(MODEL_PATH, "wb") as f:
+                    f.write(r.content)
+        return joblib.load(MODEL_PATH)
 
+    pipe = load_pipeline()
+
+    # =========================
+    # Chargement du mapping
+    # =========================
     BASE_DIR = os.path.dirname(__file__)
-    pipeline_path = os.path.join(
-       BASE_DIR,
-        "models",
-        "modele_final_rakuten.pkl"
-    )
+    mapping_path = os.path.join(BASE_DIR, "Y_train_encode.csv")
 
-    pipe, mapping, meta = load_pipeline(pipeline_path)
+    mapping_df = pd.read_csv(mapping_path)
+    mapping_df = mapping_df.drop_duplicates(subset=["prdtypecode_encoded"])
 
+    mapping = mapping_df.set_index("prdtypecode_encoded")["libelle_type_code"].to_dict()
 
+    # =========================
+    # Prédiction
+    # =========================
     if st.button("Valider"):
-        txt = str(user_input)
-        if not txt.strip():
-            st.warning("Veuillez saisir une description.")
+        if not designation_input.strip() and not description_input.strip():
+            st.warning("Veuillez saisir au moins la désignation ou la description.")
         else:
-            # prédiction sur texte brut
-            pred = pipe.predict([txt])[0]
-            # tenter d'obtenir un label lisible depuis le mapping si disponible
-            label = None
-            if mapping:
-                entry = mapping.get(pred) or mapping.get(str(pred))
-                if entry:
-                    label = entry.get("libelle_type_code") or entry.get("prdtypecode") or str(entry)
+        # Création d'un DataFrame 1 ligne pour respecter le format du pipeline
+            input_df = pd.DataFrame([{
+                "designation": designation_input,
+                "description": description_input
+            }])
+
+        # Prédiction
+            pred = pipe.predict(input_df)[0]
+            label = mapping.get(pred)
+
             if label:
-                st.success(f"🔹 Catégorie prédite : **{label}**  (code: {pred})")
+                st.success(f"🔹 Catégorie prédite : **{label}**")
             else:
-                st.success(f"🔹 Catégorie prédite (code): **{pred}**")
-
-
-#-33333333333333333333333333333-------------------------------------PAGE TESTER LE MODELE -----------------------------------------
+                st.success("🔹 Catégorie prédite : Non disponible")
