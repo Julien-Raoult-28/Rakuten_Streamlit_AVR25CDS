@@ -61,7 +61,7 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     st.title("Sommaire")
 
-    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation","Tester le modèle","Tester le modèle - 2"]
+    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation","Tester le modèle"]
     page = st.radio("", pages)
 
     # --- Auteurs ---
@@ -406,139 +406,9 @@ modèle à mieux prédire ces classes.
 &nbsp;&nbsp;&nbsp;&nbsp;• Entraîner et évaluer le modèle avec CamemBERT et Random Forest pour
 comparer leurs performances avec le modèle actuel TF-IDF + LinearSVC.   
 """)
-#---------------------------------------PAGE TESTER LE MODELE -----------------------------------------
-if page == "Tester le modèle":
-    st.header("Tester le modèle")
-
-    st.write("Entrez la description du produit pour prédire sa catégorie :")
-
-    user_input = st.text_area("Description produit", height=150)
-
-    # -------------------- IMPORTS --------------------
-    import joblib
-    import numpy as np
-    import re
-    import html
-    import pandas as pd
-    import os
-    from bs4 import BeautifulSoup
-    from unidecode import unidecode
-    from langdetect import detect, DetectorFactory
-
-
-    # Rendre la détection de langue reproductible
-    DetectorFactory.seed = 0
-
-    # -------------------- WRAPPER POUR LE PIPELINE --------------------
-    class RakutenPipelineWithLabels:
-        def __init__(self, pipeline, mapping):
-            self.pipeline = pipeline
-            self.mapping = mapping
-
-        def fit(self, X, y):
-            self.pipeline.fit(X, y)
-            return self
-
-        def predict(self, X):
-            codes = self.pipeline.predict(X)
-            return [self.mapping[code] for code in codes]
-
-    # -------------------- FONCTIONS DE NETTOYAGE --------------------
-    def remove_html_tags(text):
-        if pd.isna(text):
-            return ''
-        text = str(text)
-        soup = BeautifulSoup(text, 'html.parser')
-        cleaned = soup.get_text(separator=' ')
-        cleaned = html.unescape(cleaned)
-        cleaned = re.sub(r'[<>/:"\\]', ' ', cleaned)
-        return cleaned
-
-    def detect_lang(text):
-        try:
-            if pd.isna(text) or not str(text).strip():
-                return 'unknown'
-            text_lower = str(text).lower()
-            french_kw = ['jeu','téléchargement','code','activation','compte','internet','français','épisode','saison']
-            english_kw = ['game','download','account','internet','english','episode','season','the','and']
-            f_count = sum(1 for w in french_kw if w in text_lower)
-            e_count = sum(1 for w in english_kw if w in text_lower)
-            if f_count >= 3 and f_count > e_count:
-                return 'fr'
-            detected = detect(text)
-            if detected != 'fr' and f_count >= 2:
-                return 'fr'
-            return detected
-        except:
-            return 'unknown'
-
-    _basic_stopwords = {
-        "le","la","les","un","une","des","et","en","du","de","dans","au","aux","pour","avec","sur","par","ce","ces"
-    }
-    stop_words = {w for w in _basic_stopwords if w not in ['lot','lots']}
-
-    def clean_and_normalize_text(text):
-        if pd.isna(text):
-            return ''
-        s = str(text).lower()
-        s = unidecode(s)
-        s = re.sub(r'\bn\s*°\b', 'numero', s)
-        s = re.sub(r'[\/\-]', ' ', s)
-        s = re.sub(r'[^\w\s]', ' ', s)
-        s = ' '.join(word for word in s.split() if len(word) > 1)
-        s = ' '.join(word for word in s.split() if word not in stop_words)
-        s = ' '.join(dict.fromkeys(s.split()))
-        s = re.sub(r'\s+', ' ', s).strip()
-        return s
-
-    def clean_pipeline(text):
-        t = remove_html_tags(text)
-        lang = detect_lang(t)
-        t = clean_and_normalize_text(t)
-        return t
-
-    # -------------------- CHARGER LE PIPELINE --------------------
-    BASE_DIR = os.path.dirname(__file__)
-    PIPELINE_PATH = os.path.join(
-        BASE_DIR,
-        "models",
-        "pipeline_rakuten_without_labels.pkl"
-    )
-
-    try:
-        pipe = joblib.load(PIPELINE_PATH)
-    except FileNotFoundError:
-        st.error(
-            f"❌ Pipeline introuvable.\n"
-            f"Chemin attendu : {PIPELINE_PATH}"
-        )
-        pipe = None
-    except Exception as e:
-        st.error(f"❌ Erreur lors du chargement du pipeline : {e}")
-        pipe = None
-
-    # -------------------- PREDICTION --------------------
-    if st.button("Valider"):
-        if user_input.strip() == "":
-            st.warning("Veuillez saisir une description.")
-        else:
-            if pipe is None:
-                st.error("Le pipeline n'a pas pu être chargé.")
-            else:
-                cleaned = clean_pipeline(user_input)
-                try:
-                    pred_label = pipe.predict([cleaned])[0]
-                    st.success(f"🔹 Catégorie prédite : **{pred_label}**")
-                except Exception as e:
-                    st.error(f"Erreur pendant la prédiction: {e}")
-
-
-
-#-2222222222222222222222222222222222--------------------------------------PAGE TESTER LE MODELE -----------------------------------------
-
 
 #---------------------------------------PAGE TESTER LE MODELE (version simplifiée) -----------------------------------------
-if page == "Tester le modèle - 2":
+if page == "Tester le modèle":
     st.header("Tester le modèle")
     st.write("Entrez la description du produit pour prédire sa catégorie :")
 
@@ -559,7 +429,7 @@ if page == "Tester le modèle - 2":
     pipeline_path = os.path.join(
        BASE_DIR,
         "models",
-        "pipeline_0prepa_0features.joblib"
+        "modele_final_rakuten.pkl"
     )
 
     pipe, mapping, meta = load_pipeline(pipeline_path)
