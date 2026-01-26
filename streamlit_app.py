@@ -6,7 +6,7 @@ import joblib
 st.set_page_config(
     page_title="Rakuten AVR25CDS",   # titre affiché dans l'onglet du navigateur
     page_icon="images/favicon_Rakuten.png",             # emoji ou chemin vers une icône .png
-    layout="centered"               # optionnel : wide ou centered
+    layout="wide"               # optionnel : wide ou centered
 )
 
 st.markdown("""
@@ -62,7 +62,7 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     st.title("Sommaire")
 
-    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation","Tester le modèle"]
+    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation - texte", "Modélisation - image","Tester le modèle"]
     page = st.radio("", pages)
 
     # --- Auteurs ---
@@ -189,7 +189,7 @@ modèle lors de l'entraînement.
   st.image("images/Repartition_des_classes.png", use_container_width=False)
   st.write("""
 Plusieurs options sont possibles :  
-&nbsp;&nbsp;&nbsp;&nbsp;• Suréchantillonnage des classes minoritaires (duplucation de lignes, trduction en anglais,
+&nbsp;&nbsp;&nbsp;&nbsp;• Suréchantillonnage des classes minoritaires (duplication de lignes, trduction en anglais,
 re-traduction en français)  
 &nbsp;&nbsp;&nbsp;&nbsp;• Sous-échantillonnage des classes majoritaires (suppression de lignes)  
 &nbsp;&nbsp;&nbsp;&nbsp;• Utilisation de techniques avancées comme SMOTE pour générer des exemples synthétiques.  
@@ -308,104 +308,137 @@ fichier \"X_test_20_clean.csv\"
         """
     )
 
+
 #---------------------------------------PAGE MODELISATION -----------------------------------------
 if page == pages[3] : 
   affiche_bandeau("Modélisation sur le texte", "#bf0000")
   st.write("""
 
-#### Notre modèle se caractérise en 4 points :  
-1🔹 TF-IDF sur les mots  
-2🔹 TF-IDF sur les caractères  
-3🔹 Features heuristiques spécifiques aux jeux vidéo  
-4🔹 SVM linéaire (LinearSVC)  
-5🔹 Résultat du modèle lors du test
+#### 🔹 Choix des données  
+
+Dans un premier temps, nous avons utilisé des données préparées vues précédemment :  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• **Nettoyage des balises HTML** pour ne conserver que le texte pertinent.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Suppression des **stopwords**.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• **Traduction** des textes en français afin d’uniformiser le langage.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Concaténation des champs **designation** et **description** en une seule colonne texte.           
+ 
+Ensuite, pour gérer le déséquilibre des classes, nous avons choisi d’harmoniser la
+volumétrie par classe entre **1000 et 4000 produits**.Donc pour les classes 
+surdimensionnées nous avons effectué des suppressions de données et pour les classes 
+sous dimensionnées nous avons dupliqué aléatoirement des lignes. 
 
 ---
 
-#### 1🔹 TF-IDF sur les mots  
-           
-🔸 TF-IDF signifie Term Frequency – Inverse Document Frequency.  
-🔸 Il transforme chaque texte en vecteur numérique où chaque dimension
-correspond à un mot ou un bigramme (paire de mots).  
-🔸 L’idée :  
-&nbsp;&nbsp;&nbsp;&nbsp;• TF (Term Frequency) : un mot fréquent dans un texte obtient un score
-élevé.  
-&nbsp;&nbsp;&nbsp;&nbsp;• IDF (Inverse Document Frequency) : un mot très courant dans tous les
-textes (comme “le”, “et”) est moins important.  
-🔸 Résultat : les mots qui sont spécifiques et informatifs pour une catégorie de
-produit ont plus de poids.  
-           
-#### 2🔹 TF-IDF sur les caractères  
-           
-🔸 Même principe que TF-IDF sur les mots, mais appliqué à des séquences de
-caractères (3 à 5 lettres consécutives).  
-🔸 Objectif :  
-&nbsp;&nbsp;&nbsp;&nbsp;• Capturer des variantes orthographiques, fautes de frappe ou abréviations.  
-&nbsp;&nbsp;&nbsp;&nbsp;• Exemple : “PlayStation” → “pla”, “lay”, “ays”, …  
-&nbsp;&nbsp;&nbsp;&nbsp;• Utile quand les noms de produits peuvent être écrits de façons légèrement  
-différentes.  
-           
-#### 3🔹 Features heuristiques spécifiques aux jeux vidéo  
-           
-🔸 Ce sont des indicateurs binaires (0 ou 1) ajoutés aux vecteurs TF-IDF pour
-enrichir le modèle.  
-🔸 Exemple d’indicateurs :  
-&nbsp;&nbsp;&nbsp;&nbsp;• Présence de plateformes : ps4, xbox, switch, etc.  
-&nbsp;&nbsp;&nbsp;&nbsp;• Présence de éditeurs : Ubisoft, EA, Rockstar…  
-&nbsp;&nbsp;&nbsp;&nbsp;• Présence de franchises célèbres : Fifa, Call of Duty, Zelda…  
-&nbsp;&nbsp;&nbsp;&nbsp;• Indicateurs édition spéciale : collector, deluxe, goty…  
-&nbsp;&nbsp;&nbsp;&nbsp;• Présence de PEGI ou d’une année de sortie récente (>2000)  
-           
-🔸 Ces features aident le modèle à différencier les jeux vidéo des autres produits,
-comme les films ou les livres. 
-            
-Exemple avec le mot nintendo dans un texte : Dans les features heuristiques GameHeuristicFeatures : « nintendo » est dans la liste platform_kw. Si le texte contient ce
-mot (après mise en minuscules et suppression des accents), la feature has_platform
-prend la valeur 1. Cela ajoute une information binaire supplémentaire au vecteur de
-caractéristiques. Les deux types de signaux (poids TF-IDF et indicateur binaire) sont
-fusionnés dans FeatureUnion et passés au classifieur LinearSVC. Le SVM ne décide pas
-directement « nintendo = catégorie X », mais il utilise ces valeurs comme entrées pour
-calculer un score pour chaque classe. Si « nintendo » est fortement corrélé à une
-catégorie dans les données d’entraînement, son poids et/ou l’indicateur binaire vont
-influencer la décision finale en faveur de cette catégorie.  
-           
-#### 4🔹 SVM linéaire (LinearSVC)  
-           
-🔸 SVM (Support Vector Machine) : un modèle qui sépare les données en
-différentes catégories en trouvant une frontière optimale dans l’espace des
-caractéristiques.  
-🔸 LinearSVC : SVM avec un hyperplan linéaire, efficace pour les grands vecteurs
-creux (comme les TF-IDF).  
-🔸 Avantages :  
-&nbsp;&nbsp;&nbsp;&nbsp;• Rapide et efficace pour des données textuelles volumineuses.  
-&nbsp;&nbsp;&nbsp;&nbsp;• Gère les classes déséquilibrées grâce à class_weight="balanced".  
-(Contradictoire avec notre rééquilibrage des classes en sur ou sous
-dimensionnant mais nous nous en sommes rendu compte après la phase de
-préparation des données. Donc le rééquilibrage sera supprimé de la phase
-préparatoire et class_weight="balanced" sera directement dans le modèle
-d'entraînement)  
-&nbsp;&nbsp;&nbsp;&nbsp;• Peut être combiné avec des features supplémentaires (TF-IDF +
-heuristiques).  
-           
-**En gros, le pipeline fonctionne ainsi :**   
-🔸 1.Transformer chaque texte en vecteur numérique avec TF-IDF sur mots +
-caractères.  
-🔸 2.Ajouter des features spécifiques aux jeux vidéo.  
-🔸 3.Le SVM linéaire apprend à séparer les catégories de produits dans cet espace
-de caractéristiques et gère le déséquilibre des classes.  
-         
-#### 5🔹 Résultat du modèle lors du test 
-🔸 Le modèle obtient un F1-score de 82,91%, dépassant l'objectif de 81,13%  
-🔸 Le modèle est moins performant sur l'univers des jeux (jeux vidéos, Jeux de
-rôles, jeux de société) et les livres (Livres loisirs & société, Littérature, Lots livres &
-magazines)  
-🔸 Prochaine étape :  
-&nbsp;&nbsp;&nbsp;&nbsp;• Analyser les mauvaises prédictions, trouver des features pour aider le
-modèle à mieux prédire ces classes.  
-&nbsp;&nbsp;&nbsp;&nbsp;• Entraîner le modèle en utilisant un GPU pour accélérer les calculs.  
-&nbsp;&nbsp;&nbsp;&nbsp;• Tester les performances du modèle sur GPU et CPU.  
-&nbsp;&nbsp;&nbsp;&nbsp;• Entraîner et évaluer le modèle avec CamemBERT et Random Forest pour
-comparer leurs performances avec le modèle actuel TF-IDF + LinearSVC.   
+####  🔹 Entraînement de modèles 
+
+Le modèle initial consistait en une vectorisation TF-IDF combinée à un modèle de classification 
+Logistic Regression, entraîné sur les données préparées du champ concaténant designation et description.  
+Ce modèle a atteint un score f1 weighted **78,39 %**.  
+Ensuite, nous avons testé **TF-IDF combiné à LinearSVC**, avec un score de **78,55 %**.  
+""")
+  st.image("images/Matrice_confusion_texte.png", use_container_width=True)    
+  st.write("""      
+Après analyse des erreurs via une matrice de confusion, nous avons remarqué que certaines
+catégories étaient souvent confondues entre elles, notamment les sous-catégories de Livres et de Jeux vidéo.
+Pour tenter d’améliorer les performances, nous avons ajouté des features
+spécifiques pour ces catégories.  
+
+De plus nous avons fait machine arrière pour gérer le déséquilibre des classes en choisissant de tout garder mais 
+d’utiliser class_weight="balanced" dans le LinearSVC. Nous avons aussi ajouté des paramètres à TF-IDF 
+sur les mots et les caractères (word_tfidf et char_tfidf) : **Score : 81,72%**  
+
+---
+
+####  🔹 Optimisation des paramètres  
+
+Pour continuer, nous avons testé plusieurs paramètres différents pour **TF-IDF** et **LinearSVC** :  
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Word n-gram : 1,2 / 1,3  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Char n-gram : 3,5 / 2,4 / 4,6  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Max features : 120 000 / 80 000 / 150 000  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Min_df : 1 / 2  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• LinearSVC C : 1.5 / 1.6 / 1.8 / 2.0  
+
+**Meilleure combinaison retenue** :  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Word n-gram : 1,2  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Char n-gram : 3,5  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Max features : 120 000  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Min_df : 1  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  LinearSVC C : 1.5  
+
+Pour un score de **83,06 %**.
+
+---
+
+####  🔹 Tests de modèles Deep Learning  
+
+Ensuite nous avons voulu essayer des modèles de deep learning (XGBoost, Random Forest, CamenBERT). 
+La difficulté est surtout liée à nos machines. Nous n’étions pas assez bien équipés pour lancer des
+modèles de ce type : l’entraînement dure des heures, la mémoire surcharge et l'entraînement s'arrête,
+sur des GPU cloud des time-out nous freinaient dans nos apprentissages.  
+
+Nous avons tant bien que mal réussi à avoir des résultats mais avec le minimum de paramètres :   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  XGBoost : 79%  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  CamenBERT : 77%  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Random Forest : jamais réussi à aller au bout.    
+
+---
+
+#### 🔹 Amélioration du modèle TF-IDF + LinearSVC  
+
+Étant bloqué par la puissance de nos machines nous avons tenté d’améliorer le modèle TF-IDF + LinearSVC.
+N’y arrivant pas, nous prenons la décision de tester notre meilleur modèle sur les données brut tel quel
+et ensuite avancer par étape pour la transformation des données :   
+""")
+  st.markdown("""
+&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sur champ désignation :
+<span style='color:green; font-weight:bold;'>⭡ 83,75%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données sans balise HTML et Stopwords :
+<span style='color:red; font-weight:bold;'>⭣ 82,38%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sur champ désignation sans Features dans le modèle :
+<span style='color:green; font-weight:bold;'>⭡ 83,70%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données sans balise HTML et Stopwords sans Features dans le modèle :
+<span style='color:red; font-weight:bold;'>⭣ 82,40%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation+description :
+<span style='color:green; font-weight:bold;'>⭡ 84,92%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation avec 2 fois plus de poids que description :
+<span style='color:green; font-weight:bold;'>⭡ 85,61%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation avec 3 fois plus de poids que description :
+<span style='color:green; font-weight:bold;'>⭡ 85,71%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation avec 4 fois plus de poids que description :
+<span style='color:green; font-weight:bold;'>⭡ 85,75%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation avec 5 fois plus de poids que description :
+<span style='color:red; font-weight:bold;'>⭣ 85,70%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation x4 + description + unité de mesure :
+<span style='color:green; font-weight:bold;'>⭡ 85,81%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation x4 + description + unité de mesure + ajout de poids des 3 premiers mots de désignation :
+<span style='color:green; font-weight:bold;'>⭡ 86,06%</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation x4 + description + unité de mesure + ajout de poids des 3 premiers mots de désignation : changement de méthode (pondération directement dans le TF-IDF) : Meilleur score : <span style='color:green; font-weight:bold;'>⭡ 86,22%</span>  
+Je ne fais plus de concaténation à la main mais je choisis une approche Pipeline + ColumnTransformer, donc chaque feature est une méthode indépendante, bien séparée, traçable et réutilisable.
+""", unsafe_allow_html=True)
+
+  st.image("images/Graphique_des_modeles.png", use_container_width=True)  
+
+
+  st.write("""
+---
+
+####  🔹 Soumission au challenge  
+
+Nous avons soumis notre meilleur modèle en phase de test au challenge Rakuten et obtenu le score de **87,41%**. Pour rappel il fallait un score de 81,13% pour la réussite de ce challenge.  
+
+---
+
+#### 🔹 Autres modèles  
+
+Nous avons souhaité tester notre meilleur modèle sur les données d'entraînement en regroupant certaines classes. Toutes les classes concernant les livres en une seule classe et pareil pour les jeux vidéo et consoles. Nous avons aussi regroupé en une seule classe les jeux de sociétés et les jouets pour enfants :   
+
+&nbsp;&nbsp;&nbsp;&nbsp;• **Livres** : Livres loisirs et société + Lots Livres & Magazines + Magazines + Livres littérature et fiction  
+&nbsp;&nbsp;&nbsp;&nbsp;• **Jeux vidéo** : Jeux vidéo + Accessoires jeux vidéo + Jeux vidéo & Consoles + Lots consoles & jeux  
+&nbsp;&nbsp;&nbsp;&nbsp;• **Jeux & Enfants** : Jouets & Enfant + Jeux de société  
+  
+**Score obtenu : 90,91 %**.
+
 """)
 
 #---------------------------------------PAGE TESTER LE MODELE (version simplifiée) -----------------------------------------
