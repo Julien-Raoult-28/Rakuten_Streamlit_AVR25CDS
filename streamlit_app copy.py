@@ -62,7 +62,7 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     st.title("Sommaire")
 
-    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation - texte", "Modélisation - image", "Limites et Perspectives","Tester le modèle"]
+    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation - texte", "Modélisation - image","Tester le modèle"]
     page = st.radio("", pages)
 
     # --- Auteurs ---
@@ -440,16 +440,9 @@ Nous avons souhaité tester notre meilleur modèle sur les données d'entraînem
 **Score obtenu : 90,91 %**.
 
 """)
-#---------------------------------------PAGE MODELISATION IMAGE-----------------------------------------
+#---------------------------------------PAGE MODELISATION TEXTE-----------------------------------------
 if page == pages[4] : 
-  affiche_bandeau("Modélisation sur l'image", "#bf0000")
-  st.write("""
-           
-
-""")
-#---------------------------------------PAGE LIMITES ET PERSPECTIVES-----------------------------------------
-if page == pages[5] : 
-  affiche_bandeau("Limites et Perspectives", "#bf0000")
+  affiche_bandeau("Modélisation sur le texte", "#bf0000")
   st.write("""
            
 
