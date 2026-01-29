@@ -112,41 +112,74 @@ vision par ordinateur, NLP et HCI, avec des équipes à Tokyo, Paris, Boston, Si
 Créer un modèle capable de **classer automatiquement les produits** du catalogue Rakuten France
 dans leur code type produit (prdtypecode), en utilisant du texte (titre, description) et/ou des images.
 C’est un problème de **classification multimodale** à grande échelle.  
-           
-### Contexte du challenge  
-
-Catégoriser les produits est un enjeu crucial pour les marketplaces (recherche, recommandation, compréhension des requêtes).
-Les approches manuelles ou basées sur des règles ne sont pas scalables.
-Le défi est difficile à cause de :  
-&nbsp;&nbsp;&nbsp;&nbsp;• Données textuelles bruyantes  
-&nbsp;&nbsp;&nbsp;&nbsp;• Images variées et hétérogènes  
-&nbsp;&nbsp;&nbsp;&nbsp;• Grand nombre de classes  
-&nbsp;&nbsp;&nbsp;&nbsp;• Distribution déséquilibrée  
-&nbsp;&nbsp;&nbsp;&nbsp;• Qualité inégale des informations fournies par les vendeurs  
-Le challenge consiste à exploiter texte + image pour construire un classifieur performant.  
-           
-### Description du problème  
-
-Pour chaque produit (avec titre, image, parfois description), prédire son prdtypecode.  
-Exemple : Klarstein Présentoir 2 Montres… → catégorie produit 1500.  
-Les données ressemblent à :  
-&nbsp;&nbsp;&nbsp;&nbsp;• Designation : titre du produit  
-&nbsp;&nbsp;&nbsp;&nbsp;• Description : texte descriptif (souvent manquant)  
-&nbsp;&nbsp;&nbsp;&nbsp;• Productid et imageid : permettent de retrouver l’image  
-&nbsp;&nbsp;&nbsp;&nbsp;• Image : une seule image par produit  
-&nbsp;&nbsp;&nbsp;&nbsp;• Prdtypecode : label à prédire  
-           
-### Jeu de données  
-
-Rakuten fournit environ 99 000 produits :  
-&nbsp;&nbsp;&nbsp;&nbsp;• X_train (84 916) : textes + images  
-&nbsp;&nbsp;&nbsp;&nbsp;• Y_train : prdtypecode pour chaque id  
-&nbsp;&nbsp;&nbsp;&nbsp;• X_test (13 812) : textes + images à prédire  
-&nbsp;&nbsp;&nbsp;&nbsp;• images.zip : dossier contenant toutes les images (train/test séparées)  
-           
-### Objectif  
 L'objectif est d'obtenir un F1-score supérieur à **0,8113 sur les données textuelles**.  
-Pour les **images**, l'objectif est d'atteindre un F1-score supérieur à **0,5534**.
+Pour les **images**, l'objectif est d'atteindre un F1-score supérieur à **0,5534**.  
+           
+### Contexte métier  
+           
+Le challenge Rakuten vise à automatiser la classification de produits e‑commerce à partir
+d’images et de descriptions textuelles.  
+**Dans un contexte opérationnel, cette automatisation permet :**  
+           
+&nbsp;&nbsp;&nbsp;&nbsp;• d’accélérer la mise en ligne des produits.  
+&nbsp;&nbsp;&nbsp;&nbsp;• de réduire les erreurs de catégorisation.  
+&nbsp;&nbsp;&nbsp;&nbsp;• d’améliorer la qualité des listings.  
+&nbsp;&nbsp;&nbsp;&nbsp;• d’optimiser le référencement interne et la navigation client.   
+           
+### Contexte technique
+           
+**Le projet repose sur :**  
+           
+&nbsp;&nbsp;&nbsp;&nbsp;• un dataset de **84 916 annonces et images**.  
+&nbsp;&nbsp;&nbsp;&nbsp;• une variable cible (prdtypecode) comportant **27 classes déséquilibrées**.  
+&nbsp;&nbsp;&nbsp;&nbsp;• des descriptions textuelles de longueur très variable (de 0 à 12 451 caractères),
+incluant des balises HTML, des langues multiples et des stopwords, ce qui
+complexifie leur traitement direct.  
+&nbsp;&nbsp;&nbsp;&nbsp;• des images hétérogènes souvent bruitées, floues ou sombres.  
+&nbsp;&nbsp;&nbsp;&nbsp;• un environnement limité ( **CPU 4 cœurs, pas de GPU**), nécessitant des solutions
+optimisées pour garantir des performances élevées malgré les ressources restreintes.  
+           
+### Contexte économique  
+           
+**La catégorisation manuelle est coûteuse :**  
+           
+&nbsp;&nbsp;&nbsp;&nbsp;• **Charge humaine** : Processus chronophage nécessitant une intervention manuelle
+pour chaque produit.  
+&nbsp;&nbsp;&nbsp;&nbsp;• **Risque d’erreur** : Taux d’erreur élevé en raison de la subjectivité et de la complexité
+des 27 classes.  
+&nbsp;&nbsp;&nbsp;&nbsp;• **Impact direct** : Les erreurs de catégorisation réduisent la visibilité des produits,
+affectant la conversion et la satisfaction client.  
+           
+**Un modèle performant permet de :**  
+           
+&nbsp;&nbsp;&nbsp;&nbsp;• réduire les coûts opérationnels liés à la catégorisation manuelle.  
+&nbsp;&nbsp;&nbsp;&nbsp;• améliorer la qualité et la cohérence des listings.  
+&nbsp;&nbsp;&nbsp;&nbsp;• augmenter le taux de conversion grâce à un référencement interne optimisé.  
+&nbsp;&nbsp;&nbsp;&nbsp;• offrir une meilleure expérience utilisateur via une navigation intuitive.  
+           
+**Bénéfices d’un modèle automatisé :**  
+           
+&nbsp;&nbsp;&nbsp;&nbsp;• Gain de temps significatif : Réduction du temps de traitement.  
+&nbsp;&nbsp;&nbsp;&nbsp;• Réallocation des ressources : Les équipes peuvent se concentrer sur des tâches
+à plus forte valeur ajoutée (ex : optimisation des fiches produits, stratégie marketing).  
+&nbsp;&nbsp;&nbsp;&nbsp;• Réduction des coûts opérationnels : Moins d’heures consacrées à la
+catégorisation manuelle et aux corrections.  
+&nbsp;&nbsp;&nbsp;&nbsp;• Amélioration de la réactivité : Mise en ligne plus rapide des nouveaux produits,
+ce qui booste la compétitivité et la satisfaction client.  
+
+### Contexte scientifique
+           
+**Le projet s’inscrit dans plusieurs domaines clés du machine learning et de la data science :**  
+           
+&nbsp;&nbsp;&nbsp;&nbsp;• vision par ordinateur : pour analyser des images hétérogènes et extraire des
+features visuelles robustes.  
+&nbsp;&nbsp;&nbsp;&nbsp;• transfer learning : pour adapter des modèles pré-entraînés (ex : MobileNetV2) aux
+contraintes du projet (27 classes, pas de GPU).  
+&nbsp;&nbsp;&nbsp;&nbsp;• détection d’outliers : pour identifier et écarter les images inutilisables (floues,
+sombres, mal cadrées) et les doublons, améliorant ainsi la qualité du dataset.  
+&nbsp;&nbsp;&nbsp;&nbsp;• analyse de qualité d’images.  
+&nbsp;&nbsp;&nbsp;&nbsp;• classification supervisée multiclasse : pour prédire la catégorie produit avec une
+métrique adaptée au déséquilibre des classes (F1-score pondéré).  
 """)
 #---------------------------------------PAGE EXPLORATION DE LA DONNEE -----------------------------------------
 if page == pages[1] : 
