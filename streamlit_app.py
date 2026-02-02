@@ -401,22 +401,20 @@ if page == pages[3] :
   affiche_bandeau("Modélisation sur le texte", "#bf0000")
   st.markdown("""
 <style>
-/* Conteneur des onglets */
 div[data-baseweb="tab-list"] {
     justify-content: center;
     gap: 28px;
 }
 
-/* Bouton d’onglet */
 button[data-baseweb="tab"] {
-    position: relative;     /* 👈 indispensable pour ::after */
+    position: relative;
     padding-top: 8px;
     padding-bottom: 10px;
     min-height: 72px;
 }
 
-/* Flèche entre onglets */
-button[data-baseweb="tab"]:not(:last-child)::after {
+/* Flèche par défaut */
+button[data-baseweb="tab"]::after {
     content: "➜";
     position: absolute;
     right: -22px;
@@ -427,7 +425,11 @@ button[data-baseweb="tab"]:not(:last-child)::after {
     color: black;
 }
 
-/* Texte des onglets */
+/* Pas de flèche sur le dernier onglet */
+button[data-baseweb="tab"]:last-of-type::after {
+    content: "";
+}
+
 button[data-baseweb="tab"] > div {
     font-size: 14px;
     font-weight: 600;
@@ -436,7 +438,6 @@ button[data-baseweb="tab"] > div {
     line-height: 1.2;
 }
 
-/* Onglet actif */
 button[data-baseweb="tab"][aria-selected="true"] > div {
     font-weight: 800;
 }
@@ -445,11 +446,12 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
 
 
 
+
   tabs = st.tabs([
         "💻\nChoix des données",
         "🕓\nEntraînement de modèles",
         "⚙️\nOptimisation des paramètres",
-        "🔧\nTests de modèles Deep Learning",
+        "🔧\nTest de modèles Deep Learning",
         "📈\nAmélioration du modèle\nTF-IDF + LinearSVC",
         "🎯\nSoumission au challenge",
         "📥\nAutres modèles",
