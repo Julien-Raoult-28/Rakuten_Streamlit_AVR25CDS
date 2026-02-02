@@ -731,31 +731,37 @@ Je ne fais plus de concaténation à la main mais je choisis une approche Pipeli
 """)
     
 ####  🔹 Soumission au challenge  
+  import streamlit as st
+  import base64
+
+# Charger l'image et la convertir en base64
+  with open("images/challenge.png", "rb") as img_file:
+    img_bytes = img_file.read()
+    encoded = base64.b64encode(img_bytes).decode()
+
   with tabs[5]:
-    col1, col2 = st.columns([1, 1])
-
-    with col1:
-        st.markdown("""
-        <div style="
-            background-color:#efefef;
-            padding:14px;
-            border-left:5px solid #bf0000;
-            border-radius:10px;
-            text-align:left;
-            height:400px;            /* 👈 fixe la hauteur identique à l'image */
-            display:flex;
-            align-items:center;       /* centrage vertical */
-        ">
-            <div>
-                Nous avons soumis notre meilleur modèle en phase de test au challenge Rakuten 
-                et obtenu le score de <b>87,41%</b>.<br><br>
-                Pour rappel, il fallait un score de <b>81,13%</b> pour la réussite de ce challenge.
-            </div>
+    st.markdown(f"""
+    <div style="
+        background-color:#efefef;
+        padding:14px;
+        border-left:5px solid #bf0000;
+        border-radius:10px;
+        display:flex;
+        align-items:center;       /* centrage vertical */
+        gap:20px;                 /* espace entre texte et image */
+        height:400px;             /* hauteur fixe */
+    ">
+        <div style="flex:1;">
+            Nous avons soumis notre meilleur modèle en phase de test au challenge Rakuten 
+            et obtenu le score de <b>87,41%</b>.<br><br>
+            Pour rappel, il fallait un score de <b>81,13%</b> pour la réussite de ce challenge.
         </div>
-        """, unsafe_allow_html=True)
+        <div style="flex:1;">
+            <img src="data:image/png;base64,{encoded}" style="width:100%; height:100%; object-fit:contain;"/>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    with col2:
-        st.image("images/challenge.png", use_container_width=True)  # ✅ remplacé ici
 
     
 #### 🔹 Autres modèles  
