@@ -143,18 +143,21 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
 ###  Contexte Rakuten 
   with tabs[0]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:50%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;          
     ">
  
 
 Rakuten est un des plus grands acteurs mondiaux du e-commerce, créé en 1997, 
-avec plus de **1,3 milliard d’utilisateurs** dans son écosystème international.
+avec plus de **1,3 milliard d’utilisateurs** dans son écosystème international.  
+                
 Le **Rakuten Institute of Technology (RIT)** mène des recherches en apprentissage automatique,
 vision par ordinateur, NLP et HCI, avec des équipes à Tokyo, Paris, Boston, Singapour et Bengaluru.  
 </div>
@@ -163,13 +166,15 @@ vision par ordinateur, NLP et HCI, avec des équipes à Tokyo, Paris, Boston, Si
 ### Objectif du projet  
   with tabs[1]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:70%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;       
     ">
                        
 Créer un modèle capable de **classer automatiquement les produits** du catalogue Rakuten France
@@ -184,13 +189,15 @@ Pour les **images**, l'objectif est d'atteindre un F1-score supérieur à **0,55
 ### Contexte métier  
   with tabs[2]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:70%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;        
     ">
                   
 Le challenge Rakuten vise à automatiser la classification de produits e‑commerce à partir
@@ -199,10 +206,10 @@ d’images et de descriptions textuelles.
 **Dans un contexte opérationnel, cette automatisation permet :**  
 
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> d’accélérer la mise en ligne des produits.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> de réduire les erreurs de catégorisation.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> d’améliorer la qualité des listings.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> d’optimiser le référencement interne et la navigation client.   
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> D’accélérer la mise en ligne des produits.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> De réduire les erreurs de catégorisation.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> D’améliorer la qualité des listings.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> D’optimiser le référencement interne et la navigation client.   
 </ul>
 </div>
 """, unsafe_allow_html=True) 
@@ -210,25 +217,27 @@ d’images et de descriptions textuelles.
 ### Contexte technique
   with tabs[3]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:90%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;          
     ">
                    
-**Le projet repose sur :**  
+<strong>Le projet repose sur :</strong>  
            
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> un dataset de **84 916 annonces et images**.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> une variable cible (prdtypecode) comportant **27 classes déséquilibrées**.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> des descriptions textuelles de longueur très variable (de 0 à 12 451 caractères),
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Un dataset de **84 916 annonces et images**.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Une variable cible (prdtypecode) comportant **27 classes déséquilibrées**.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Des descriptions textuelles de longueur très variable (de 0 à 12 451 caractères),
 incluant des balises HTML, des langues multiples et des stopwords, ce qui
 complexifie leur traitement direct.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> des images hétérogènes souvent bruitées, floues ou sombres.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> un environnement limité ( **CPU 4 cœurs, pas de GPU**), nécessitant des solutions
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Des images hétérogènes souvent bruitées, floues ou sombres.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Un environnement limité ( **CPU 4 cœurs, pas de GPU**), nécessitant des solutions
 optimisées pour garantir des performances élevées malgré les ressources restreintes.  
 </ul>
 </div>
@@ -237,13 +246,15 @@ optimisées pour garantir des performances élevées malgré les ressources rest
 ### Contexte économique  
   with tabs[4]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:90%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;          
     ">
                     
 **La catégorisation manuelle est coûteuse :**  
@@ -256,16 +267,43 @@ des 27 classes.
 <li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Impact direct</strong> : Les erreurs de catégorisation réduisent la visibilité des produits,
 affectant la conversion et la satisfaction client.  
 </ul>
-           
+</div>
+""", unsafe_allow_html=True) 
+    
+    st.markdown("""
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;          
+    ">     
+                      
 **Un modèle performant permet de :**  
            
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> réduire les coûts opérationnels liés à la catégorisation manuelle.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> améliorer la qualité et la cohérence des listings.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> augmenter le taux de conversion grâce à un référencement interne optimisé.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> offrir une meilleure expérience utilisateur via une navigation intuitive.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Réduire les coûts opérationnels liés à la catégorisation manuelle.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Améliorer la qualité et la cohérence des listings.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Augmenter le taux de conversion grâce à un référencement interne optimisé.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Offrir une meilleure expérience utilisateur via une navigation intuitive.  
 </ul> 
-                         
+</div>
+""", unsafe_allow_html=True)  
+    st.markdown("""
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;          
+    ">     
+                                    
 **Bénéfices d’un modèle automatisé :**  
            
 <ul style="list-style: none; padding-left: 0;">                          
@@ -283,26 +321,28 @@ ce qui booste la compétitivité et la satisfaction client.
 ### Contexte scientifique
   with tabs[5]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:90%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;         
     ">
                  
 **Le projet s’inscrit dans plusieurs domaines clés du machine learning et de la data science :**  
            
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>vision par ordinateur</strong> : pour analyser des images hétérogènes et extraire des
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Vision par ordinateur</strong> : pour analyser des images hétérogènes et extraire des
 features visuelles robustes.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> transfer learning</strong> : pour adapter des modèles pré-entraînés (ex : MobileNetV2) aux
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> Transfer learning</strong> : pour adapter des modèles pré-entraînés (ex : MobileNetV2) aux
 contraintes du projet (27 classes, pas de GPU).  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> détection d’outliers</strong> : pour identifier et écarter les images inutilisables (floues,
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> Détection d’outliers</strong> : pour identifier et écarter les images inutilisables (floues,
 sombres, mal cadrées) et les doublons, améliorant ainsi la qualité du dataset.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> analyse de qualité d’images</strong>.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> classification supervisée multiclasse</strong> : pour prédire la catégorie produit avec une
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> Analyse de qualité d’images</strong>.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> Classification supervisée multiclasse</strong> : pour prédire la catégorie produit avec une
 métrique adaptée au déséquilibre des classes (F1-score pondéré).  
 </ul>
 </div>
@@ -468,7 +508,7 @@ fichier \"X_test_20_clean.csv\"
     )
 
 
-#---------------------------------------PAGE MODELISATION TEXTE-----------------------------------------
+#----------------------------------------------------------------PAGE MODELISATION TEXTE-------------------------------------------------------------------------------------------
 if page == pages[3] : 
   affiche_bandeau("Modélisation sur le texte", "#bf0000")
   st.markdown("""
@@ -483,18 +523,19 @@ button[data-baseweb="tab"] {
     padding-top: 8px;
     padding-bottom: 10px;
     min-height: 72px;
+    padding-left: 12px;   /* espace avant le texte */
 }
 
 /* Flèche par défaut */
 button[data-baseweb="tab"]::after {
     content: "➜";
     position: absolute;
-    right: -22px;
+    right: -28px;
     top: 50%;
     transform: translateY(-50%);
     font-size: 18px;
     font-weight: 700;
-    color: black;
+    color: grey;
 }
 
 /* Pas de flèche sur le dernier onglet */
@@ -516,29 +557,28 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
 </style>
 """, unsafe_allow_html=True)
 
-
-
-
   tabs = st.tabs([
-        "💻\nChoix des données",
-        "🕓\nEntraînement de modèles",
-        "⚙️\nOptimisation des paramètres",
-        "🔧\nTest de modèles Deep Learning",
+        "💻\nChoix\ndes données",
+        "🕓\nEntraînement\nde modèles",
+        "⚙️\nOptimisation\ndes paramètres",
+        "🔧\nTest de modèles\nDeep Learning",
         "📈\nAmélioration du modèle\nTF-IDF + LinearSVC",
-        "🎯\nSoumission au challenge",
-        "📥\nAutres modèles",
+        "🎯\nSoumission\nau challenge",
+        "📥\nAutres\nmodèles",
     ])
   
 #### 🔹 Choix des données 
   with tabs[0]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:90%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;            
     ">
  
 
@@ -558,34 +598,49 @@ sous dimensionnées nous avons dupliqué aléatoirement des lignes.
 
 </div>
 """, unsafe_allow_html=True) 
+    
+  import streamlit as st
+  import base64
+
+# Charger l'image et la convertir en base64
+  with open("images/Matrice_confusion_texte.png", "rb") as img_file2:
+    img_bytes2 = img_file2.read()
+    encoded = base64.b64encode(img_bytes2).decode()
+
 ####  🔹 Entraînement de modèles 
   with tabs[1]:
-    st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:90%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    st.markdown(f"""
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;             
     ">
                 
 Le modèle initial consistait en une vectorisation TF-IDF combinée à un modèle de classification 
 Logistic Regression, entraîné sur les données préparées du champ concaténant designation et description.  
 Ce modèle a atteint un score f1 weighted **78,39 %**.  
 Ensuite, nous avons testé **TF-IDF combiné à LinearSVC**, avec un score de **78,55 %**.  
+                
+<div><img src="data:image/png;base64,{encoded}" style="width:100%; height:100%; object-fit:contain;"/></div>
+                
 </div>
 """, unsafe_allow_html=True) 
-    
-    st.image("images/Matrice_confusion_texte.png", use_container_width=True)    
+     
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:90%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;          
     ">
                       
 Après analyse des erreurs via une matrice de confusion, nous avons remarqué que certaines
@@ -603,13 +658,15 @@ sur les mots et les caractères (word_tfidf et char_tfidf) : **Score : 81,72%**
 ####  🔹 Optimisation des paramètres
   with tabs[2]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:60%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;            
     ">
  
 
@@ -628,13 +685,15 @@ Pour continuer, nous avons testé plusieurs paramètres différents pour **TF-ID
            
            """)
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:60%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;           
     ">
                  
 **Meilleure combinaison retenue** :  
@@ -653,13 +712,15 @@ Pour un score de <strong>83,06 %</strong>.
 ####  🔹 Tests de modèles Deep Learning  
   with tabs[3]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:80%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;            
     ">
 Ensuite nous avons voulu essayer des modèles de deep learning (XGBoost, Random Forest, CamenBERT). 
 La difficulté est surtout liée à nos machines. Nous n’étions pas assez bien équipés pour lancer des
@@ -679,52 +740,161 @@ Nous avons tant bien que mal réussi à avoir des résultats mais avec le minimu
 #### 🔹 Amélioration du modèle TF-IDF + LinearSVC  
   with tabs[4]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:80%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;         
     ">
                 
 Étant bloqué par la puissance de nos machines nous avons tenté d’améliorer le modèle TF-IDF + LinearSVC.
 N’y arrivant pas, nous prenons la décision de tester notre meilleur modèle sur les données brut tel quel
 et ensuite avancer par étape pour la transformation des données :   
-
-
-<ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sur champ désignation :
-<span style='color:green; font-weight:bold;'>⭡ 83,75%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données sans balise HTML et Stopwords :
-<span style='color:red; font-weight:bold;'>⭣ 82,38%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sur champ désignation sans Features dans le modèle :
-<span style='color:green; font-weight:bold;'>⭡ 83,70%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données sans balise HTML et Stopwords sans Features dans le modèle :
-<span style='color:red; font-weight:bold;'>⭣ 82,40%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation+description :
-<span style='color:green; font-weight:bold;'>⭡ 84,92%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation avec 2 fois plus de poids que description :
-<span style='color:green; font-weight:bold;'>⭡ 85,61%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation avec 3 fois plus de poids que description :
-<span style='color:green; font-weight:bold;'>⭡ 85,71%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation avec 4 fois plus de poids que description :
-<span style='color:green; font-weight:bold;'>⭡ 85,75%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation avec 5 fois plus de poids que description :
-<span style='color:red; font-weight:bold;'>⭣ 85,70%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation x4 + description + unité de mesure :
-<span style='color:green; font-weight:bold;'>⭡ 85,81%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation x4 + description + unité de mesure + ajout de poids des 3 premiers mots de désignation :
-<span style='color:green; font-weight:bold;'>⭡ 86,06%</span><br>
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation x4 + description + unité de mesure + ajout de poids des 3 premiers mots de désignation : changement de méthode (pondération directement dans le TF-IDF) : Meilleur score : <span style='color:green; font-weight:bold;'>⭡ 86,22%</span><br>  
-<br>  
-Je ne fais plus de concaténation à la main mais je choisis une approche Pipeline + ColumnTransformer, donc chaque feature est une méthode indépendante, bien séparée, traçable et réutilisable.
-</ul>
 </div>
 """, unsafe_allow_html=True) 
+    
+    st.write("""
+  
+  
+""")
+    
+    st.markdown("""
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;
+">
 
-    st.image("images/Graphique_des_modeles.png", use_container_width=True)  
+<h3 style="color:#bf0000; margin-bottom:15px;">📊 Performance des modèles</h3>
 
+<ul style="list-style:none; padding-left:0; margin:0;">
+
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Données brut - sur champ désignation :
+    <span style='color:#28a745; font-weight:bold; margin-left:auto;'>⭡ 83,75%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Données sans balise HTML et Stopwords :
+    <span style='color:#dc3545; font-weight:bold; margin-left:auto;'>⭣ 82,38%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Données brut - sur champ désignation sans Features dans le modèle :
+    <span style='color:#28a745; font-weight:bold; margin-left:auto;'>⭡ 83,70%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Données sans balise HTML et Stopwords sans Features dans le modèle :
+    <span style='color:#dc3545; font-weight:bold; margin-left:auto;'>⭣ 82,40%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Données brut - sans features - désignation+description :
+    <span style='color:#28a745; font-weight:bold; margin-left:auto;'>⭡ 84,92%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Données brut - désignation avec 2 fois plus de poids que description :
+    <span style='color:#28a745; font-weight:bold; margin-left:auto;'>⭡ 85,61%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Données brut - désignation avec 3 fois plus de poids que description :
+    <span style='color:#28a745; font-weight:bold; margin-left:auto;'>⭡ 85,71%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Données brut - désignation avec 4 fois plus de poids que description :
+    <span style='color:#28a745; font-weight:bold; margin-left:auto;'>⭡ 85,75%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Données brut - désignation avec 5 fois plus de poids que description :
+    <span style='color:#dc3545; font-weight:bold; margin-left:auto;'>⭣ 85,70%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Données brut - désignation x4 + description + unité de mesure :
+    <span style='color:#28a745; font-weight:bold; margin-left:auto;'>⭡ 85,81%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Même modèle + ajout de poids sur les 3 premiers mots de désignation :
+    <span style='color:#28a745; font-weight:bold; margin-left:auto;'>⭡ 86,06%</span>
+</li>
+<li style="margin-bottom:10px; display:flex; align-items:center;">
+    <span style="color:#bf0000; font-size:18px; margin-right:10px;">⬥</span>
+    Changement de méthode (pondération directement dans le TF-IDF) : Meilleur score :
+    <span style='color:#28a745; font-weight:bold; margin-left:auto;'>⭡ 86,22%</span>
+</li>
+
+</ul>
+
+</div>
+""", unsafe_allow_html=True)
+
+ 
+    
+    st.write("""
+  
+  
+""")
+    
+    st.markdown("""
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;            
+    ">
+                   
+Dans ce dernier modèle nous avons choisis une approche Pipeline + ColumnTransformer, donc chaque feature est une méthode indépendante, bien séparée, traçable et réutilisable.
+</div>
+""", unsafe_allow_html=True) 
+    
+    st.write("""
+  
+  
+""")
+    import streamlit as st
+    import base64
+
+# Charger l'image et la convertir en base64
+    with open("images/Graphique_des_modeles2.png", "rb") as img_file2:
+      img_bytes2 = img_file2.read()
+      encoded = base64.b64encode(img_bytes2).decode()
+
+    st.markdown(f"""
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:85%;             
+    ">
+    <h3 style="color:#bf0000; margin-bottom:15px;">📊 Evolution chronologique des modèles testés</h3>
+
+<div><img src="data:image/png;base64,{encoded}" style="width:100%; height:100%; object-fit:contain;"/></div>
+</div>
+""", unsafe_allow_html=True) 
 
     st.write("""
 ---
@@ -741,11 +911,15 @@ Je ne fais plus de concaténation à la main mais je choisis une approche Pipeli
 
   with tabs[5]:
     st.markdown(f"""
-    <div style="
-        background-color:#efefef;
-        padding:14px;
-        border-left:5px solid #bf0000;
-        border-radius:10px;
+    <div style=" 
+        background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+        padding:20px;
+        border-left:6px solid #bf0000;
+        border-radius:15px;
+        margin: 20px auto;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        width:85%;  
         display:flex;
         align-items:center;       /* centrage vertical */
         gap:20px;                 /* espace entre texte et image */
@@ -761,19 +935,19 @@ Je ne fais plus de concaténation à la main mais je choisis une approche Pipeli
         </div>
     </div>
     """, unsafe_allow_html=True)
-
-
-    
+  
 #### 🔹 Autres modèles  
   with tabs[6]:
     st.markdown("""
-<div style="background-color:#efefef;
-    padding:10px;
-    border-left:5px solid #bf0000;
-    width:80%;
-    border-radius:10px;
-    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
-    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+<div style=" 
+        background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+        padding:20px;
+        border-left:6px solid #bf0000;
+        border-radius:15px;
+        margin: 20px auto;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        width:85%;          
     ">
                 
 Nous avons souhaité tester notre meilleur modèle sur les données d'entraînement en regroupant certaines classes. Toutes les classes concernant les livres en une seule classe et pareil pour les jeux vidéo et consoles. Nous avons aussi regroupé en une seule classe les jeux de sociétés et les jouets pour enfants :   
