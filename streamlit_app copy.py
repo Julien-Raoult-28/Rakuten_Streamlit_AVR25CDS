@@ -99,24 +99,72 @@ def affiche_bandeau(titre, couleur_fond="#bf0000"):
 #---------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------
 if page == pages[0] : 
   affiche_bandeau("Présentation du projet", "#bf0000")
-  st.write("""
-###  Contexte Rakuten  
+  st.markdown("""
+<style>
+/* Centrage horizontal des onglets */
+div[data-baseweb="tab-list"] {
+    justify-content: center;
+    gap: 24px;   /* espace horizontal entre les onglets */
+}
+
+/* Bouton d’onglet */
+button[data-baseweb="tab"] {
+    padding-top: 8px;
+    padding-bottom: 10px;
+    min-height: 72px;
+}
+
+/* Texte des onglets */
+button[data-baseweb="tab"] > div {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    white-space: pre-line;
+    line-height: 1.2;
+}
+
+/* Onglet actif */
+button[data-baseweb="tab"][aria-selected="true"] > div {
+    font-weight: 800;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
+  tabs = st.tabs([
+        "🏢\nContexte Rakuten",
+        "🏁\nObjectif du projet",
+        "💼\nContexte métier",
+        "⚙️\nContexte technique",
+        "💶\nContexte économique",
+        "🔬\nContexte scientifique"
+    ])
+  
+###  Contexte Rakuten 
+  with tabs[0]:
+    st.write("""
+ 
 
 Rakuten est un des plus grands acteurs mondiaux du e-commerce, créé en 1997, 
 avec plus de **1,3 milliard d’utilisateurs** dans son écosystème international.
 Le **Rakuten Institute of Technology (RIT)** mène des recherches en apprentissage automatique,
 vision par ordinateur, NLP et HCI, avec des équipes à Tokyo, Paris, Boston, Singapour et Bengaluru.  
-           
+""")     
+          
 ### Objectif du projet  
+  with tabs[1]:
+    st.write("""
            
 Créer un modèle capable de **classer automatiquement les produits** du catalogue Rakuten France
 dans leur code type produit (prdtypecode), en utilisant du texte (titre, description) et/ou des images.
 C’est un problème de **classification multimodale** à grande échelle.  
 L'objectif est d'obtenir un F1-score supérieur à **0,8113 sur les données textuelles**.  
 Pour les **images**, l'objectif est d'atteindre un F1-score supérieur à **0,5534**.  
-           
+""")   
+            
 ### Contexte métier  
-           
+  with tabs[2]:
+    st.write("""          
 Le challenge Rakuten vise à automatiser la classification de produits e‑commerce à partir
 d’images et de descriptions textuelles.  
 **Dans un contexte opérationnel, cette automatisation permet :**  
@@ -125,9 +173,11 @@ d’images et de descriptions textuelles.
 &nbsp;&nbsp;&nbsp;&nbsp;• de réduire les erreurs de catégorisation.  
 &nbsp;&nbsp;&nbsp;&nbsp;• d’améliorer la qualité des listings.  
 &nbsp;&nbsp;&nbsp;&nbsp;• d’optimiser le référencement interne et la navigation client.   
-           
+""")
+               
 ### Contexte technique
-           
+  with tabs[3]:
+    st.write("""            
 **Le projet repose sur :**  
            
 &nbsp;&nbsp;&nbsp;&nbsp;• un dataset de **84 916 annonces et images**.  
@@ -138,9 +188,11 @@ complexifie leur traitement direct.
 &nbsp;&nbsp;&nbsp;&nbsp;• des images hétérogènes souvent bruitées, floues ou sombres.  
 &nbsp;&nbsp;&nbsp;&nbsp;• un environnement limité ( **CPU 4 cœurs, pas de GPU**), nécessitant des solutions
 optimisées pour garantir des performances élevées malgré les ressources restreintes.  
-           
+""")
+               
 ### Contexte économique  
-           
+  with tabs[4]:
+    st.write("""            
 **La catégorisation manuelle est coûteuse :**  
            
 &nbsp;&nbsp;&nbsp;&nbsp;• **Charge humaine** : Processus chronophage nécessitant une intervention manuelle
@@ -166,9 +218,11 @@ affectant la conversion et la satisfaction client.
 catégorisation manuelle et aux corrections.  
 &nbsp;&nbsp;&nbsp;&nbsp;• Amélioration de la réactivité : Mise en ligne plus rapide des nouveaux produits,
 ce qui booste la compétitivité et la satisfaction client.  
-
+""")
+    
 ### Contexte scientifique
-           
+  with tabs[5]:
+    st.write("""            
 **Le projet s’inscrit dans plusieurs domaines clés du machine learning et de la data science :**  
            
 &nbsp;&nbsp;&nbsp;&nbsp;• vision par ordinateur : pour analyser des images hétérogènes et extraire des
@@ -345,9 +399,68 @@ fichier \"X_test_20_clean.csv\"
 #---------------------------------------PAGE MODELISATION TEXTE-----------------------------------------
 if page == pages[3] : 
   affiche_bandeau("Modélisation sur le texte", "#bf0000")
-  st.write("""
+  st.markdown("""
+<style>
+div[data-baseweb="tab-list"] {
+    justify-content: center;
+    gap: 28px;
+}
 
-#### 🔹 Choix des données  
+button[data-baseweb="tab"] {
+    position: relative;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    min-height: 72px;
+}
+
+/* Flèche par défaut */
+button[data-baseweb="tab"]::after {
+    content: "➜";
+    position: absolute;
+    right: -22px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Pas de flèche sur le dernier onglet */
+button[data-baseweb="tab"]:last-of-type::after {
+    content: "";
+}
+
+button[data-baseweb="tab"] > div {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    white-space: pre-line;
+    line-height: 1.2;
+}
+
+button[data-baseweb="tab"][aria-selected="true"] > div {
+    font-weight: 800;
+}
+</style>
+""", unsafe_allow_html=True)
+
+
+
+
+  tabs = st.tabs([
+        "💻\nChoix des données",
+        "🕓\nEntraînement de modèles",
+        "⚙️\nOptimisation des paramètres",
+        "🔧\nTest de modèles Deep Learning",
+        "📈\nAmélioration du modèle\nTF-IDF + LinearSVC",
+        "🎯\nSoumission au challenge",
+        "📥\nAutres modèles",
+    ])
+  
+#### 🔹 Choix des données 
+  with tabs[0]:
+    st.write("""
+ 
 
 Dans un premier temps, nous avons utilisé des données préparées vues précédemment :  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• **Nettoyage des balises HTML** pour ne conserver que le texte pertinent.  
@@ -361,16 +474,17 @@ surdimensionnées nous avons effectué des suppressions de données et pour les 
 sous dimensionnées nous avons dupliqué aléatoirement des lignes. 
 
 ---
-
+""")
 ####  🔹 Entraînement de modèles 
-
+  with tabs[1]:
+    st.write("""
 Le modèle initial consistait en une vectorisation TF-IDF combinée à un modèle de classification 
 Logistic Regression, entraîné sur les données préparées du champ concaténant designation et description.  
 Ce modèle a atteint un score f1 weighted **78,39 %**.  
 Ensuite, nous avons testé **TF-IDF combiné à LinearSVC**, avec un score de **78,55 %**.  
 """)
-  st.image("images/Matrice_confusion_texte.png", use_container_width=True)    
-  st.write("""      
+    st.image("images/Matrice_confusion_texte.png", use_container_width=True)    
+    st.write("""      
 Après analyse des erreurs via une matrice de confusion, nous avons remarqué que certaines
 catégories étaient souvent confondues entre elles, notamment les sous-catégories de Livres et de Jeux vidéo.
 Pour tenter d’améliorer les performances, nous avons ajouté des features
@@ -381,8 +495,13 @@ d’utiliser class_weight="balanced" dans le LinearSVC. Nous avons aussi ajouté
 sur les mots et les caractères (word_tfidf et char_tfidf) : **Score : 81,72%**  
 
 ---
+""")
 
-####  🔹 Optimisation des paramètres  
+
+####  🔹 Optimisation des paramètres
+  with tabs[2]:
+    st.write("""
+ 
 
 Pour continuer, nous avons testé plusieurs paramètres différents pour **TF-IDF** et **LinearSVC** :  
 
@@ -402,9 +521,10 @@ Pour continuer, nous avons testé plusieurs paramètres différents pour **TF-ID
 Pour un score de **83,06 %**.
 
 ---
-
+""")
 ####  🔹 Tests de modèles Deep Learning  
-
+  with tabs[3]:
+    st.write("""
 Ensuite nous avons voulu essayer des modèles de deep learning (XGBoost, Random Forest, CamenBERT). 
 La difficulté est surtout liée à nos machines. Nous n’étions pas assez bien équipés pour lancer des
 modèles de ce type : l’entraînement dure des heures, la mémoire surcharge et l'entraînement s'arrête,
@@ -416,14 +536,15 @@ Nous avons tant bien que mal réussi à avoir des résultats mais avec le minimu
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Random Forest : jamais réussi à aller au bout.    
 
 ---
-
+""")
 #### 🔹 Amélioration du modèle TF-IDF + LinearSVC  
-
+  with tabs[4]:
+    st.write("""
 Étant bloqué par la puissance de nos machines nous avons tenté d’améliorer le modèle TF-IDF + LinearSVC.
 N’y arrivant pas, nous prenons la décision de tester notre meilleur modèle sur les données brut tel quel
 et ensuite avancer par étape pour la transformation des données :   
 """)
-  st.markdown("""
+    st.markdown("""
 &nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sur champ désignation :
 <span style='color:green; font-weight:bold;'>⭡ 83,75%</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;• Données sans balise HTML et Stopwords :
@@ -450,20 +571,23 @@ et ensuite avancer par étape pour la transformation des données :
 Je ne fais plus de concaténation à la main mais je choisis une approche Pipeline + ColumnTransformer, donc chaque feature est une méthode indépendante, bien séparée, traçable et réutilisable.
 """, unsafe_allow_html=True)
 
-  st.image("images/Graphique_des_modeles.png", use_container_width=True)  
+    st.image("images/Graphique_des_modeles.png", use_container_width=True)  
 
 
-  st.write("""
+    st.write("""
 ---
-
+""")
 ####  🔹 Soumission au challenge  
-
+  with tabs[5]:
+    st.write("""
 Nous avons soumis notre meilleur modèle en phase de test au challenge Rakuten et obtenu le score de **87,41%**. Pour rappel il fallait un score de 81,13% pour la réussite de ce challenge.  
 
----
+""")
+    st.image("images/challenge.png", use_container_width=True) 
 
 #### 🔹 Autres modèles  
-
+  with tabs[6]:
+    st.write("""
 Nous avons souhaité tester notre meilleur modèle sur les données d'entraînement en regroupant certaines classes. Toutes les classes concernant les livres en une seule classe et pareil pour les jeux vidéo et consoles. Nous avons aussi regroupé en une seule classe les jeux de sociétés et les jouets pour enfants :   
 
 &nbsp;&nbsp;&nbsp;&nbsp;• **Livres** : Livres loisirs et société + Lots Livres & Magazines + Magazines + Livres littérature et fiction  

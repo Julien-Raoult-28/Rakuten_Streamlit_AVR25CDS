@@ -142,99 +142,171 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
   
 ###  Contexte Rakuten 
   with tabs[0]:
-    st.write("""
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:50%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
  
 
 Rakuten est un des plus grands acteurs mondiaux du e-commerce, créé en 1997, 
 avec plus de **1,3 milliard d’utilisateurs** dans son écosystème international.
 Le **Rakuten Institute of Technology (RIT)** mène des recherches en apprentissage automatique,
 vision par ordinateur, NLP et HCI, avec des équipes à Tokyo, Paris, Boston, Singapour et Bengaluru.  
-""")     
+</div>
+""", unsafe_allow_html=True)    
           
 ### Objectif du projet  
   with tabs[1]:
-    st.write("""
-           
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:70%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
+                       
 Créer un modèle capable de **classer automatiquement les produits** du catalogue Rakuten France
 dans leur code type produit (prdtypecode), en utilisant du texte (titre, description) et/ou des images.
 C’est un problème de **classification multimodale** à grande échelle.  
+                
 L'objectif est d'obtenir un F1-score supérieur à **0,8113 sur les données textuelles**.  
 Pour les **images**, l'objectif est d'atteindre un F1-score supérieur à **0,5534**.  
-""")   
+</div>
+""", unsafe_allow_html=True)    
             
 ### Contexte métier  
   with tabs[2]:
-    st.write("""          
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:70%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
+                  
 Le challenge Rakuten vise à automatiser la classification de produits e‑commerce à partir
 d’images et de descriptions textuelles.  
+                
 **Dans un contexte opérationnel, cette automatisation permet :**  
-           
-&nbsp;&nbsp;&nbsp;&nbsp;• d’accélérer la mise en ligne des produits.  
-&nbsp;&nbsp;&nbsp;&nbsp;• de réduire les erreurs de catégorisation.  
-&nbsp;&nbsp;&nbsp;&nbsp;• d’améliorer la qualité des listings.  
-&nbsp;&nbsp;&nbsp;&nbsp;• d’optimiser le référencement interne et la navigation client.   
-""")
+
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> d’accélérer la mise en ligne des produits.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> de réduire les erreurs de catégorisation.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> d’améliorer la qualité des listings.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> d’optimiser le référencement interne et la navigation client.   
+</ul>
+</div>
+""", unsafe_allow_html=True) 
                
 ### Contexte technique
   with tabs[3]:
-    st.write("""            
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:90%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
+                   
 **Le projet repose sur :**  
            
-&nbsp;&nbsp;&nbsp;&nbsp;• un dataset de **84 916 annonces et images**.  
-&nbsp;&nbsp;&nbsp;&nbsp;• une variable cible (prdtypecode) comportant **27 classes déséquilibrées**.  
-&nbsp;&nbsp;&nbsp;&nbsp;• des descriptions textuelles de longueur très variable (de 0 à 12 451 caractères),
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> un dataset de **84 916 annonces et images**.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> une variable cible (prdtypecode) comportant **27 classes déséquilibrées**.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> des descriptions textuelles de longueur très variable (de 0 à 12 451 caractères),
 incluant des balises HTML, des langues multiples et des stopwords, ce qui
 complexifie leur traitement direct.  
-&nbsp;&nbsp;&nbsp;&nbsp;• des images hétérogènes souvent bruitées, floues ou sombres.  
-&nbsp;&nbsp;&nbsp;&nbsp;• un environnement limité ( **CPU 4 cœurs, pas de GPU**), nécessitant des solutions
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> des images hétérogènes souvent bruitées, floues ou sombres.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> un environnement limité ( **CPU 4 cœurs, pas de GPU**), nécessitant des solutions
 optimisées pour garantir des performances élevées malgré les ressources restreintes.  
-""")
+</ul>
+</div>
+""", unsafe_allow_html=True) 
                
 ### Contexte économique  
   with tabs[4]:
-    st.write("""            
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:90%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
+                    
 **La catégorisation manuelle est coûteuse :**  
            
-&nbsp;&nbsp;&nbsp;&nbsp;• **Charge humaine** : Processus chronophage nécessitant une intervention manuelle
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Charge humaine</strong> : Processus chronophage nécessitant une intervention manuelle
 pour chaque produit.  
-&nbsp;&nbsp;&nbsp;&nbsp;• **Risque d’erreur** : Taux d’erreur élevé en raison de la subjectivité et de la complexité
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Risque d’erreur</strong> : Taux d’erreur élevé en raison de la subjectivité et de la complexité
 des 27 classes.  
-&nbsp;&nbsp;&nbsp;&nbsp;• **Impact direct** : Les erreurs de catégorisation réduisent la visibilité des produits,
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Impact direct</strong> : Les erreurs de catégorisation réduisent la visibilité des produits,
 affectant la conversion et la satisfaction client.  
+</ul>
            
 **Un modèle performant permet de :**  
            
-&nbsp;&nbsp;&nbsp;&nbsp;• réduire les coûts opérationnels liés à la catégorisation manuelle.  
-&nbsp;&nbsp;&nbsp;&nbsp;• améliorer la qualité et la cohérence des listings.  
-&nbsp;&nbsp;&nbsp;&nbsp;• augmenter le taux de conversion grâce à un référencement interne optimisé.  
-&nbsp;&nbsp;&nbsp;&nbsp;• offrir une meilleure expérience utilisateur via une navigation intuitive.  
-           
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> réduire les coûts opérationnels liés à la catégorisation manuelle.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> améliorer la qualité et la cohérence des listings.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> augmenter le taux de conversion grâce à un référencement interne optimisé.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> offrir une meilleure expérience utilisateur via une navigation intuitive.  
+</ul> 
+                         
 **Bénéfices d’un modèle automatisé :**  
            
-&nbsp;&nbsp;&nbsp;&nbsp;• Gain de temps significatif : Réduction du temps de traitement.  
-&nbsp;&nbsp;&nbsp;&nbsp;• Réallocation des ressources : Les équipes peuvent se concentrer sur des tâches
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Gain de temps significatif : Réduction du temps de traitement.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Réallocation des ressources : Les équipes peuvent se concentrer sur des tâches
 à plus forte valeur ajoutée (ex : optimisation des fiches produits, stratégie marketing).  
-&nbsp;&nbsp;&nbsp;&nbsp;• Réduction des coûts opérationnels : Moins d’heures consacrées à la
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Réduction des coûts opérationnels : Moins d’heures consacrées à la
 catégorisation manuelle et aux corrections.  
-&nbsp;&nbsp;&nbsp;&nbsp;• Amélioration de la réactivité : Mise en ligne plus rapide des nouveaux produits,
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Amélioration de la réactivité : Mise en ligne plus rapide des nouveaux produits,
 ce qui booste la compétitivité et la satisfaction client.  
-""")
+</ul>
+</div>
+""", unsafe_allow_html=True) 
     
 ### Contexte scientifique
   with tabs[5]:
-    st.write("""            
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:90%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
+                 
 **Le projet s’inscrit dans plusieurs domaines clés du machine learning et de la data science :**  
            
-&nbsp;&nbsp;&nbsp;&nbsp;• vision par ordinateur : pour analyser des images hétérogènes et extraire des
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>vision par ordinateur</strong> : pour analyser des images hétérogènes et extraire des
 features visuelles robustes.  
-&nbsp;&nbsp;&nbsp;&nbsp;• transfer learning : pour adapter des modèles pré-entraînés (ex : MobileNetV2) aux
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> transfer learning</strong> : pour adapter des modèles pré-entraînés (ex : MobileNetV2) aux
 contraintes du projet (27 classes, pas de GPU).  
-&nbsp;&nbsp;&nbsp;&nbsp;• détection d’outliers : pour identifier et écarter les images inutilisables (floues,
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> détection d’outliers</strong> : pour identifier et écarter les images inutilisables (floues,
 sombres, mal cadrées) et les doublons, améliorant ainsi la qualité du dataset.  
-&nbsp;&nbsp;&nbsp;&nbsp;• analyse de qualité d’images.  
-&nbsp;&nbsp;&nbsp;&nbsp;• classification supervisée multiclasse : pour prédire la catégorie produit avec une
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> analyse de qualité d’images</strong>.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong> classification supervisée multiclasse</strong> : pour prédire la catégorie produit avec une
 métrique adaptée au déséquilibre des classes (F1-score pondéré).  
-""")
+</ul>
+</div>
+""", unsafe_allow_html=True) 
 #---------------------------------------PAGE EXPLORATION DE LA DONNEE -----------------------------------------
 if page == pages[1] : 
   affiche_bandeau("Exploration des données", "#bf0000")
@@ -459,32 +531,63 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
   
 #### 🔹 Choix des données 
   with tabs[0]:
-    st.write("""
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:90%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
  
 
 Dans un premier temps, nous avons utilisé des données préparées vues précédemment :  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• **Nettoyage des balises HTML** pour ne conserver que le texte pertinent.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Suppression des **stopwords**.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• **Traduction** des textes en français afin d’uniformiser le langage.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Concaténation des champs **designation** et **description** en une seule colonne texte.           
- 
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Nettoyage des balises HTML</strong> pour ne conserver que le texte pertinent.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Suppression des <strong>stopwords</strong>.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> <strong>Traduction</strong> des textes en français afin d’uniformiser le langage.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Concaténation des champs <strong>designation</strong> et <strong>description</strong> en une seule colonne texte.           
+</ul>
+                
 Ensuite, pour gérer le déséquilibre des classes, nous avons choisi d’harmoniser la
 volumétrie par classe entre **1000 et 4000 produits**.Donc pour les classes 
 surdimensionnées nous avons effectué des suppressions de données et pour les classes 
 sous dimensionnées nous avons dupliqué aléatoirement des lignes. 
 
----
-""")
+
+</div>
+""", unsafe_allow_html=True) 
 ####  🔹 Entraînement de modèles 
   with tabs[1]:
-    st.write("""
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:90%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
+                
 Le modèle initial consistait en une vectorisation TF-IDF combinée à un modèle de classification 
 Logistic Regression, entraîné sur les données préparées du champ concaténant designation et description.  
 Ce modèle a atteint un score f1 weighted **78,39 %**.  
 Ensuite, nous avons testé **TF-IDF combiné à LinearSVC**, avec un score de **78,55 %**.  
-""")
+</div>
+""", unsafe_allow_html=True) 
+    
     st.image("images/Matrice_confusion_texte.png", use_container_width=True)    
-    st.write("""      
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:90%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
+                      
 Après analyse des erreurs via une matrice de confusion, nous avons remarqué que certaines
 catégories étaient souvent confondues entre elles, notamment les sous-catégories de Livres et de Jeux vidéo.
 Pour tenter d’améliorer les performances, nous avons ajouté des features
@@ -493,83 +596,132 @@ spécifiques pour ces catégories.
 De plus nous avons fait machine arrière pour gérer le déséquilibre des classes en choisissant de tout garder mais 
 d’utiliser class_weight="balanced" dans le LinearSVC. Nous avons aussi ajouté des paramètres à TF-IDF 
 sur les mots et les caractères (word_tfidf et char_tfidf) : **Score : 81,72%**  
-
----
-""")
+</div>
+""", unsafe_allow_html=True) 
 
 
 ####  🔹 Optimisation des paramètres
   with tabs[2]:
-    st.write("""
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:60%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
  
 
 Pour continuer, nous avons testé plusieurs paramètres différents pour **TF-IDF** et **LinearSVC** :  
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Word n-gram : 1,2 / 1,3  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Char n-gram : 3,5 / 2,4 / 4,6  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Max features : 120 000 / 80 000 / 150 000  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Min_df : 1 / 2  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• LinearSVC C : 1.5 / 1.6 / 1.8 / 2.0  
-
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Word n-gram : 1,2 / 1,3  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Char n-gram : 3,5 / 2,4 / 4,6  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Max features : 120 000 / 80 000 / 150 000  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Min_df : 1 / 2  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> LinearSVC C : 1.5 / 1.6 / 1.8 / 2.0  
+</ul>
+</div>
+""", unsafe_allow_html=True) 
+    st.write("""
+           
+           """)
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:60%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
+                 
 **Meilleure combinaison retenue** :  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Word n-gram : 1,2  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Char n-gram : 3,5  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Max features : 120 000  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Min_df : 1  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  LinearSVC C : 1.5  
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span>  Word n-gram : 1,2  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span>  Char n-gram : 3,5  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span>  Max features : 120 000  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span>  Min_df : 1  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span>  LinearSVC C : 1.5  
+</ul>
+Pour un score de <strong>83,06 %</strong>.
+</div>
+""", unsafe_allow_html=True) 
+  
 
-Pour un score de **83,06 %**.
-
----
-""")
 ####  🔹 Tests de modèles Deep Learning  
   with tabs[3]:
-    st.write("""
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:80%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
 Ensuite nous avons voulu essayer des modèles de deep learning (XGBoost, Random Forest, CamenBERT). 
 La difficulté est surtout liée à nos machines. Nous n’étions pas assez bien équipés pour lancer des
 modèles de ce type : l’entraînement dure des heures, la mémoire surcharge et l'entraînement s'arrête,
 sur des GPU cloud des time-out nous freinaient dans nos apprentissages.  
-
+    
 Nous avons tant bien que mal réussi à avoir des résultats mais avec le minimum de paramètres :   
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  XGBoost : 79%  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  CamenBERT : 77%  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•  Random Forest : jamais réussi à aller au bout.    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> XGBoost : 79%  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span>  CamenBERT : 77%  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span>  Random Forest : jamais réussi à aller au bout.    
+</ul>
+</div>
+""", unsafe_allow_html=True) 
+    
 
----
-""")
 #### 🔹 Amélioration du modèle TF-IDF + LinearSVC  
   with tabs[4]:
-    st.write("""
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:80%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
+                
 Étant bloqué par la puissance de nos machines nous avons tenté d’améliorer le modèle TF-IDF + LinearSVC.
 N’y arrivant pas, nous prenons la décision de tester notre meilleur modèle sur les données brut tel quel
 et ensuite avancer par étape pour la transformation des données :   
-""")
-    st.markdown("""
-&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sur champ désignation :
+
+
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sur champ désignation :
 <span style='color:green; font-weight:bold;'>⭡ 83,75%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données sans balise HTML et Stopwords :
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données sans balise HTML et Stopwords :
 <span style='color:red; font-weight:bold;'>⭣ 82,38%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sur champ désignation sans Features dans le modèle :
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sur champ désignation sans Features dans le modèle :
 <span style='color:green; font-weight:bold;'>⭡ 83,70%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données sans balise HTML et Stopwords sans Features dans le modèle :
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données sans balise HTML et Stopwords sans Features dans le modèle :
 <span style='color:red; font-weight:bold;'>⭣ 82,40%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation+description :
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation+description :
 <span style='color:green; font-weight:bold;'>⭡ 84,92%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation avec 2 fois plus de poids que description :
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation avec 2 fois plus de poids que description :
 <span style='color:green; font-weight:bold;'>⭡ 85,61%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation avec 3 fois plus de poids que description :
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation avec 3 fois plus de poids que description :
 <span style='color:green; font-weight:bold;'>⭡ 85,71%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation avec 4 fois plus de poids que description :
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation avec 4 fois plus de poids que description :
 <span style='color:green; font-weight:bold;'>⭡ 85,75%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation avec 5 fois plus de poids que description :
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation avec 5 fois plus de poids que description :
 <span style='color:red; font-weight:bold;'>⭣ 85,70%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation x4 + description + unité de mesure :
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation x4 + description + unité de mesure :
 <span style='color:green; font-weight:bold;'>⭡ 85,81%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation x4 + description + unité de mesure + ajout de poids des 3 premiers mots de désignation :
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation x4 + description + unité de mesure + ajout de poids des 3 premiers mots de désignation :
 <span style='color:green; font-weight:bold;'>⭡ 86,06%</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;• Données brut - sans features - désignation x4 + description + unité de mesure + ajout de poids des 3 premiers mots de désignation : changement de méthode (pondération directement dans le TF-IDF) : Meilleur score : <span style='color:green; font-weight:bold;'>⭡ 86,22%</span>  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données brut - sans features - désignation x4 + description + unité de mesure + ajout de poids des 3 premiers mots de désignation : changement de méthode (pondération directement dans le TF-IDF) : Meilleur score : <span style='color:green; font-weight:bold;'>⭡ 86,22%</span><br>  
+<br>  
 Je ne fais plus de concaténation à la main mais je choisis une approche Pipeline + ColumnTransformer, donc chaque feature est une méthode indépendante, bien séparée, traçable et réutilisable.
-""", unsafe_allow_html=True)
+</ul>
+</div>
+""", unsafe_allow_html=True) 
 
     st.image("images/Graphique_des_modeles.png", use_container_width=True)  
 
@@ -577,26 +729,58 @@ Je ne fais plus de concaténation à la main mais je choisis une approche Pipeli
     st.write("""
 ---
 """)
+    
 ####  🔹 Soumission au challenge  
   with tabs[5]:
-    st.write("""
-Nous avons soumis notre meilleur modèle en phase de test au challenge Rakuten et obtenu le score de **87,41%**. Pour rappel il fallait un score de 81,13% pour la réussite de ce challenge.  
+    col1, col2 = st.columns([1, 1])
 
-""")
-    st.image("images/challenge.png", use_container_width=True) 
+    with col1:
+        st.markdown("""
+        <div style="
+            background-color:#efefef;
+            padding:14px;
+            border-left:5px solid #bf0000;
+            border-radius:10px;
+            text-align:left;
+            height:400px;            /* 👈 fixe la hauteur identique à l'image */
+            display:flex;
+            align-items:center;       /* centrage vertical */
+        ">
+            <div>
+                Nous avons soumis notre meilleur modèle en phase de test au challenge Rakuten 
+                et obtenu le score de <b>87,41%</b>.<br><br>
+                Pour rappel, il fallait un score de <b>81,13%</b> pour la réussite de ce challenge.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
+    with col2:
+        st.image("images/challenge.png", use_container_width=True)  # ✅ remplacé ici
+
+    
 #### 🔹 Autres modèles  
   with tabs[6]:
-    st.write("""
+    st.markdown("""
+<div style="background-color:#efefef;
+    padding:10px;
+    border-left:5px solid #bf0000;
+    width:80%;
+    border-radius:10px;
+    margin: 0 auto;           /* 👈 centre le bloc horizontalement */
+    text-align: left;         /* 👈 texte aligné à gauche à l'intérieur */           
+    ">
+                
 Nous avons souhaité tester notre meilleur modèle sur les données d'entraînement en regroupant certaines classes. Toutes les classes concernant les livres en une seule classe et pareil pour les jeux vidéo et consoles. Nous avons aussi regroupé en une seule classe les jeux de sociétés et les jouets pour enfants :   
 
-&nbsp;&nbsp;&nbsp;&nbsp;• **Livres** : Livres loisirs et société + Lots Livres & Magazines + Magazines + Livres littérature et fiction  
-&nbsp;&nbsp;&nbsp;&nbsp;• **Jeux vidéo** : Jeux vidéo + Accessoires jeux vidéo + Jeux vidéo & Consoles + Lots consoles & jeux  
-&nbsp;&nbsp;&nbsp;&nbsp;• **Jeux & Enfants** : Jouets & Enfant + Jeux de société  
-  
-**Score obtenu : 90,91 %**.
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Livres</strong> : Livres loisirs et société + Lots Livres & Magazines + Magazines + Livres littérature et fiction  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Jeux vidéo</strong> : Jeux vidéo + Accessoires jeux vidéo + Jeux vidéo & Consoles + Lots consoles & jeux  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Jeux & Enfants</strong> : Jouets & Enfant + Jeux de société  
+</ul>  
+<strong>Score obtenu : 90,91 %</strong>.
 
-""")
+</div>
+""", unsafe_allow_html=True) 
 #---------------------------------------PAGE MODELISATION IMAGE-----------------------------------------
 if page == pages[4] : 
   affiche_bandeau("Modélisation sur l'image", "#bf0000")
