@@ -37,7 +37,7 @@ st.markdown("""
             ---
   """, unsafe_allow_html=True)
 
-# --------------------- STYLE PERSONNALISÉ POUR LE MENU DE GAUCHE SIDEBAR ---
+# --------------------------------------------- STYLE PERSONNALISÉ POUR LE MENU DE GAUCHE SIDEBAR ---------------------------------------------------------------------------
 st.markdown("""
     <style>
     /* Couleur de fond de la sidebar */
@@ -62,7 +62,7 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     st.title("Sommaire")
 
-    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation - texte", "Modélisation - image", "Limites et Perspectives","Tester le modèle"]
+    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation - texte", "Tester le modèle texte", "Modélisation - image","Tester le modèle image", "Perspectives"]
     page = st.radio("", pages)
 
     # --- Auteurs ---
@@ -96,7 +96,13 @@ def affiche_bandeau(titre, couleur_fond="#bf0000"):
 
 
 # === CONTENU DES PAGES ===
-#---------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
 if page == pages[0] : 
   affiche_bandeau("Présentation du projet", "#bf0000")
   st.markdown("""
@@ -140,7 +146,7 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
         "🔬\nContexte scientifique"
     ])
   
-###  Contexte Rakuten 
+###  Contexte Rakuten --------------------------------------------------------------------------------------------
   with tabs[0]:
     st.markdown("""
 <div style="
@@ -163,7 +169,7 @@ vision par ordinateur, NLP et HCI, avec des équipes à Tokyo, Paris, Boston, Si
 </div>
 """, unsafe_allow_html=True)    
           
-### Objectif du projet  
+### Objectif du projet  ------------------------------------------------------------------------------------------------
   with tabs[1]:
     st.markdown("""
 <div style="
@@ -186,7 +192,7 @@ Pour les **images**, l'objectif est d'atteindre un F1-score supérieur à **0,55
 </div>
 """, unsafe_allow_html=True)    
             
-### Contexte métier  
+### Contexte métier  ------------------------------------------------------------------------------------------------
   with tabs[2]:
     st.markdown("""
 <div style="
@@ -214,7 +220,7 @@ d’images et de descriptions textuelles.
 </div>
 """, unsafe_allow_html=True) 
                
-### Contexte technique
+### Contexte technique------------------------------------------------------------------------------------------------
   with tabs[3]:
     st.markdown("""
 <div style="
@@ -243,7 +249,7 @@ optimisées pour garantir des performances élevées malgré les ressources rest
 </div>
 """, unsafe_allow_html=True) 
                
-### Contexte économique  
+### Contexte économique  ------------------------------------------------------------------------------------------------
   with tabs[4]:
     st.markdown("""
 <div style="
@@ -318,7 +324,7 @@ ce qui booste la compétitivité et la satisfaction client.
 </div>
 """, unsafe_allow_html=True) 
     
-### Contexte scientifique
+### Contexte scientifique------------------------------------------------------------------------------------------------
   with tabs[5]:
     st.markdown("""
 <div style="
@@ -347,6 +353,10 @@ métrique adaptée au déséquilibre des classes (F1-score pondéré).
 </ul>
 </div>
 """, unsafe_allow_html=True) 
+#--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
+#--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
+#--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
+#--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
 #--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
 if page == pages[1]:
 
@@ -384,7 +394,7 @@ if page == pages[1]:
         "📍\nPertinence des Variables"
     ])
 
-    # ================= TAB 1 =================
+    # =================== Cadre ========================================================================================================================================
     with tabs[0]:
 
         st.markdown("""
@@ -417,7 +427,7 @@ if page == pages[1]:
         """, unsafe_allow_html=True)
 
 
-    # ================= TAB 2 =================
+    # ================= pertinence des variable ======================================================================================================
     with tabs[1]:
         import streamlit as st 
         import base64
@@ -475,7 +485,12 @@ if page == pages[1]:
 
 
 
-#---------------------------------------PAGE PREPARATION DE LA DONNEE -----------------------------------------
+#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
+#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
+#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
+#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
+#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
+#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
 if page == pages[2] : 
   affiche_bandeau("Préparation des données", "#bf0000")
   import pandas as pd
@@ -635,7 +650,12 @@ Cette phase d'exploration et de préparation des données a été *déterminante
 """)
 
 
-#----------------------------------------------------------------PAGE MODELISATION TEXTE-------------------------------------------------------------------------------------------
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
 if page == pages[3] : 
   affiche_bandeau("Modélisation sur le texte", "#bf0000")
   st.markdown("""
@@ -694,7 +714,7 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
         "📥\nAutres\nmodèles",
     ])
   
-#### 🔹 Choix des données 
+#### 🔹 Choix des données ===================================================================================
   with tabs[0]:
     st.markdown("""
 <div style="
@@ -734,7 +754,7 @@ sous dimensionnées nous avons dupliqué aléatoirement des lignes.
     img_bytes2 = img_file2.read()
     encoded = base64.b64encode(img_bytes2).decode()
 
-####  🔹 Entraînement de modèles 
+####  🔹 Entraînement de modèles ===================================================================================
   with tabs[1]:
     st.markdown(f"""
 <div style="
@@ -782,7 +802,7 @@ sur les mots et les caractères (word_tfidf et char_tfidf) : **Score : 81,72%**
 """, unsafe_allow_html=True) 
 
 
-####  🔹 Optimisation des paramètres
+####  🔹 Optimisation des paramètres===================================================================================
   with tabs[2]:
     st.markdown("""
 <div style="
@@ -836,7 +856,7 @@ Pour un score de <strong>83,06 %</strong>.
 """, unsafe_allow_html=True) 
   
 
-####  🔹 Tests de modèles Deep Learning  
+####  🔹 Tests de modèles Deep Learning  ===================================================================================
   with tabs[3]:
     st.markdown("""
 <div style="
@@ -864,7 +884,7 @@ Nous avons tant bien que mal réussi à avoir des résultats mais avec le minimu
 """, unsafe_allow_html=True) 
     
 
-#### 🔹 Amélioration du modèle TF-IDF + LinearSVC  
+#### 🔹 Amélioration du modèle TF-IDF + LinearSVC  ===================================================================================
   with tabs[4]:
     st.markdown("""
 <div style="
@@ -1027,7 +1047,7 @@ Dans ce dernier modèle nous avons choisis une approche Pipeline + ColumnTransfo
 ---
 """)
     
-####  🔹 Soumission au challenge  
+####  🔹 Soumission au challenge  ===================================================================================
   import streamlit as st
   import base64
 
@@ -1063,7 +1083,7 @@ Dans ce dernier modèle nous avons choisis une approche Pipeline + ColumnTransfo
     </div>
     """, unsafe_allow_html=True)
   
-#### 🔹 Autres modèles  
+#### 🔹 Autres modèles  ===================================================================================
   with tabs[6]:
     st.markdown("""
 <div style=" 
@@ -1088,24 +1108,51 @@ Nous avons souhaité tester notre meilleur modèle sur les données d'entraînem
 
 </div>
 """, unsafe_allow_html=True) 
-#---------------------------------------PAGE MODELISATION IMAGE-----------------------------------------
-if page == pages[4] : 
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+if page == pages[5] : 
   affiche_bandeau("Modélisation sur l'image", "#bf0000")
   st.write("""
            
 
 """)
-#---------------------------------------PAGE LIMITES ET PERSPECTIVES-----------------------------------------
-if page == pages[5] : 
-  affiche_bandeau("Limites et Perspectives", "#bf0000")
+#=============================================================Tester le modèle image ===========================================================
+#=============================================================Tester le modèle image===========================================================
+#=============================================================Tester le modèle image===========================================================
+#=============================================================Tester le modèle image===========================================================
+#=============================================================Tester le modèle image===========================================================
+#=============================================================Tester le modèle image===========================================================
+if page == pages[6] : 
+  affiche_bandeau("Tester le modèle image", "#bf0000")
   st.write("""
            
 
 """)
-#---------------------------------------PAGE TESTER LE MODELE (version simplifiée) -----------------------------------------
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+if page == pages[7] : 
+  affiche_bandeau("Perspectives", "#bf0000")
+  st.write("""
+           
+
+""")
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
 
 
-if page == "Tester le modèle":
+if page == "Tester le modèle texte":
     import os
     import re
     import joblib
@@ -1113,7 +1160,7 @@ if page == "Tester le modèle":
     import pandas as pd
     import requests
 
-    st.header("Tester le modèle")
+    st.header("Tester le modèle texte")
     st.write("Entrez la désignation et la description du produit pour prédire sa catégorie :")
 
     # =========================
