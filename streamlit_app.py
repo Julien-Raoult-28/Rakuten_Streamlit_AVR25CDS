@@ -62,7 +62,7 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     st.title("Sommaire")
 
-    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation - texte", "Tester le modèle texte", "Modélisation - image","Tester le modèle image", "Perspectives"]
+    pages = ["Présentation du projet","Exploration et préparation", "Modélisation - texte", "Tester le modèle texte", "Modélisation - image","Tester le modèle image", "Perspectives"]
     page = st.radio("", pages)
 
     # --- Auteurs ---
@@ -360,7 +360,7 @@ métrique adaptée au déséquilibre des classes (F1-score pondéré).
 #--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
 if page == pages[1]:
 
-    affiche_bandeau("Exploration des données", "#bf0000")
+    affiche_bandeau("Exploration et préparation des données", "#bf0000")
 
     st.markdown("""
     <style>
@@ -390,45 +390,13 @@ if page == pages[1]:
     """, unsafe_allow_html=True)
 
     tabs = st.tabs([
-        "📦\nCadre",
-        "📍\nPertinence des Variables"
+        "🔎\nExploration des Données",
+        "📦\nPréparation des Données",
+        "📊\nVisualisations"
     ])
 
-    # =================== Cadre ========================================================================================================================================
+    # =================== Exploration des Données ========================================================================================================================================
     with tabs[0]:
-
-        st.markdown("""
-        <div style="
-            background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
-            padding:20px;
-            border-left:6px solid #bf0000;
-            border-radius:15px;
-            margin: 20px auto;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            font-family: 'Segoe UI';
-            width:85%;
-">
-<strong>Jeux de Données Utilisés :</strong>
-                     
-<ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données d’entraînement : désignation, description, image, catégorie.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données de test : mêmes champs, sans étiquette.
-</ul>
-
-<strong>Volumétrie :</strong>  
-                    
-<ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> 84 916 images associées à 27 classes.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Résolutions très variées.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Longueur désignations : 11 à 250 caractères.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Longueur descriptions : 0 à 12 451 caractères.
-</ul>
-        </div>
-        """, unsafe_allow_html=True)
-
-
-    # ================= pertinence des variable ======================================================================================================
-    with tabs[1]:
         import streamlit as st 
         import base64
         # Charger image
@@ -446,217 +414,140 @@ if page == pages[1]:
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             font-family: 'Segoe UI';
             width:85%;
-        ">
-
-<strong>Variables Pertinentes :</strong>
-                    
+">
+<strong>Données :</strong>
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Texte : designation et description (champs lexicaux spécifiques selon les catégories).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Images : pixels + features visuelles (brightness, contrast, blur_score, entropy).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Variable cible : prdtypecode (27 classes).
-</ul>
-
-<strong>Particularités du Dataset :</strong>
-                    
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> 85 000 images et textes.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Classes déséquilibrées (ex : classe 2583 = 10 000 exemples, classe 1180 = 500 exemples).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Textes : longueurs variables, balises HTML, stopwords.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Images : floues, sombres, mal cadrées.
+</ul>  
+                                     
+<strong>Problématiques :</strong>
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Dataset très bruité : fautes, abréviations, langues multiples, balises HTML.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Longueurs de texte très variables : de 0 à 12 451 caractères, avec des outliers (descriptions extrêmement courtes ou longues).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Classes très déséquilibrées : certaines catégories sont surreprésentées, tandis que d’autres sont rares.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Doublons : visuels (images identiques pour des produits différents) et textuels (descriptions copiées).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Conflits de labels : produits mal étiquetés (ex : un livre classé dans "jeux vidéo").
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Images inutilisables : floues, sombres ou quasi vides.
-</ul>
-
-<strong>Limites des Données :</strong>
-                    
-<ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Absence de variables structurées (prix, marque, caractéristiques techniques).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Pas de bounding boxes : impossible d’utiliser des modèles de détection d’objets (ex : Faster R-CNN).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Pas de GPU : contrainte matérielle ayant orienté le choix vers des modèles légers (ex : MobileNetV2).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Classes rares ou similaires : difficulté à modéliser les catégories peu représentées ou sémantiquement proches (ex : romans vs livres société & culture).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Déséquilibre des classes.Bruit dans les données (textes et images).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Doublons et conflits de labels.
 </ul>
                     
 <h3 style="color:#bf0000;">📊 Visualisation du déséquilibre</h3>
-
 <div style="text-align:center;"><img src="data:image/png;base64,{encoded}" style="width:70%; object-fit:contain;"/></div>
+</div>
+""", unsafe_allow_html=True)
+
+
+# ================= Préparation des données ======================================================================================================
+    with tabs[1]:
+        
+        st.markdown(f"""
+        <div style="
+            background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+            padding:20px;
+            border-left:6px solid #bf0000;
+            border-radius:15px;
+            margin: 20px auto;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            font-family: 'Segoe UI';
+            width:85%;
+        ">
+
+<strong>Images :</strong>
+                    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Correction EXIF, crop, resize (224x224).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Détection des images vides/floues.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Déduplication (hachage MD5).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Normalisation ImageNet.
+</ul>
+
+<strong>Textes :</strong>
+                    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Nettoyage : suppression des balises HTML et stopwords.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Traduction en français.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Extraction des unités de mesure (ex : "500g").
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Vectorisation TF-IDF (ngrams mots + caractères).
+</ul>
+
+<strong>Gestion du Déséquilibre :</strong>
+                    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Rééchantillonnage (4 000 exemples/classe).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Pondération (class_weight="balanced").
+</ul>
+                    
+
+
+</div>
+""", unsafe_allow_html=True)
+
+# ================= Visualisation ======================================================================================================
+    with tabs[2]:
+        import streamlit as st 
+        import base64
+        # Charger image
+        with open("images/f_corrélation_métrique_visuelle.png", "rb") as img_file:
+            img_bytes = img_file.read()
+            encoded = base64.b64encode(img_bytes).decode()
+        with open("images/f_brightness.png", "rb") as img_file2:
+            img_bytes2 = img_file2.read()
+            encoded2 = base64.b64encode(img_bytes2).decode()
+        with open("images/f_contrast.png", "rb") as img_file3:
+            img_bytes3 = img_file3.read()
+            encoded3 = base64.b64encode(img_bytes3).decode()
+        with open("images/f_entropy.png", "rb") as img_file4:
+            img_bytes4 = img_file4.read()
+            encoded4 = base64.b64encode(img_bytes4).decode()
+        with open("images/f_stopword.png", "rb") as img_file5:
+            img_bytes5 = img_file5.read()
+            encoded5 = base64.b64encode(img_bytes5).decode()
+
+        st.markdown(f"""
+        <div style="
+            background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+            padding:20px;
+            border-left:6px solid #bf0000;
+            border-radius:15px;
+            margin: 20px auto;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            font-family: 'Segoe UI';
+            width:85%;
+        ">
+
+<strong>Images :</strong>
+                    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Heatmap des corrélations : brightness 🔁 entropy (0.92), blur_score 🔁 edge_ratio (-0.72).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Distributions : luminosité (bimodale), contraste (unimodale), entropie (étalée).
+</ul>
+
+<strong>Textes :</strong>
+                    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Nuage de mots : stopwords dominants ("de", "pour").
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Longueurs des textes : très variables (0 à 12 451 caractères).
+</ul>
+<h4 style="color:#bf0000;text-align:center;">📊 Corrélation entre métriques visuelles</h4>
+<div style="text-align:center;margin-bottom:50px;"><img src="data:image/png;base64,{encoded}" style="width:70%; object-fit:contain;"/></div>
+<h4 style="color:#bf0000;text-align:center;">📊 Distribution globale de brightness</h4>
+<div style="text-align:center;margin-bottom:50px;"><img src="data:image/png;base64,{encoded2}" style="width:70%; object-fit:contain;"/></div>
+<h4 style="color:#bf0000;text-align:center;">📊 Distribution globale de contrast</h4>
+<div style="text-align:center;margin-bottom:50px;"><img src="data:image/png;base64,{encoded3}" style="width:70%; object-fit:contain;"/></div>
+<h4 style="color:#bf0000;text-align:center;">📊 Distribution globale de entropy</h4>
+<div style="text-align:center;margin-bottom:50px;margin-bottom:50px;"><img src="data:image/png;base64,{encoded4}" style="width:70%; object-fit:contain;"/></div>
+<h4 style="color:#bf0000;text-align:center;">📊 Mots les plus fréquents dans désignation</h4>
+<div style="text-align:center;margin-bottom:50px;"><img src="data:image/png;base64,{encoded5}" style="width:70%; object-fit:contain;"/></div>
 
 </div>
 """, unsafe_allow_html=True)
 
 
-
-#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
-#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
-#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
-#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
-#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
-#===================================================PAGE PREPARATION DE LA DONNEE ====================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
 if page == pages[2] : 
-  affiche_bandeau("Préparation des données", "#bf0000")
-  import pandas as pd
-  import numpy as np
-  import matplotlib.pyplot as plt
-  import seaborn as sns
-  st.subheader("2.3 Pre-processing et Feature Engineering")
-  st.markdown("""
-*Nettoyage des Données :*
-
-*Images — Pipeline de Prétraitement :*
-- Correction EXIF et conversion RGB : Standardisation via OpenCV (cv2.cvtColor).
-- Crop des bordures extrêmes.
-- Resize + padding : Redimensionnement à 224×224 pixels (compatible MobileNetV2).
-- Détection d’images quasi vides → mise en quarantaine.
-- Filtrage des images floues : Seuil de variance de Laplace (<100) pour identifier les images à exclure.
-- Déduplication : Hachage MD5 des images pour supprimer les doublons.
-- Détection de conflits de labels → flag.
-- Gestion des outliers : IQR sur les métriques visuelles (brightness, blur_score) par classe.
-- Filtrage manuel par classe.
-
-*Textes — Pipeline de Prétraitement :*
-- Nettoyage initial :
-  - Extraction des champs : Isolation des colonnes designation et description avec gestion des valeurs manquantes (fillna("")).
-  - Retrait des balises HTML : Suppression des tags (ex : <b>, <i>) pour ne conserver que le texte brut.
-  - Suppression des stopwords : Réduction du bruit lexical via nltk ou spaCy (ex : "le", "la", "de").  
-
-               
-- Standardisation linguistique :
-  - Traduction en français : Objectif : Éviter la dispersion des features TF-IDF due à la multiplicité des langues et améliorer la cohérence sémantique.
-  - Enrichissement des features :
-  - Premiers mots de la désignation : Extraction des 3 premiers mots (ex : "livre roman historique").
-  - Unités de mesure : Détection des dimensions/poids (ex : "500g", "30cm").  
-
-                    
-- Vectorisation :
-  - Application de TF-IDF avec :
-    - ngram_range=(1, 2) pour les mots (capturer les paires comme "livre roman").
-    - ngram_range=(3, 5) pour les caractères (capturer les motifs comme "500g").
-    - max_features=120_000 pour limiter la dimensionnalité tout en conservant l’information discriminante.  
-
-                 
-  - Gestion du déséquilibre des classes :
-    - Rééchantillonnage : Limitation à 4 000 exemples par classe (undersampling des classes majoritaires).
-    - Pondération : Utilisation de class_weight="balanced" dans LinearSVC pour compenser les déséquilibres résiduels.
-""")
-
-  st.subheader("Répartition des Produits par Langue")
-  st.markdown("""
-*Observation :* Le français domine largement (65 022 produits), suivi de l’anglais (12 443) et du néerlandais (2 767). Les autres langues sont marginales.
-*Conclusion :* Cela justifie la traduction en français pour uniformiser le corpus et éviter la dispersion des features TF-IDF.
-""")
-  # Visualisation des mots fréquents
-  st.subheader("Mots les Plus Fréquents")
-  st.markdown("""
-*Observation :* Les stopwords ("de", "pour", "en") dominent, suivis de chiffres et symboles ("+", "2", "cm").
-*Conclusion :* Valide la suppression des stopwords et l’extraction des unités de mesure (ex : "cm").
-""")
-
-  st.subheader("Transformation des Données")
-  st.markdown("""
-*Images :*
-- Normalisation ImageNet : Standardisation des valeurs des pixels (moyenne=[0.485, 0.456, 0.406], écart-type=[0.229, 0.224, 0.225]) pour adapter les entrées au modèle MobileNetV2.
-- Standardisation des features tabulaires : Centrage-réduction des métriques visuelles (brightness, blur_score) pour les modèles comme RandomForest.
-
-*Textes :*
-- Pas de normalisation classique : La vectorisation TF-IDF normalise implicitement les fréquences de termes.
-- Traduction en français : Uniformisation linguistique pour réduire la dispersion des features, justifiée par la prédominance du français (65 022/84 916 produits).
-""")
-
-  st.subheader("Réduction de Dimension")
-  st.markdown("""
-*Images :*
-- La réduction de dimension (PCA) a été écartée en raison des contraintes CPU et de la bonne gestion des features nombreuses par RandomForest.
-- Les embeddings CNN (MobileNetV2) ont été conservés en 1280 dimensions, suffisantes pour capturer les motifs visuels discriminants.
-
-*Textes :*
-- Contrôle strict de la dimensionnalité :
-- Nombre maximal de features : Limité à 120 000 pour équilibrer performance et coût computationnel.
-- Sélection de n-grams : Mots (1-2) pour capturer les paires comme "livre roman", caractères (3-5) pour les motifs comme "500g" ou "30cm".
-""")
-
-
-
-  st.subheader("Relations entre Variables (Images)")
-  st.markdown("""
-*Corrélations Fortes :*
-- Brightness ↔ Entropy (0.92) : Les images lumineuses ont généralement une entropie élevée (plus de détails et de complexité).
-- Mean_R ↔ Mean_G ↔ Mean_B (0.92–0.99) : Les canaux RGB sont fortement corrélés, ce qui est attendu pour des images en couleurs naturelles.
-- Pct_white ↔ Density (-0.95) : Les images avec un pourcentage élevé de blanc ont une densité de pixels non blancs faible.
-
-*Corrélations Négatives :*
-- Blur_score ↔ Edge_ratio (-0.72) : Les images floues ont moins de contours nets.
-- Pct_black ↔ Mean_R/G/B (-0.41 à -0.45) : Les images sombres ont des valeurs RGB basses.
-""")
-
-# Heatmap des corrélations
-  # Heatmap des corrélations
-  corr_data = {
-    "Brightness": [1.0, 0.92, -0.72],
-    "Entropy": [0.92, 1.0, -0.5],
-    "Blur_score": [-0.72, -0.5, 1.0]
-  }
-
-  df_corr = pd.DataFrame(
-    corr_data,
-    index=["Brightness", "Entropy", "Blur_score"]
-  )
-
-  fig, ax = plt.subplots()
-
-  sns.heatmap(df_corr, annot=True, cmap="coolwarm", ax=ax)
-
-  ax.set_title("Heatmap des Corrélations entre Métriques Visuelles")
-
-  st.pyplot(fig)
-
-
-  st.subheader("Distribution des Métriques Visuelles")
-  st.markdown("""
-*Luminosité (Brightness) :*
-- Distribution bimodale : Deux pics distincts, suggérant deux groupes d'images (ex : images claires vs images sombres).
-- Les images sombres pourraient nécessiter un prétraitement (ex : ajustement de la luminosité) pour améliorer leur qualité.
-
-*Contraste (Contrast) :*
-- Distribution unimodale avec une queue vers la droite : La majorité des images ont un contraste modéré, mais certaines ont un contraste très élevé.
-- Les classes comme "électronique" ont un contraste plus élevé que "livres".
-
-*Entropie (Entropy) :*
-- Distribution étalée : L'entropie varie fortement, ce qui reflète la diversité des détails dans les images.
-- Les images à faible entropie (peu de détails) pourraient être moins informatives pour le modèle.
-
-*Bruit (Noise) :*
-- Distribution concentrée vers les faibles valeurs : La majorité des images ont un niveau de bruit faible.
-- Les images très bruitées pourraient nécessiter un filtrage ou un prétraitement (ex : débroitage).
-""")
-
-  st.subheader("Analyse des Textes")
-  st.markdown("""
-*Répartition Inégale des Classes :*
-- Déséquilibre modéré.
-- Longueur des textes très dispersée, avec présence d’outliers (descriptions extrêmement longues ou très courtes).
-
-*Statistiques Descriptives :*
-- Fréquence des mots, longueur moyenne des textes.
-- Validation de la pertinence des n-grams (ex : "livre" vs "livre roman").
-
-*Analyse des N-grams :*
-- Confirme que les combinaisons de mots (1-2) et de caractères (3-5) capturent des motifs pertinents.
-""")
-
-# Conclusion
-  st.markdown("""
----
-### Conclusion
-Cette phase d'exploration et de préparation des données a été *déterminante* pour orienter les choix de modélisation et garantir que les modèles seront entraînés sur des données *propres, cohérentes et représentatives*. Elle ouvre la voie à la phase de modélisation (Rendu 2), avec une base solide pour construire un pipeline *industrialisable et performant*.
-""")
-
-
-#=======================================PAGE MODELISATION TEXTE==================================================================================================
-#=======================================PAGE MODELISATION TEXTE==================================================================================================
-#=======================================PAGE MODELISATION TEXTE==================================================================================================
-#=======================================PAGE MODELISATION TEXTE==================================================================================================
-#=======================================PAGE MODELISATION TEXTE==================================================================================================
-#=======================================PAGE MODELISATION TEXTE==================================================================================================
-if page == pages[3] : 
   affiche_bandeau("Modélisation sur le texte", "#bf0000")
   st.markdown("""
 <style>
@@ -1114,7 +1005,7 @@ Nous avons souhaité tester notre meilleur modèle sur les données d'entraînem
 #=============================================================PAGE MODELISATION IMAGE===========================================================
 #=============================================================PAGE MODELISATION IMAGE===========================================================
 #=============================================================PAGE MODELISATION IMAGE===========================================================
-if page == pages[5] : 
+if page == pages[4] : 
   affiche_bandeau("Modélisation sur l'image", "#bf0000")
   st.write("""
            
@@ -1126,7 +1017,7 @@ if page == pages[5] :
 #=============================================================Tester le modèle image===========================================================
 #=============================================================Tester le modèle image===========================================================
 #=============================================================Tester le modèle image===========================================================
-if page == pages[6] : 
+if page == pages[5] : 
   affiche_bandeau("Tester le modèle image", "#bf0000")
   st.write("""
            
@@ -1138,7 +1029,7 @@ if page == pages[6] :
 #===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
 #===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
 #===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
-if page == pages[7] : 
+if page == pages[6] : 
   affiche_bandeau("Perspectives", "#bf0000")
   st.write("""
            
