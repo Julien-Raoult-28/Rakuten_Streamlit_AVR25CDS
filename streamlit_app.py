@@ -185,7 +185,7 @@ vision par ordinateur, NLP et HCI, avec des équipes à Tokyo, Paris, Boston, Si
                        
 Créer un modèle capable de **classer automatiquement les produits** du catalogue Rakuten France
 dans leur code type produit (prdtypecode), en utilisant du texte (titre, description) et/ou des images.
-C’est un problème de **classification multimodale** à grande échelle.  
+C’est un problème de **classification à grande échelle**.  
                 
 L'objectif est d'obtenir un F1-score supérieur à **0,8113 sur les données textuelles**.  
 Pour les **images**, l'objectif est d'atteindre un F1-score supérieur à **0,5534**.  
@@ -237,13 +237,13 @@ d’images et de descriptions textuelles.
 <strong>Le projet repose sur :</strong>  
            
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Un dataset de **84 916 annonces et images**.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Une variable cible (prdtypecode) comportant **27 classes déséquilibrées**.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Un dataset de <strong>84 916 annonces et images</strong>.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Une variable cible (prdtypecode) comportant <strong>27 classes déséquilibrées</strong>.  
 <li><span style="color:#bf0000; font-size:18px;">⬥</span> Des descriptions textuelles de longueur très variable (de 0 à 12 451 caractères),
 incluant des balises HTML, des langues multiples et des stopwords, ce qui
 complexifie leur traitement direct.  
 <li><span style="color:#bf0000; font-size:18px;">⬥</span> Des images hétérogènes souvent bruitées, floues ou sombres.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Un environnement limité ( **CPU 4 cœurs, pas de GPU**), nécessitant des solutions
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Un environnement limité ( <strong>CPU 4 cœurs, pas de GPU</strong>), nécessitant des solutions
 optimisées pour garantir des performances élevées malgré les ressources restreintes.  
 </ul>
 </div>
