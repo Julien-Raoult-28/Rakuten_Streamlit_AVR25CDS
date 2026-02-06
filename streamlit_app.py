@@ -1031,10 +1031,251 @@ if page == pages[5] :
 #===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
 if page == pages[6] : 
   affiche_bandeau("Perspectives", "#bf0000")
-  st.write("""
-           
+  st.markdown("""
+<style>
+/* Centrage horizontal des onglets */
+div[data-baseweb="tab-list"] {
+    justify-content: center;
+    gap: 24px;   /* espace horizontal entre les onglets */
+}
 
-""")
+/* Bouton d’onglet */
+button[data-baseweb="tab"] {
+    padding-top: 8px;
+    padding-bottom: 10px;
+    min-height: 72px;
+}
+
+/* Texte des onglets */
+button[data-baseweb="tab"] > div {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    white-space: pre-line;
+    line-height: 1.2;
+}
+
+/* Onglet actif */
+button[data-baseweb="tab"][aria-selected="true"] > div {
+    font-weight: 800;
+}
+</style>
+""", unsafe_allow_html=True)
+
+  tabs = st.tabs([
+        "🌐\nApproche Multimodale",
+        "🕓\nAutres",
+    ])
+  
+#### 🔹 Multimodale ===================================================================================
+  with tabs[0]:
+    st.markdown("""
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:100%;            
+    ">
+<h3>Approche Multimodale</h3>
+Le cœur du système reposera sur notre meilleur modèle texte, basé sur TF-IDF et LinearSVC, qui capture efficacement l’information sémantique et reste le plus performant globalement.<br>
+Les images seront traitées via ResNet50, mais avec un rôle complémentaire.<br>
+<br>
+Plutôt que de fusionner naïvement les modalités, nous introduirons une pondération asymétrique : 
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span>Le modèle texte a un poids plus élevé
+<li><span style="color:#bf0000; font-size:18px;">⬥</span>Tandis que le modèle image intervient davantage sur les classes où le texte est historiquement en difficulté.<br>
+<br>
+Cette stratégie permettra d’exploiter la richesse visuelle lorsque le signal textuel est faible, tout en conservant la précision du texte quand il est pertinent.
+Le résultat sera un modèle plus robuste, capable de mieux généraliser sur des cas complexes.
+</div>
+    """, unsafe_allow_html=True)
+  with tabs[0]:
+   import streamlit.components.v1 as components
+
+   components.html("""
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:60px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:100%;            
+    ">
+<style>
+.grid {
+    display: grid;
+    grid-template-columns: 160px 80px 180px 80px 180px;
+    grid-template-rows: 80px 80px 80px;
+    align-items: center;
+    justify-items: center;
+    margin: 40px auto;
+}
+
+.card {
+    background: linear-gradient(135deg, #efefef, #efefef);
+    border-radius: 14px;
+    padding: 16px;
+    width: 150px;
+    text-align: center;
+    color: #bf0000;
+    font-size: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
+
+.arrow {
+    font-size: 26px;
+    color: #bf0000;
+}
+</style>
+<div><strong>🔹 Schéma de l'approche multimodale</strong></div>
+<div class="grid">
+
+    <!-- A1 -->
+    <div class="card" style="grid-column:1; grid-row:1;">
+        📝 Texte<br>
+        ↓<br>
+        TF-IDF<br>
+        ↓<br>
+        Vecteur Texte
+    </div>
+
+    <!-- B1 -->
+    <div class="arrow" style="grid-column:2; grid-row:1;">
+        ↘
+    </div>
+
+    <!-- A3 -->
+    <div class="card" style="grid-column:1; grid-row:3;">
+        🖼️ Image<br>
+        ↓<br>
+        ResNet50<br>
+        ↓<br>
+        Vecteur Image
+    </div>
+
+    <!-- B3 -->
+    <div class="arrow" style="grid-column:2; grid-row:3;">
+        ↗
+    </div>
+
+    <!-- C2 -->
+    <div class="card" style="grid-column:3; grid-row:2;">
+        🔗 Fusion
+    </div>
+
+    <!-- D2 -->
+    <div class="arrow" style="grid-column:4; grid-row:2;">
+        →
+    </div>
+
+    <!-- E2 -->
+    <div class="card" style="grid-column:5; grid-row:2;">
+        Vecteur Fusionné<br>
+        ↓<br>
+        RandomForest<br>
+        ↓<br>
+        🎯 Prédiction
+    </div>
+</div>
+                   
+<br><br>
+                   
+<div><strong>🔹 Amélioration progressive du F1-score</strong></div>                  
+<style>
+.table-container {
+    margin: 10px 0;
+    max-width: 850px;
+}
+
+table.model-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: linear-gradient(135deg, #fdfdfd, #f3f3f3);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.model-table th {
+    background-color: #bf0000;
+    color: white;
+    padding: 14px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.model-table td {
+    padding: 14px;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+
+    /* retour ligne auto */
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.model-table tr:last-child td {
+    border-bottom: none;
+}
+
+.model-table tr:hover {
+    background-color: #f8eaea;
+}
+
+.score {
+    font-weight: bold;
+    color: #bf0000;
+    text-align: center;
+}
+</style>
+
+<div class="table-container">
+<table class="model-table">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>F1-score</th>
+            <th>Améliorations clés</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align:center;"><strong>V1</strong></td>
+            <td class="score">0.665</td>
+            <td>Modèle de base : <strong>RandomForest</strong> sans optimisation.</td>
+        </tr>
+        <tr>
+            <td style="text-align:center;"><strong>V2</strong></td>
+            <td class="score">0.682</td>
+            <td>
+                Équilibrage des classes (<code>class_weight="balanced"</code>)<br>
+                + optimisation des hyperparamètres.
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;"><strong>V3</strong></td>
+            <td class="score">0.734</td>
+            <td>
+                Réduction de dimension (<strong>PCA</strong>)<br>
+                + recherche aléatoire des hyperparamètres
+                (<strong>RandomizedSearchCV</strong>).
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+""", height=800)
+  
 #=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
 #=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
 #=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
