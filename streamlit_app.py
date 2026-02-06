@@ -813,7 +813,7 @@ et ensuite avancer par étape pour la transformation des données :
 ">
 
 <h3 style="color:#bf0000; margin-bottom:15px;">📊 Performance des modèles</h3>
-
+Pour comparer les modèles de manière équitable, nous avons utilisé le même échantillon train/validation pour tous les tests, en fixant <strong>random_state=42</strong> afin de garantir la reproductibilité.<br><br>
 <ul style="list-style:none; padding-left:0; margin:0;">
 
 <li style="margin-bottom:10px; display:flex; align-items:center;">
@@ -1080,17 +1080,15 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width:100%;            
     ">
-<h3>Approche Multimodale</h3>
-Le cœur du système reposera sur notre meilleur modèle texte, basé sur TF-IDF et LinearSVC, qui capture efficacement l’information sémantique et reste le plus performant globalement.<br>
-Les images seront traitées via ResNet50, mais avec un rôle complémentaire.<br>
-<br>
-Plutôt que de fusionner naïvement les modalités, nous introduirons une pondération asymétrique : 
+<h3>Méthodologie – Approche Multimodale</h3>
+                
+<strong>🔹 Comment combiner texte et image ?</strong>
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span>Le modèle texte a un poids plus élevé
-<li><span style="color:#bf0000; font-size:18px;">⬥</span>Tandis que le modèle image intervient davantage sur les classes où le texte est historiquement en difficulté.<br>
-<br>
-Cette stratégie permettra d’exploiter la richesse visuelle lorsque le signal textuel est faible, tout en conservant la précision du texte quand il est pertinent.
-Le résultat sera un modèle plus robuste, capable de mieux généraliser sur des cas complexes.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Extraction des Features Texte</strong> : Utilisation de <strong>TF-IDF</strong> pour transformer les mots en vecteurs numériques (ex: "télévision 55 pouces" → vecteur).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Image</strong> : Utilisation d’un modèle <strong>ResNet50</strong> (réseau de neurones pré-entraîné) pour extraire des caractéristiques visuelles (ex: forme, couleur).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Fusion des Features</strong> :Concatenation des vecteurs texte + image pour former un <strong>vecteur unique par produit</strong>.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Modèle de Classification :RandomForest</strong> (arbre de décision avancé) entraîné sur les vecteurs fusionnés.
+</ul>
 </div>
     """, unsafe_allow_html=True)
   with tabs[0]:
@@ -1276,6 +1274,8 @@ table.model-table {
 </div>
 """, height=800)
   
+
+
 #=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
 #=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
 #=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
