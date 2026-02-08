@@ -760,14 +760,13 @@ Pour un score de <strong>83,06 %</strong>.
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width:85%;            
     ">
-Ensuite nous avons voulu essayer des modèles de deep learning (XGBoost, Random Forest, CamenBERT). 
+Ensuite nous avons voulu essayer des modèles de deep learning (Random Forest, CamenBERT). 
 La difficulté est surtout liée à nos machines. Nous n’étions pas assez bien équipés pour lancer des
 modèles de ce type : l’entraînement dure des heures, la mémoire surcharge et l'entraînement s'arrête,
 sur des GPU cloud des time-out nous freinaient dans nos apprentissages.  
     
 Nous avons tant bien que mal réussi à avoir des résultats mais avec le minimum de paramètres :   
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> XGBoost : 79%  
 <li><span style="color:#bf0000; font-size:18px;">⬥</span>  CamenBERT : 77%  
 <li><span style="color:#bf0000; font-size:18px;">⬥</span>  Random Forest : jamais réussi à aller au bout.    
 </ul>
