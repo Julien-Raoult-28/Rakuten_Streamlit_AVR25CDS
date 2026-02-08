@@ -37,7 +37,7 @@ st.markdown("""
             ---
   """, unsafe_allow_html=True)
 
-# --------------------- STYLE PERSONNALISÉ POUR LE MENU DE GAUCHE SIDEBAR ---
+# --------------------------------------------- STYLE PERSONNALISÉ POUR LE MENU DE GAUCHE SIDEBAR ---------------------------------------------------------------------------
 st.markdown("""
     <style>
     /* Couleur de fond de la sidebar */
@@ -62,7 +62,7 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     st.title("Sommaire")
 
-    pages = ["Présentation du projet","Exploration", "Préparation", "Modélisation - texte", "Modélisation - image", "Limites et Perspectives","Tester le modèle"]
+    pages = ["Présentation du projet","Exploration et préparation", "Modélisation - texte", "Tester le modèle texte", "Modélisation - image","Tester le modèle image", "Perspectives"]
     page = st.radio("", pages)
 
     # --- Auteurs ---
@@ -96,7 +96,13 @@ def affiche_bandeau(titre, couleur_fond="#bf0000"):
 
 
 # === CONTENU DES PAGES ===
-#---------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
+#---------------------------------------------------------------PAGE PRESENTATION DU PROJET -----------------------------------------------------------------------------
 if page == pages[0] : 
   affiche_bandeau("Présentation du projet", "#bf0000")
   st.markdown("""
@@ -140,7 +146,7 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
         "🔬\nContexte scientifique"
     ])
   
-###  Contexte Rakuten 
+###  Contexte Rakuten --------------------------------------------------------------------------------------------
   with tabs[0]:
     st.markdown("""
 <div style="
@@ -163,7 +169,7 @@ vision par ordinateur, NLP et HCI, avec des équipes à Tokyo, Paris, Boston, Si
 </div>
 """, unsafe_allow_html=True)    
           
-### Objectif du projet  
+### Objectif du projet  ------------------------------------------------------------------------------------------------
   with tabs[1]:
     st.markdown("""
 <div style="
@@ -179,14 +185,14 @@ vision par ordinateur, NLP et HCI, avec des équipes à Tokyo, Paris, Boston, Si
                        
 Créer un modèle capable de **classer automatiquement les produits** du catalogue Rakuten France
 dans leur code type produit (prdtypecode), en utilisant du texte (titre, description) et/ou des images.
-C’est un problème de **classification multimodale** à grande échelle.  
+C’est un problème de **classification à grande échelle**.  
                 
 L'objectif est d'obtenir un F1-score supérieur à **0,8113 sur les données textuelles**.  
 Pour les **images**, l'objectif est d'atteindre un F1-score supérieur à **0,5534**.  
 </div>
 """, unsafe_allow_html=True)    
             
-### Contexte métier  
+### Contexte métier  ------------------------------------------------------------------------------------------------
   with tabs[2]:
     st.markdown("""
 <div style="
@@ -214,7 +220,7 @@ d’images et de descriptions textuelles.
 </div>
 """, unsafe_allow_html=True) 
                
-### Contexte technique
+### Contexte technique------------------------------------------------------------------------------------------------
   with tabs[3]:
     st.markdown("""
 <div style="
@@ -231,19 +237,19 @@ d’images et de descriptions textuelles.
 <strong>Le projet repose sur :</strong>  
            
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Un dataset de **84 916 annonces et images**.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Une variable cible (prdtypecode) comportant **27 classes déséquilibrées**.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Un dataset de <strong>84 916 annonces et images</strong>.  
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Une variable cible (prdtypecode) comportant <strong>27 classes déséquilibrées</strong>.  
 <li><span style="color:#bf0000; font-size:18px;">⬥</span> Des descriptions textuelles de longueur très variable (de 0 à 12 451 caractères),
 incluant des balises HTML, des langues multiples et des stopwords, ce qui
 complexifie leur traitement direct.  
 <li><span style="color:#bf0000; font-size:18px;">⬥</span> Des images hétérogènes souvent bruitées, floues ou sombres.  
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Un environnement limité ( **CPU 4 cœurs, pas de GPU**), nécessitant des solutions
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Un environnement limité ( <strong>CPU 4 cœurs, pas de GPU</strong>), nécessitant des solutions
 optimisées pour garantir des performances élevées malgré les ressources restreintes.  
 </ul>
 </div>
 """, unsafe_allow_html=True) 
                
-### Contexte économique  
+### Contexte économique  ------------------------------------------------------------------------------------------------
   with tabs[4]:
     st.markdown("""
 <div style="
@@ -318,7 +324,7 @@ ce qui booste la compétitivité et la satisfaction client.
 </div>
 """, unsafe_allow_html=True) 
     
-### Contexte scientifique
+### Contexte scientifique------------------------------------------------------------------------------------------------
   with tabs[5]:
     st.markdown("""
 <div style="
@@ -348,9 +354,13 @@ métrique adaptée au déséquilibre des classes (F1-score pondéré).
 </div>
 """, unsafe_allow_html=True) 
 #--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
+#--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
+#--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
+#--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
+#--------------------------------------------------------------PAGE EXPLORATION DE LA DONNEE ----------------------------------------------------------------
 if page == pages[1]:
 
-    affiche_bandeau("Exploration des données", "#bf0000")
+    affiche_bandeau("Exploration et préparation des données", "#bf0000")
 
     st.markdown("""
     <style>
@@ -380,45 +390,13 @@ if page == pages[1]:
     """, unsafe_allow_html=True)
 
     tabs = st.tabs([
-        "📦\nCadre",
-        "📍\nPertinence des Variables"
+        "🔎\nExploration des Données",
+        "📦\nPréparation des Données",
+        "📊\nVisualisations"
     ])
 
-    # ================= TAB 1 =================
+    # =================== Exploration des Données ========================================================================================================================================
     with tabs[0]:
-
-        st.markdown("""
-        <div style="
-            background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
-            padding:20px;
-            border-left:6px solid #bf0000;
-            border-radius:15px;
-            margin: 20px auto;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            font-family: 'Segoe UI';
-            width:85%;
-">
-<strong>Jeux de Données Utilisés :</strong>
-                     
-<ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données d’entraînement : désignation, description, image, catégorie.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Données de test : mêmes champs, sans étiquette.
-</ul>
-
-<strong>Volumétrie :</strong>  
-                    
-<ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> 84 916 images associées à 27 classes.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Résolutions très variées.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Longueur désignations : 11 à 250 caractères.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Longueur descriptions : 0 à 12 451 caractères.
-</ul>
-        </div>
-        """, unsafe_allow_html=True)
-
-
-    # ================= TAB 2 =================
-    with tabs[1]:
         import streamlit as st 
         import base64
         # Charger image
@@ -436,207 +414,140 @@ if page == pages[1]:
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             font-family: 'Segoe UI';
             width:85%;
-        ">
-
-<strong>Variables Pertinentes :</strong>
-                    
+">
+<strong>Données :</strong>
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Texte : designation et description (champs lexicaux spécifiques selon les catégories).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Images : pixels + features visuelles (brightness, contrast, blur_score, entropy).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Variable cible : prdtypecode (27 classes).
-</ul>
-
-<strong>Particularités du Dataset :</strong>
-                    
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> 85 000 images et textes.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Classes déséquilibrées (ex : classe 2583 = 10 000 exemples, classe 1180 = 500 exemples).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Textes : longueurs variables, balises HTML, stopwords.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Images : floues, sombres, mal cadrées.
+</ul>  
+                                     
+<strong>Problématiques :</strong>
 <ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Dataset très bruité : fautes, abréviations, langues multiples, balises HTML.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Longueurs de texte très variables : de 0 à 12 451 caractères, avec des outliers (descriptions extrêmement courtes ou longues).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Classes très déséquilibrées : certaines catégories sont surreprésentées, tandis que d’autres sont rares.
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Doublons : visuels (images identiques pour des produits différents) et textuels (descriptions copiées).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Conflits de labels : produits mal étiquetés (ex : un livre classé dans "jeux vidéo").
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Images inutilisables : floues, sombres ou quasi vides.
-</ul>
-
-<strong>Limites des Données :</strong>
-                    
-<ul style="list-style: none; padding-left: 0;">                          
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Absence de variables structurées (prix, marque, caractéristiques techniques).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Pas de bounding boxes : impossible d’utiliser des modèles de détection d’objets (ex : Faster R-CNN).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Pas de GPU : contrainte matérielle ayant orienté le choix vers des modèles légers (ex : MobileNetV2).
-<li><span style="color:#bf0000; font-size:18px;">⬥</span> Classes rares ou similaires : difficulté à modéliser les catégories peu représentées ou sémantiquement proches (ex : romans vs livres société & culture).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Déséquilibre des classes.Bruit dans les données (textes et images).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Doublons et conflits de labels.
 </ul>
                     
 <h3 style="color:#bf0000;">📊 Visualisation du déséquilibre</h3>
-
 <div style="text-align:center;"><img src="data:image/png;base64,{encoded}" style="width:70%; object-fit:contain;"/></div>
+</div>
+""", unsafe_allow_html=True)
+
+
+# ================= Préparation des données ======================================================================================================
+    with tabs[1]:
+        
+        st.markdown(f"""
+        <div style="
+            background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+            padding:20px;
+            border-left:6px solid #bf0000;
+            border-radius:15px;
+            margin: 20px auto;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            font-family: 'Segoe UI';
+            width:85%;
+        ">
+
+<strong>Images :</strong>
+                    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Correction EXIF, crop, resize (224x224).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Détection des images vides/floues.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Déduplication (hachage MD5).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Normalisation ImageNet.
+</ul>
+
+<strong>Textes :</strong>
+                    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Nettoyage : suppression des balises HTML et stopwords.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Traduction en français.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Extraction des unités de mesure (ex : "500g").
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Vectorisation TF-IDF (ngrams mots + caractères).
+</ul>
+
+<strong>Gestion du Déséquilibre :</strong>
+                    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Rééchantillonnage (4 000 exemples/classe).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Pondération (class_weight="balanced").
+</ul>
+                    
+
+
+</div>
+""", unsafe_allow_html=True)
+
+# ================= Visualisation ======================================================================================================
+    with tabs[2]:
+        import streamlit as st 
+        import base64
+        # Charger image
+        with open("images/f_corrélation_métrique_visuelle.png", "rb") as img_file:
+            img_bytes = img_file.read()
+            encoded = base64.b64encode(img_bytes).decode()
+        with open("images/f_brightness.png", "rb") as img_file2:
+            img_bytes2 = img_file2.read()
+            encoded2 = base64.b64encode(img_bytes2).decode()
+        with open("images/f_contrast.png", "rb") as img_file3:
+            img_bytes3 = img_file3.read()
+            encoded3 = base64.b64encode(img_bytes3).decode()
+        with open("images/f_entropy.png", "rb") as img_file4:
+            img_bytes4 = img_file4.read()
+            encoded4 = base64.b64encode(img_bytes4).decode()
+        with open("images/f_stopword.png", "rb") as img_file5:
+            img_bytes5 = img_file5.read()
+            encoded5 = base64.b64encode(img_bytes5).decode()
+
+        st.markdown(f"""
+        <div style="
+            background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+            padding:20px;
+            border-left:6px solid #bf0000;
+            border-radius:15px;
+            margin: 20px auto;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            font-family: 'Segoe UI';
+            width:85%;
+        ">
+
+<strong>Images :</strong>
+                    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Heatmap des corrélations : brightness 🔁 entropy (0.92), blur_score 🔁 edge_ratio (-0.72).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Distributions : luminosité (bimodale), contraste (unimodale), entropie (étalée).
+</ul>
+
+<strong>Textes :</strong>
+                    
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Nuage de mots : stopwords dominants ("de", "pour").
+<li><span style="color:#bf0000; font-size:18px;">⬥</span> Longueurs des textes : très variables (0 à 12 451 caractères).
+</ul>
+<h4 style="color:#bf0000;text-align:center;">📊 Corrélation entre métriques visuelles</h4>
+<div style="text-align:center;margin-bottom:50px;"><img src="data:image/png;base64,{encoded}" style="width:70%; object-fit:contain;"/></div>
+<h4 style="color:#bf0000;text-align:center;">📊 Distribution globale de brightness</h4>
+<div style="text-align:center;margin-bottom:50px;"><img src="data:image/png;base64,{encoded2}" style="width:70%; object-fit:contain;"/></div>
+<h4 style="color:#bf0000;text-align:center;">📊 Distribution globale de contrast</h4>
+<div style="text-align:center;margin-bottom:50px;"><img src="data:image/png;base64,{encoded3}" style="width:70%; object-fit:contain;"/></div>
+<h4 style="color:#bf0000;text-align:center;">📊 Distribution globale de entropy</h4>
+<div style="text-align:center;margin-bottom:50px;margin-bottom:50px;"><img src="data:image/png;base64,{encoded4}" style="width:70%; object-fit:contain;"/></div>
+<h4 style="color:#bf0000;text-align:center;">📊 Mots les plus fréquents dans désignation</h4>
+<div style="text-align:center;margin-bottom:50px;"><img src="data:image/png;base64,{encoded5}" style="width:70%; object-fit:contain;"/></div>
 
 </div>
 """, unsafe_allow_html=True)
 
 
-
-#---------------------------------------PAGE PREPARATION DE LA DONNEE -----------------------------------------
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
+#=======================================PAGE MODELISATION TEXTE==================================================================================================
 if page == pages[2] : 
-  affiche_bandeau("Préparation des données", "#bf0000")
-  import pandas as pd
-  import numpy as np
-  import matplotlib.pyplot as plt
-  import seaborn as sns
-  st.subheader("2.3 Pre-processing et Feature Engineering")
-  st.markdown("""
-*Nettoyage des Données :*
-
-*Images — Pipeline de Prétraitement :*
-- Correction EXIF et conversion RGB : Standardisation via OpenCV (cv2.cvtColor).
-- Crop des bordures extrêmes.
-- Resize + padding : Redimensionnement à 224×224 pixels (compatible MobileNetV2).
-- Détection d’images quasi vides → mise en quarantaine.
-- Filtrage des images floues : Seuil de variance de Laplace (<100) pour identifier les images à exclure.
-- Déduplication : Hachage MD5 des images pour supprimer les doublons.
-- Détection de conflits de labels → flag.
-- Gestion des outliers : IQR sur les métriques visuelles (brightness, blur_score) par classe.
-- Filtrage manuel par classe.
-
-*Textes — Pipeline de Prétraitement :*
-- Nettoyage initial :
-  - Extraction des champs : Isolation des colonnes designation et description avec gestion des valeurs manquantes (fillna("")).
-  - Retrait des balises HTML : Suppression des tags (ex : <b>, <i>) pour ne conserver que le texte brut.
-  - Suppression des stopwords : Réduction du bruit lexical via nltk ou spaCy (ex : "le", "la", "de").  
-
-               
-- Standardisation linguistique :
-  - Traduction en français : Objectif : Éviter la dispersion des features TF-IDF due à la multiplicité des langues et améliorer la cohérence sémantique.
-  - Enrichissement des features :
-  - Premiers mots de la désignation : Extraction des 3 premiers mots (ex : "livre roman historique").
-  - Unités de mesure : Détection des dimensions/poids (ex : "500g", "30cm").  
-
-                    
-- Vectorisation :
-  - Application de TF-IDF avec :
-    - ngram_range=(1, 2) pour les mots (capturer les paires comme "livre roman").
-    - ngram_range=(3, 5) pour les caractères (capturer les motifs comme "500g").
-    - max_features=120_000 pour limiter la dimensionnalité tout en conservant l’information discriminante.  
-
-                 
-  - Gestion du déséquilibre des classes :
-    - Rééchantillonnage : Limitation à 4 000 exemples par classe (undersampling des classes majoritaires).
-    - Pondération : Utilisation de class_weight="balanced" dans LinearSVC pour compenser les déséquilibres résiduels.
-""")
-
-  st.subheader("Répartition des Produits par Langue")
-  st.markdown("""
-*Observation :* Le français domine largement (65 022 produits), suivi de l’anglais (12 443) et du néerlandais (2 767). Les autres langues sont marginales.
-*Conclusion :* Cela justifie la traduction en français pour uniformiser le corpus et éviter la dispersion des features TF-IDF.
-""")
-  # Visualisation des mots fréquents
-  st.subheader("Mots les Plus Fréquents")
-  st.markdown("""
-*Observation :* Les stopwords ("de", "pour", "en") dominent, suivis de chiffres et symboles ("+", "2", "cm").
-*Conclusion :* Valide la suppression des stopwords et l’extraction des unités de mesure (ex : "cm").
-""")
-
-  st.subheader("Transformation des Données")
-  st.markdown("""
-*Images :*
-- Normalisation ImageNet : Standardisation des valeurs des pixels (moyenne=[0.485, 0.456, 0.406], écart-type=[0.229, 0.224, 0.225]) pour adapter les entrées au modèle MobileNetV2.
-- Standardisation des features tabulaires : Centrage-réduction des métriques visuelles (brightness, blur_score) pour les modèles comme RandomForest.
-
-*Textes :*
-- Pas de normalisation classique : La vectorisation TF-IDF normalise implicitement les fréquences de termes.
-- Traduction en français : Uniformisation linguistique pour réduire la dispersion des features, justifiée par la prédominance du français (65 022/84 916 produits).
-""")
-
-  st.subheader("Réduction de Dimension")
-  st.markdown("""
-*Images :*
-- La réduction de dimension (PCA) a été écartée en raison des contraintes CPU et de la bonne gestion des features nombreuses par RandomForest.
-- Les embeddings CNN (MobileNetV2) ont été conservés en 1280 dimensions, suffisantes pour capturer les motifs visuels discriminants.
-
-*Textes :*
-- Contrôle strict de la dimensionnalité :
-- Nombre maximal de features : Limité à 120 000 pour équilibrer performance et coût computationnel.
-- Sélection de n-grams : Mots (1-2) pour capturer les paires comme "livre roman", caractères (3-5) pour les motifs comme "500g" ou "30cm".
-""")
-
-
-
-  st.subheader("Relations entre Variables (Images)")
-  st.markdown("""
-*Corrélations Fortes :*
-- Brightness ↔ Entropy (0.92) : Les images lumineuses ont généralement une entropie élevée (plus de détails et de complexité).
-- Mean_R ↔ Mean_G ↔ Mean_B (0.92–0.99) : Les canaux RGB sont fortement corrélés, ce qui est attendu pour des images en couleurs naturelles.
-- Pct_white ↔ Density (-0.95) : Les images avec un pourcentage élevé de blanc ont une densité de pixels non blancs faible.
-
-*Corrélations Négatives :*
-- Blur_score ↔ Edge_ratio (-0.72) : Les images floues ont moins de contours nets.
-- Pct_black ↔ Mean_R/G/B (-0.41 à -0.45) : Les images sombres ont des valeurs RGB basses.
-""")
-
-# Heatmap des corrélations
-  # Heatmap des corrélations
-  corr_data = {
-    "Brightness": [1.0, 0.92, -0.72],
-    "Entropy": [0.92, 1.0, -0.5],
-    "Blur_score": [-0.72, -0.5, 1.0]
-  }
-
-  df_corr = pd.DataFrame(
-    corr_data,
-    index=["Brightness", "Entropy", "Blur_score"]
-  )
-
-  fig, ax = plt.subplots()
-
-  sns.heatmap(df_corr, annot=True, cmap="coolwarm", ax=ax)
-
-  ax.set_title("Heatmap des Corrélations entre Métriques Visuelles")
-
-  st.pyplot(fig)
-
-
-  st.subheader("Distribution des Métriques Visuelles")
-  st.markdown("""
-*Luminosité (Brightness) :*
-- Distribution bimodale : Deux pics distincts, suggérant deux groupes d'images (ex : images claires vs images sombres).
-- Les images sombres pourraient nécessiter un prétraitement (ex : ajustement de la luminosité) pour améliorer leur qualité.
-
-*Contraste (Contrast) :*
-- Distribution unimodale avec une queue vers la droite : La majorité des images ont un contraste modéré, mais certaines ont un contraste très élevé.
-- Les classes comme "électronique" ont un contraste plus élevé que "livres".
-
-*Entropie (Entropy) :*
-- Distribution étalée : L'entropie varie fortement, ce qui reflète la diversité des détails dans les images.
-- Les images à faible entropie (peu de détails) pourraient être moins informatives pour le modèle.
-
-*Bruit (Noise) :*
-- Distribution concentrée vers les faibles valeurs : La majorité des images ont un niveau de bruit faible.
-- Les images très bruitées pourraient nécessiter un filtrage ou un prétraitement (ex : débroitage).
-""")
-
-  st.subheader("Analyse des Textes")
-  st.markdown("""
-*Répartition Inégale des Classes :*
-- Déséquilibre modéré.
-- Longueur des textes très dispersée, avec présence d’outliers (descriptions extrêmement longues ou très courtes).
-
-*Statistiques Descriptives :*
-- Fréquence des mots, longueur moyenne des textes.
-- Validation de la pertinence des n-grams (ex : "livre" vs "livre roman").
-
-*Analyse des N-grams :*
-- Confirme que les combinaisons de mots (1-2) et de caractères (3-5) capturent des motifs pertinents.
-""")
-
-# Conclusion
-  st.markdown("""
----
-### Conclusion
-Cette phase d'exploration et de préparation des données a été *déterminante* pour orienter les choix de modélisation et garantir que les modèles seront entraînés sur des données *propres, cohérentes et représentatives*. Elle ouvre la voie à la phase de modélisation (Rendu 2), avec une base solide pour construire un pipeline *industrialisable et performant*.
-""")
-
-
-#----------------------------------------------------------------PAGE MODELISATION TEXTE-------------------------------------------------------------------------------------------
-if page == pages[3] : 
   affiche_bandeau("Modélisation sur le texte", "#bf0000")
   st.markdown("""
 <style>
@@ -694,7 +605,7 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
         "📥\nAutres\nmodèles",
     ])
   
-#### 🔹 Choix des données 
+#### 🔹 Choix des données ===================================================================================
   with tabs[0]:
     st.markdown("""
 <div style="
@@ -734,7 +645,7 @@ sous dimensionnées nous avons dupliqué aléatoirement des lignes.
     img_bytes2 = img_file2.read()
     encoded = base64.b64encode(img_bytes2).decode()
 
-####  🔹 Entraînement de modèles 
+####  🔹 Entraînement de modèles ===================================================================================
   with tabs[1]:
     st.markdown(f"""
 <div style="
@@ -782,7 +693,7 @@ sur les mots et les caractères (word_tfidf et char_tfidf) : **Score : 81,72%**
 """, unsafe_allow_html=True) 
 
 
-####  🔹 Optimisation des paramètres
+####  🔹 Optimisation des paramètres===================================================================================
   with tabs[2]:
     st.markdown("""
 <div style="
@@ -836,7 +747,7 @@ Pour un score de <strong>83,06 %</strong>.
 """, unsafe_allow_html=True) 
   
 
-####  🔹 Tests de modèles Deep Learning  
+####  🔹 Tests de modèles Deep Learning  ===================================================================================
   with tabs[3]:
     st.markdown("""
 <div style="
@@ -864,7 +775,7 @@ Nous avons tant bien que mal réussi à avoir des résultats mais avec le minimu
 """, unsafe_allow_html=True) 
     
 
-#### 🔹 Amélioration du modèle TF-IDF + LinearSVC  
+#### 🔹 Amélioration du modèle TF-IDF + LinearSVC  ===================================================================================
   with tabs[4]:
     st.markdown("""
 <div style="
@@ -902,7 +813,7 @@ et ensuite avancer par étape pour la transformation des données :
 ">
 
 <h3 style="color:#bf0000; margin-bottom:15px;">📊 Performance des modèles</h3>
-
+Pour comparer les modèles de manière équitable, nous avons utilisé le même échantillon train/validation pour tous les tests, en fixant <strong>random_state=42</strong> afin de garantir la reproductibilité.<br><br>
 <ul style="list-style:none; padding-left:0; margin:0;">
 
 <li style="margin-bottom:10px; display:flex; align-items:center;">
@@ -1027,7 +938,7 @@ Dans ce dernier modèle nous avons choisis une approche Pipeline + ColumnTransfo
 ---
 """)
     
-####  🔹 Soumission au challenge  
+####  🔹 Soumission au challenge  ===================================================================================
   import streamlit as st
   import base64
 
@@ -1063,7 +974,7 @@ Dans ce dernier modèle nous avons choisis une approche Pipeline + ColumnTransfo
     </div>
     """, unsafe_allow_html=True)
   
-#### 🔹 Autres modèles  
+#### 🔹 Autres modèles  ===================================================================================
   with tabs[6]:
     st.markdown("""
 <div style=" 
@@ -1088,24 +999,292 @@ Nous avons souhaité tester notre meilleur modèle sur les données d'entraînem
 
 </div>
 """, unsafe_allow_html=True) 
-#---------------------------------------PAGE MODELISATION IMAGE-----------------------------------------
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+#=============================================================PAGE MODELISATION IMAGE===========================================================
+#=============================================================PAGE MODELISATION IMAGE===========================================================
 if page == pages[4] : 
   affiche_bandeau("Modélisation sur l'image", "#bf0000")
   st.write("""
            
 
 """)
-#---------------------------------------PAGE LIMITES ET PERSPECTIVES-----------------------------------------
+#=============================================================Tester le modèle image ===========================================================
+#=============================================================Tester le modèle image===========================================================
+#=============================================================Tester le modèle image===========================================================
+#=============================================================Tester le modèle image===========================================================
+#=============================================================Tester le modèle image===========================================================
+#=============================================================Tester le modèle image===========================================================
 if page == pages[5] : 
-  affiche_bandeau("Limites et Perspectives", "#bf0000")
+  affiche_bandeau("Tester le modèle image", "#bf0000")
   st.write("""
            
 
 """)
-#---------------------------------------PAGE TESTER LE MODELE (version simplifiée) -----------------------------------------
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+if page == pages[6] : 
+  affiche_bandeau("Perspectives", "#bf0000")
+  st.markdown("""
+<style>
+/* Centrage horizontal des onglets */
+div[data-baseweb="tab-list"] {
+    justify-content: center;
+    gap: 24px;   /* espace horizontal entre les onglets */
+}
+
+/* Bouton d’onglet */
+button[data-baseweb="tab"] {
+    padding-top: 8px;
+    padding-bottom: 10px;
+    min-height: 72px;
+}
+
+/* Texte des onglets */
+button[data-baseweb="tab"] > div {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    white-space: pre-line;
+    line-height: 1.2;
+}
+
+/* Onglet actif */
+button[data-baseweb="tab"][aria-selected="true"] > div {
+    font-weight: 800;
+}
+</style>
+""", unsafe_allow_html=True)
+
+  tabs = st.tabs([
+        "🌐\nApproche Multimodale",
+        "🕓\nAutres",
+    ])
+  
+#### 🔹 Multimodale ===================================================================================
+  with tabs[0]:
+    st.markdown("""
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:20px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:100%;            
+    ">
+<h3>Méthodologie – Approche Multimodale</h3>
+                
+<strong>🔹 Comment combiner texte et image ?</strong>
+<ul style="list-style: none; padding-left: 0;">                          
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Extraction des Features Texte</strong> : Utilisation de <strong>TF-IDF</strong> pour transformer les mots en vecteurs numériques (ex: "télévision 55 pouces" → vecteur).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Image</strong> : Utilisation d’un modèle <strong>ResNet50</strong> (réseau de neurones pré-entraîné) pour extraire des caractéristiques visuelles (ex: forme, couleur).
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Fusion des Features</strong> :Concatenation des vecteurs texte + image pour former un <strong>vecteur unique par produit</strong>.
+<li><span style="color:#bf0000; font-size:18px;">⬥</span><strong>Modèle de Classification :RandomForest</strong> (arbre de décision avancé) entraîné sur les vecteurs fusionnés.
+</ul>
+</div>
+    """, unsafe_allow_html=True)
+  with tabs[0]:
+   import streamlit.components.v1 as components
+
+   components.html("""
+<div style="
+    background: linear-gradient(135deg, #fdfdfd, #f0f0f0);
+    padding:60px;
+    border-left:6px solid #bf0000;
+    border-radius:15px;
+    margin: 20px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width:100%;            
+    ">
+<style>
+.grid {
+    display: grid;
+    grid-template-columns: 160px 80px 180px 80px 180px;
+    grid-template-rows: 80px 80px 80px;
+    align-items: center;
+    justify-items: center;
+    margin: 40px auto;
+}
+
+.card {
+    background: linear-gradient(135deg, #efefef, #efefef);
+    border-radius: 14px;
+    padding: 16px;
+    width: 150px;
+    text-align: center;
+    color: #bf0000;
+    font-size: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
+
+.arrow {
+    font-size: 26px;
+    color: #bf0000;
+}
+</style>
+<div><strong>🔹 Schéma de l'approche multimodale</strong></div>
+<div class="grid">
+
+    <!-- A1 -->
+    <div class="card" style="grid-column:1; grid-row:1;">
+        📝 Texte<br>
+        ↓<br>
+        TF-IDF<br>
+        ↓<br>
+        Vecteur Texte
+    </div>
+
+    <!-- B1 -->
+    <div class="arrow" style="grid-column:2; grid-row:1;">
+        ↘
+    </div>
+
+    <!-- A3 -->
+    <div class="card" style="grid-column:1; grid-row:3;">
+        🖼️ Image<br>
+        ↓<br>
+        ResNet50<br>
+        ↓<br>
+        Vecteur Image
+    </div>
+
+    <!-- B3 -->
+    <div class="arrow" style="grid-column:2; grid-row:3;">
+        ↗
+    </div>
+
+    <!-- C2 -->
+    <div class="card" style="grid-column:3; grid-row:2;">
+        🔗 Fusion
+    </div>
+
+    <!-- D2 -->
+    <div class="arrow" style="grid-column:4; grid-row:2;">
+        →
+    </div>
+
+    <!-- E2 -->
+    <div class="card" style="grid-column:5; grid-row:2;">
+        Vecteur Fusionné<br>
+        ↓<br>
+        RandomForest<br>
+        ↓<br>
+        🎯 Prédiction
+    </div>
+</div>
+                   
+<br><br>
+                   
+<div><strong>🔹 Amélioration progressive du F1-score</strong></div>                  
+<style>
+.table-container {
+    margin: 10px 0;
+    max-width: 850px;
+}
+
+table.model-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: linear-gradient(135deg, #fdfdfd, #f3f3f3);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.model-table th {
+    background-color: #bf0000;
+    color: white;
+    padding: 14px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.model-table td {
+    padding: 14px;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+
+    /* retour ligne auto */
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.model-table tr:last-child td {
+    border-bottom: none;
+}
+
+.model-table tr:hover {
+    background-color: #f8eaea;
+}
+
+.score {
+    font-weight: bold;
+    color: #bf0000;
+    text-align: center;
+}
+</style>
+
+<div class="table-container">
+<table class="model-table">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>F1-score</th>
+            <th>Améliorations clés</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align:center;"><strong>V1</strong></td>
+            <td class="score">0.665</td>
+            <td>Modèle de base : <strong>RandomForest</strong> sans optimisation.</td>
+        </tr>
+        <tr>
+            <td style="text-align:center;"><strong>V2</strong></td>
+            <td class="score">0.682</td>
+            <td>
+                Équilibrage des classes (<code>class_weight="balanced"</code>)<br>
+                + optimisation des hyperparamètres.
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;"><strong>V3</strong></td>
+            <td class="score">0.734</td>
+            <td>
+                Réduction de dimension (<strong>PCA</strong>)<br>
+                + recherche aléatoire des hyperparamètres
+                (<strong>RandomizedSearchCV</strong>).
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+""", height=800)
+  
 
 
-if page == "Tester le modèle":
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+#=======================================PAGE TESTER LE MODELE (version simplifiée) ===============================================================
+
+
+if page == "Tester le modèle texte":
     import os
     import re
     import joblib
@@ -1113,7 +1292,7 @@ if page == "Tester le modèle":
     import pandas as pd
     import requests
 
-    st.header("Tester le modèle")
+    st.header("Tester le modèle texte (fonctionne que en local)")
     st.write("Entrez la désignation et la description du produit pour prédire sa catégorie :")
 
     # =========================

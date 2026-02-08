@@ -62,7 +62,7 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
     st.title("Sommaire")
 
-    pages = ["Présentation du projet","Exploration et préparation", "Modélisation - texte", "Tester le modèle texte", "Modélisation - image","Tester le modèle image", "Perspectives"]
+    pages = ["Présentation du projet","Exploration et préparation", "Modélisation - texte", "Tester le modèle texte", "Modélisation - image", "Perspectives"]
     page = st.radio("", pages)
 
     # --- Auteurs ---
@@ -999,37 +999,15 @@ Nous avons souhaité tester notre meilleur modèle sur les données d'entraînem
 
 </div>
 """, unsafe_allow_html=True) 
-#=============================================================PAGE MODELISATION IMAGE===========================================================
-#=============================================================PAGE MODELISATION IMAGE===========================================================
-#=============================================================PAGE MODELISATION IMAGE===========================================================
-#=============================================================PAGE MODELISATION IMAGE===========================================================
-#=============================================================PAGE MODELISATION IMAGE===========================================================
-#=============================================================PAGE MODELISATION IMAGE===========================================================
-if page == pages[4] : 
-  affiche_bandeau("Modélisation sur l'image", "#bf0000")
-  st.write("""
-           
 
-""")
-#=============================================================Tester le modèle image ===========================================================
-#=============================================================Tester le modèle image===========================================================
-#=============================================================Tester le modèle image===========================================================
-#=============================================================Tester le modèle image===========================================================
-#=============================================================Tester le modèle image===========================================================
-#=============================================================Tester le modèle image===========================================================
+
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
+#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
 if page == pages[5] : 
-  affiche_bandeau("Tester le modèle image", "#bf0000")
-  st.write("""
-           
-
-""")
-#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
-#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
-#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
-#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
-#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
-#===========================================PAGE LIMITES ET PERSPECTIVES==========================================================================
-if page == pages[6] : 
   affiche_bandeau("Perspectives", "#bf0000")
   st.markdown("""
 <style>
@@ -1386,3 +1364,203 @@ if page == "Tester le modèle texte":
                 st.success(f"🔹 Catégorie prédite : **{label}**")
             else:
                 st.success("🔹 Catégorie prédite : Non disponible")
+
+
+#################   ANGIE################# ################# ################# ################# ################# 
+#################   ANGIE################# ################# ################# ################# ################# 
+#################   ANGIE################# ################# ################# ################# ################# 
+#################   ANGIE################# ################# ################# ################# ################# 
+#################   ANGIE################# ################# ################# ################# ################# 
+
+# =========================================================
+# PAGE STREAMLIT — PITCH 5 MINUTES (VERSION PORTABLE)
+# =========================================================
+
+if page == pages[4] : 
+  affiche_bandeau("Modélisation Images", "#bf0000")
+
+
+  import streamlit as st
+  import pandas as pd
+  from pathlib import Path
+  import matplotlib.pyplot as plt
+
+  from pitch_portable.utils_pitch import header, footer, badge, insight_card
+
+
+# ---------------------------------------------------------
+# CONFIGURATION
+# ---------------------------------------------------------
+#st.set_page_config(page_title="Pitch 5 minutes", layout="wide")
+
+
+
+# ---------------------------------------------------------
+# CHEMINS LOCAUX
+# ---------------------------------------------------------
+  ASSETS = Path("assets_pitch")
+  CSV_GLOBAL = Path("tableau_global.csv")
+
+
+# ---------------------------------------------------------
+# HEADER
+# ---------------------------------------------------------
+  header(
+    "Modèle MobileNetV3‑Large optimisé",
+    "Pourquoi ce modèle, comment il se comporte, où il se trompe, et ce que cela implique métier."
+)
+
+
+  st.markdown("""
+Cette page condense en **5 minutes** l’essentiel du projet :
+- **Choix du modèle**
+- **Comportement global**
+- **Limites et erreurs critiques**
+- **Interprétabilité visuelle (Grad‑CAM)**
+""")
+
+
+# ---------------------------------------------------------
+# BADGES SYNTHÉTIQUES
+# ---------------------------------------------------------
+  TOP1 = 0.572
+  TOP3 = 0.79
+  F1_MACRO = 0.55
+  F1_WEIGHTED = 0.58
+
+
+  col1, col2, col3, col4 = st.columns(4)
+  with col1: badge("Modèle retenu", "MobileNetV3‑Large optimisé")
+  with col2:
+    badge("Top‑1", f"{TOP1*100:.1f}%")
+    badge("Top‑3", f"{TOP3*100:.1f}%")
+  with col3:
+    badge("F1‑macro", f"{F1_MACRO:.2f}")
+    badge("F1‑weighted", f"{F1_WEIGHTED:.2f}")
+  with col4:
+    badge("Run", "20260201_215010")
+
+
+  st.markdown("---")
+
+
+# =========================================================
+# 1. Pourquoi ce modèle ?
+# =========================================================
+  st.subheader("1️⃣ Pourquoi MobileNetV3‑Large optimisé ?")
+
+
+  df_global = pd.read_csv(CSV_GLOBAL)
+
+
+  colonnes = [
+    "Modèle", "Architecture", "Type", "Accuracy", "F1‑macro", "F1‑weighted",
+    "Paramètres (M)", "Taille modèle (MB)", "Balancing", "Augmentation",
+    "Fine‑tuning", "Optimisation"
+]
+
+
+  df_affiche = df_global[[c for c in colonnes if c in df_global.columns]]
+
+
+  st.dataframe(
+    df_affiche.style.format({
+        "Accuracy": "{:.3f}",
+        "F1‑macro": "{:.3f}",
+        "F1‑weighted": "{:.3f}",
+    }),
+    use_container_width=True,
+    height=350
+)
+
+
+  insight_card("MobileNetV3‑Large optimisé offre le meilleur équilibre entre performance, stabilité et coût.")
+
+
+# ---------------------------------------------------------
+# Figures de comparaison
+# ---------------------------------------------------------
+  colA, colB = st.columns(2)
+
+
+  with colA:
+    st.markdown("**Figure – F1‑weighted par modèle**")
+    st.image(str(ASSETS / "barplot_F1_weighted.png"), use_container_width=True)
+
+
+  with colB:
+    st.markdown("**Figure – Heatmap de robustesse par classe**")
+    st.image(str(ASSETS / "heatmap_classes.png"), use_container_width=True)
+
+
+  with st.expander("📉 Voir la courbe de loss (stabilité d’apprentissage)"):
+    st.image(str(ASSETS / "loss_curve_mobilenetv3_opt.png"), use_container_width=True)
+
+
+  st.markdown("---")
+
+
+# =========================================================
+# 2. Comportement global
+# =========================================================
+  st.subheader("2️⃣ Comment le modèle se comporte ?")
+
+
+  colC, colD = st.columns(2)
+
+
+  with colC:
+    st.markdown("**Top‑1 / Top‑3 accuracy**")
+    st.image(str(ASSETS / "topk_accuracy.png"), use_container_width=True)
+
+
+  with colD:
+    st.markdown("**Matrice de confusion normalisée**")
+    st.image(str(ASSETS / "confusion_matrix_normalized.png"), use_container_width=True)
+
+
+  st.markdown("---")
+
+
+# =========================================================
+# 3. Grad‑CAM
+# =========================================================
+  st.subheader("3️⃣ Pourquoi il se trompe ? – Grad‑CAM")
+
+
+  colE, colF = st.columns(2)
+
+
+  with colE:
+    st.caption("✔️ Bonnes prédictions")
+    st.image(str(ASSETS / "gradcam_bien_1.jpg"), use_container_width=True)
+    st.image(str(ASSETS / "gradcam_bien_2.jpg"), use_container_width=True)
+
+
+  with colF:
+    st.caption("🔥 Erreurs critiques")
+    st.image(str(ASSETS / "gradcam_errors_1.jpg"), use_container_width=True)
+    st.image(str(ASSETS / "gradcam_errors_2.jpg"), use_container_width=True)
+
+
+  insight_card("Les Grad‑CAM montrent que les erreurs reflètent des biais visuels et des ambiguïtés métier.")
+
+
+  st.markdown("---")
+
+
+# =========================================================
+# 4. Message final
+# =========================================================
+  st.subheader("4️⃣ Insight final")
+
+
+  st.markdown("""
+> **MobileNetV3‑Large optimisé** est un modèle léger, stable et robuste,  
+> qui comprend bien les familles de produits Rakuten,  
+> dont les erreurs sont structurées et explicables,  
+> et pour lequel des axes d’amélioration clairs ont été définis.
+""")
+
+
+  footer()
