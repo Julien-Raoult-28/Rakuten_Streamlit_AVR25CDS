@@ -1268,7 +1268,7 @@ if page == "Tester le modèle texte":
     import pandas as pd
     import requests
 
-    st.header("Tester le modèle texte (fonctionne que en local)")
+    st.header("Tester le modèle texte")
     st.write("Entrez la désignation et la description du produit pour prédire sa catégorie :")
 
     # =========================
