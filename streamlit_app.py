@@ -1223,12 +1223,12 @@ table.model-table {
     </thead>
     <tbody>
         <tr>
-            <td style="text-align:center;"><strong>V1</strong></td>
+            <td style="text-align:center;"><strong>V1</strong> (temps d'exécution 1h40)</td>
             <td class="score">0.665</td>
             <td>Modèle de base : <strong>RandomForest</strong> sans optimisation.</td>
         </tr>
         <tr>
-            <td style="text-align:center;"><strong>V2</strong></td>
+            <td style="text-align:center;"><strong>V2</strong> (5h)</td>
             <td class="score">0.682</td>
             <td>
                 Équilibrage des classes (<code>class_weight="balanced"</code>)<br>
@@ -1236,7 +1236,7 @@ table.model-table {
             </td>
         </tr>
         <tr>
-            <td style="text-align:center;"><strong>V3</strong></td>
+            <td style="text-align:center;"><strong>V3</strong> (25h)</td>
             <td class="score">0.734</td>
             <td>
                 Réduction de dimension (<strong>PCA</strong>)<br>
