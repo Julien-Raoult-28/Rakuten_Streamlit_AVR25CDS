@@ -1410,7 +1410,7 @@ if page == pages[4] :
 )
 
 
-st.markdown("""
+  st.markdown("""
 Cette page condense en **5 minutes** l’essentiel du projet :
 - **Choix du modèle**
 - **Comportement global**
@@ -1422,62 +1422,62 @@ Cette page condense en **5 minutes** l’essentiel du projet :
 # ---------------------------------------------------------
 # BADGES SYNTHÉTIQUES
 # ---------------------------------------------------------
-TOP1 = 0.572
-TOP3 = 0.79
-F1_MACRO = 0.55
-F1_WEIGHTED = 0.58
+  TOP1 = 0.572
+  TOP3 = 0.79
+  F1_MACRO = 0.55
+  F1_WEIGHTED = 0.58
 
 
-col1, col2, col3, col4 = st.columns(4)
-with col1: badge("Modèle retenu", "MobileNetV3‑Large optimisé")
-with col2:
+  col1, col2, col3, col4 = st.columns(4)
+  with col1: badge("Modèle retenu", "MobileNetV3‑Large optimisé")
+  with col2:
     badge("Top‑1", f"{TOP1*100:.1f}%")
     badge("Top‑3", f"{TOP3*100:.1f}%")
-with col3:
+  with col3:
     badge("F1‑macro", f"{F1_MACRO:.2f}")
     badge("F1‑weighted", f"{F1_WEIGHTED:.2f}")
-with col4:
+  with col4:
     badge("Run", "20260201_215010")
 
 
-st.markdown("---")
+  st.markdown("---")
 
 
 # =========================================================
 # 1. Pourquoi ce modèle ?
 # =========================================================
-st.subheader("1️⃣ Pourquoi MobileNetV3‑Large optimisé ?")
+  st.subheader("1️⃣ Pourquoi MobileNetV3‑Large optimisé ?")
 
 
 # Bloc explicatif ajouté depuis la version harmonisée
-st.markdown("""
+  st.markdown("""
 <div style='padding: 10px; background-color: #f5f5f5; border-radius: 8px;'>
 <b>Comparaison synthétique des modèles testés</b>
 </div>
 """, unsafe_allow_html=True)
 
 
-df_global = pd.read_csv(CSV_GLOBAL)
+  df_global = pd.read_csv(CSV_GLOBAL)
 
 
 # Mise en avant du modèle retenu (commentaire harmonisé)
-df_global["Modèle"] = df_global.apply(
+  df_global["Modèle"] = df_global.apply(
     lambda row: "⭐ " + row["Modèle"] if "MobileNetV3" in row["Modèle"] else row["Modèle"],
     axis=1
 )
 
 
-colonnes = [
+  colonnes = [
     "Modèle", "Architecture", "Type", "Accuracy", "F1‑macro", "F1‑weighted",
     "Paramètres (M)", "Taille modèle (MB)", "Balancing", "Augmentation",
     "Fine‑tuning", "Optimisation"
 ]
 
 
-df_affiche = df_global[[c for c in colonnes if c in df_global.columns]]
+  df_affiche = df_global[[c for c in colonnes if c in df_global.columns]]
 
 
-st.dataframe(
+  st.dataframe(
     df_affiche.style.format({
         "Accuracy": "{:.3f}",
         "F1‑macro": "{:.3f}",
@@ -1488,16 +1488,16 @@ st.dataframe(
 )
 
 
-insight_card("MobileNetV3‑Large optimisé offre le meilleur équilibre entre performance, stabilité et coût.")
+  insight_card("MobileNetV3‑Large optimisé offre le meilleur équilibre entre performance, stabilité et coût.")
 
 
 # ---------------------------------------------------------
 # Figures de comparaison (avec commentaires harmonisés)
 # ---------------------------------------------------------
-colA, colB = st.columns(2)
+  colA, colB = st.columns(2)
 
 
-with colA:
+  with colA:
     st.markdown("**Figure – F1‑weighted par modèle**")
     st.image(str(ASSETS / "barplot_F1_weighted.png"), use_container_width=True)
     st.markdown("""
@@ -1510,7 +1510,7 @@ with colA:
 """)
 
 
-with colB:
+  with colB:
     st.markdown("**Figure – Heatmap de robustesse par classe**")
     st.image(str(ASSETS / "heatmap_classes.png"), use_container_width=True)
     st.markdown("""
@@ -1524,7 +1524,7 @@ with colB:
 """)
 
 
-with st.expander("📉 Voir la courbe de loss (stabilité d’apprentissage)"):
+  with st.expander("📉 Voir la courbe de loss (stabilité d’apprentissage)"):
     st.image(str(ASSETS / "loss_curve_mobilenetv3_opt.png"), use_container_width=True)
     st.markdown("""
 **Lecture experte :**
@@ -1537,25 +1537,25 @@ with st.expander("📉 Voir la courbe de loss (stabilité d’apprentissage)"):
 """)
 
 
-insight_card(
+  insight_card(
     "En 3 éléments : tableau global + F1 + robustesse par classe → "
     "MobileNetV3‑Large optimisé est le meilleur compromis."
 )
 
 
-st.markdown("---")
+  st.markdown("---")
 
 
 # =========================================================
 # 2. Comportement global
 # =========================================================
-st.subheader("2️⃣ Comment le modèle se comporte ?")
+  st.subheader("2️⃣ Comment le modèle se comporte ?")
 
 
-colC, colD = st.columns(2)
+  colC, colD = st.columns(2)
 
 
-with colC:
+  with colC:
     st.markdown("**Top‑1 / Top‑3 accuracy**")
     st.image(str(ASSETS / "topk_accuracy.png"), use_container_width=True)
     st.markdown("""
@@ -1568,7 +1568,7 @@ with colC:
 """)
 
 
-with colD:
+  with colD:
     st.markdown("**Matrice de confusion normalisée**")
     st.image(str(ASSETS / "confusion_matrix_normalized.png"), use_container_width=True)
     st.markdown("""
@@ -1585,13 +1585,13 @@ with colD:
 
 
 # Mini-figure ajoutée dans la version harmonisée
-st.markdown("**Top 3 clusters d’erreurs**")
+  st.markdown("**Top 3 clusters d’erreurs**")
 
 
-col_fig5, _ = st.columns([1, 1])
+  col_fig5, _ = st.columns([1, 1])
 
 
-with col_fig5:
+  with col_fig5:
     clusters = ["Jouets / Jeux / Figurines", "Maison / Décoration / Jardin", "Lots multi‑produits"]
     scores = [1.0, 0.8, 0.6]
 
@@ -1610,37 +1610,37 @@ with col_fig5:
     st.pyplot(fig)
 
 
-insight_card(
+  insight_card(
     "Les erreurs suivent des patterns visuels cohérents : "
     "le modèle comprend la famille, mais hésite sur la sous‑catégorie."
 )
 
 
-st.markdown("---")
+  st.markdown("---")
 
 
 # =========================================================
 # 3. Grad‑CAM
 # =========================================================
-st.subheader("3️⃣ Pourquoi il se trompe ? – Grad‑CAM")
+  st.subheader("3️⃣ Pourquoi il se trompe ? – Grad‑CAM")
 
 
-colE, colF = st.columns(2)
+  colE, colF = st.columns(2)
 
 
-with colE:
+  with colE:
     st.caption("✔️ Bonnes prédictions")
     st.image(str(ASSETS / "gradcam_bien_1.jpg"), use_container_width=True)
     st.image(str(ASSETS / "gradcam_bien_2.jpg"), use_container_width=True)
 
 
-with colF:
+  with colF:
     st.caption("🔥 Erreurs critiques")
     st.image(str(ASSETS / "gradcam_errors_1.jpg"), use_container_width=True)
     st.image(str(ASSETS / "gradcam_errors_2.jpg"), use_container_width=True)
 
 
-st.markdown("""
+  st.markdown("""
 **Lecture experte :**
 - Sur les bonnes prédictions : attention centrée sur l’objet.  
 - Sur les erreurs critiques : attention déplacée vers l’arrière‑plan.
@@ -1651,22 +1651,22 @@ st.markdown("""
 """)
 
 
-insight_card(
+  insight_card(
     "Les Grad‑CAM montrent que les erreurs reflètent des biais visuels "
     "(fond, textures, couleurs) et des ambiguïtés métier."
 )
 
 
-st.markdown("---")
+  st.markdown("---")
 
 
 # =========================================================
 # 4. Message final
 # =========================================================
-st.subheader("4️⃣ Insight final")
+  st.subheader("4️⃣ Insight final")
 
 
-st.markdown("""
+  st.markdown("""
 > **MobileNetV3‑Large optimisé** est un modèle léger, stable et robuste,  
 > qui comprend bien les familles de produits Rakuten,  
 > dont les erreurs sont structurées et explicables,  
@@ -1674,5 +1674,5 @@ st.markdown("""
 """)
 
 
-footer()
+  footer()
  
