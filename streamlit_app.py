@@ -1040,8 +1040,7 @@ button[data-baseweb="tab"][aria-selected="true"] > div {
 """, unsafe_allow_html=True)
 
   tabs = st.tabs([
-        "🌐\nApproche Multimodale",
-        "🕓\nAutres",
+        "🌐\nApproche Multimodale"
     ])
   
 #### 🔹 Multimodale ===================================================================================
